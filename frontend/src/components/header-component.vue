@@ -120,7 +120,7 @@ import { store } from "@/stores/user-store";
 import { onMounted} from "vue";
 import { useRouter } from "vue-router";
 export default {
-  name: "headerAccount",
+  name: "headerComponent",
 
 
   setup() {
