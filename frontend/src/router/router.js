@@ -2,11 +2,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 /*Components imports*/
-import header from '@/components/header/header-component.vue'
+import headerComponent from '@/components/header-component.vue'
 //Creación de rutas
 const routes = [
-    { path: '/', component: header },
-    { path: '/:pathMatch(.*)*', component: header },
+    { path: '/', component: headerComponent },
+    { path: '/:pathMatch(.*)*', component: headerComponent },
 ];
 
 

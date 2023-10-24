@@ -1,8 +1,8 @@
 import router from './router/router';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import App from './App.vue'
-import { store } from "@/stores/user-store.js";
+import App from '@/App.vue'
+import { store } from "./stores/user-store.js";
 
 router.beforeEach(async(to, from, next)=>{
     const authRequired = to.meta?.auth;
