@@ -203,4 +203,4 @@ if (window.innerWidth < 768) {
 };
 </script>
 
-<style src="@/assets/css/headerAccount.css"></style>
+<style src="@/assets/css/style.css"></style>
