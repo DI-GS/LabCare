@@ -233,3 +233,18 @@ body {
     padding: 1px 30px;
   }
 }
+
+/* Estilo para vista de hoja de asignatura*/
+.main-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  align-items: center;
+ 
+}
+
+.content {
+  padding: 20px;
+  /* Agrega más estilos según sea necesario para el contenido de tu vista */
+}
+
