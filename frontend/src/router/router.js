@@ -11,10 +11,11 @@ const routes = [
     { path: '/', component: headerComponent },
     { path: '/:pathMatch(.*)*', component: headerComponent },
     { path: '/Agregar-hoja-asignatura', component: subjectSheets },
+    { path: '/Visualizar-usuarios', name: 'ViewUsers', component: ViewUsers},
     { path: '/Visualizar-horarios', name: 'schedulesView', component: viewSchedules },
     { path: '/Visualizar-horarios/Agregar-horario', name: 'schedulesAdd', component: schedulesAdd },
-];
 
+];
 
 //Configuración del router
 const router = createRouter({
