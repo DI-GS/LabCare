@@ -32,12 +32,12 @@
           <!-- End -->
 
           <li class="item">
-            <a href="#" class="nav_link">
+            <router-link class="navlink" :to="{name: 'schedulesView'}"><a href="#" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-calendar"></i>
               </span>
               <span class="navlink">Horarios</span>
-            </a>
+            </a></router-link>
           </li>
           <li class="item">
             <a href="#" class="nav_link">
