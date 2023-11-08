@@ -32,8 +32,9 @@
   </head>
   <body>
 <div class="main-container content padding">
+    <div><h1>Lista de usuarios</h1></div>
     <div class="container my-5">
-        <router-link to="" class="btn btn-sm btn-success">Nuevo horario</router-link>
+        <router-link to="" class="btn btn-sm btn-success">Agregar Usuario</router-link>
       <div class="row">
         <table id="example" class="table table-striped" style="width: 100%">
             <thead>
