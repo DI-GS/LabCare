@@ -11,8 +11,8 @@ const routes = [
     { path: '/:pathMatch(.*)*', component: headerComponent },
     { path: '/Agregar-hoja-asignatura', component: subjectSheets },
     { path: '/Visualizar-horarios', component: viewSchedules },
+    { path: '/Visualizar-usuarios', name: 'ViewUsers', component: ViewUsers},
 ];
-
 
 //Configuración del router
 const router = createRouter({

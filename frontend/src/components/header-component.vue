@@ -22,13 +22,13 @@
 
         <ul class="menu_items">
           <li class="item">
-            <a href="#" class="nav_link">
+            <router-link class="navlink" :to="{name: 'ViewUsers'}"><a href="#" class="nav_link">
               <span class="navlink_icon">
-                <i class="bx bx-user-circle"></i>
+                <i class="bx bx-calendar"></i>
               </span>
               <span class="navlink">Usuarios</span>
-            </a>
-          </li>
+            </a></router-link>
+          </li>
           <!-- End -->
 
           <li class="item">
