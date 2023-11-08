@@ -19,7 +19,7 @@ body {
 
 /* navbar */
 .navbar {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   width: 100%;
   left: 0;
@@ -248,3 +248,6 @@ body {
   /* Agrega más estilos según sea necesario para el contenido de tu vista */
 }
 
+.padding{
+  padding-left: 200px;
+}
