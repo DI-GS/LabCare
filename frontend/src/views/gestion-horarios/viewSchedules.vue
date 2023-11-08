@@ -72,6 +72,9 @@ let dataTableIsInitialized = false;
 let dataTableOptions = {
   dom: 'Bfrtilp',
   lengthMenu: [5, 10, 15, 20, 100, 200, 500],
+  columnDefs: [
+    { searchable: false, targets:[0,2]},
+  ],
   pageLength: 3,
   destroy: true,
   language: {
