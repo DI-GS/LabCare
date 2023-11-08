@@ -5,12 +5,14 @@ import { createRouter, createWebHistory } from 'vue-router';
 import headerComponent from '@/components/header-component.vue'
 import subjectSheets from '@/views/hojas-asignatura/agregar-hoja.vue'
 import viewSchedules from '@/views/gestion-horarios/viewSchedules.vue'
+import schedulesAdd from '@/views/gestion-horarios/schedulesAdd.vue'
 //Creación de rutas
 const routes = [
     { path: '/', component: headerComponent },
     { path: '/:pathMatch(.*)*', component: headerComponent },
     { path: '/Agregar-hoja-asignatura', component: subjectSheets },
-    { path: '/Visualizar-horarios', component: viewSchedules },
+    { path: '/Visualizar-horarios', name: 'schedulesView', component: viewSchedules },
+    { path: '/Visualizar-horarios/Agregar-horario', name: 'schedulesAdd', component: schedulesAdd },
 ];
 
 
