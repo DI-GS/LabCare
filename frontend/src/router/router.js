@@ -6,6 +6,7 @@ import headerComponent from '@/components/header-component.vue'
 import subjectSheets from '@/views/hojas-asignatura/agregar-hoja.vue'
 import viewSchedules from '@/views/gestion-horarios/viewSchedules.vue'
 import schedulesAdd from '@/views/gestion-horarios/schedulesAdd.vue'
+import ViewUsers from '@/views/gestion-usuarios/viewUsers.vue'
 //Creación de rutas
 const routes = [
     { path: '/', component: headerComponent },

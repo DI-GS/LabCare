@@ -28,7 +28,7 @@
               </span>
               <span class="navlink">Usuarios</span>
             </a></router-link>
-          </li>
+</li>
           <!-- End -->
 
           <li class="item">
