@@ -24,10 +24,10 @@ body {
   width: 100%;
   left: 0;
   background-color: var(--white-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 30px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 15px 30px !important;
   z-index: 1000;
   box-shadow: 0 0 2px var(--grey-color-light);
 }
