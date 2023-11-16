@@ -2,7 +2,7 @@
   <div class="main-container">
     <headerComponent></headerComponent>
 
-    <div class="content">
+    <div class="content content-width" >
       <div class="form-group">
         <div class="row">
           <div class="col-md-6 mb-3">

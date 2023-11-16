@@ -251,12 +251,18 @@ body {
 
 .content {
   padding: 20px;
+}
+
+.content-width{
   width: 50%; /* Puedes ajustar el valor según tus necesidades */
   text-align: center;
 }
 
 /* Fin estilo para vista de hoja de asignatura*/
 
+.padding{
+  padding-left: 200px;
+}
 
 
 
