@@ -246,13 +246,19 @@ body {
   flex-direction: column;
   margin-top: 100px;
   align-items: center;
- 
+
 }
 
 .content {
   padding: 20px;
-  /* Agrega más estilos según sea necesario para el contenido de tu vista */
 }
+
+.content-width{
+  width: 50%; /* Puedes ajustar el valor según tus necesidades */
+  text-align: center;
+}
+
+/* Fin estilo para vista de hoja de asignatura*/
 
 .padding{
   padding-left: 200px;
