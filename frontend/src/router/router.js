@@ -7,6 +7,8 @@ import subjectSheets from '@/views/hojas-asignatura/agregar-hoja.vue'
 import viewSchedules from '@/views/gestion-horarios/viewSchedules.vue'
 import schedulesAdd from '@/views/gestion-horarios/schedulesAdd.vue'
 import ViewUsers from '@/views/gestion-usuarios/viewUsers.vue'
+import ViewInicio from '@/views/inicio-de-sesion/formulario_i.vue'
+import ViewInformativa from '@/views/inicio-de-sesion/pagina_principal.vue'
 //Creación de rutas
 const routes = [
     { path: '/', component: headerComponent },
@@ -15,7 +17,8 @@ const routes = [
     { path: '/Visualizar-usuarios', name: 'ViewUsers', component: ViewUsers},
     { path: '/Visualizar-horarios', name: 'schedulesView', component: viewSchedules },
     { path: '/Visualizar-horarios/Agregar-horario', name: 'schedulesAdd', component: schedulesAdd },
-
+    { path: '/Visualizar-formularioInicio', name: 'formulario_i', component: ViewInicio},
+    { path: '/pagina-inicio', name: 'pagina_principal', component: ViewInformativa},
 ];
 
 //Configuración del router
