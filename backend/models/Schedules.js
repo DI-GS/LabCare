@@ -3,10 +3,6 @@ const { Schema, model } = mongoose;
 
 const schedulesSchema = new Schema(
     {
-        _id:{
-            type: Number,
-            required: true,
-        },
         profesor:{
             type: String,
             required: true,
@@ -39,9 +35,6 @@ const schedulesSchema = new Schema(
                     }
                 ]
             },
-            {
-
-            }
         ]
     }
 );
