@@ -27,12 +27,15 @@ const schedulesSchema = new Schema(
                             type: Number,
                             required: true,
                         },
-                        "hora_inicio":"8:00:00",
-                        "hora_fin":"8:50:00"                         
+                        hora_inicio:{
+                            type: String,
+                            required: true,
+                        },
+                        hora_fin:{
+                            type: String,
+                            required: true,
+                        }                         
                     },
-                    {
-                        
-                    }
                 ]
             },
         ]
