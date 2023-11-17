@@ -2,7 +2,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 /*Components imports*/
-import headerComponent from '@/components/header-component.vue'
 import subjectSheets from '@/views/hojas-asignatura/subjectSheetsAdd.vue'
 import viewSchedules from '@/views/gestion-horarios/viewSchedules.vue'
 import schedulesAdd from '@/views/gestion-horarios/schedulesAdd.vue'
