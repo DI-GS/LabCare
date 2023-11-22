@@ -9,15 +9,17 @@
                    <img src="@/assets/images/menu-btn.png" class="menu-icon" alt="">
                </label>
    
-                         <div class="menu">
-                 <nav class="navbar">
-                     <ul>
-                       <li><a href="#" class="login-btn">Inicio de Sesión</a></li>
-                        
-                     </ul>
-                     <div class="labcare">Lab<span class="highlight">Care</span></div>
-                 </nav>
-             </div>
+               <div class="menu">
+          <nav class="navbar">
+            <ul>
+              <!-- Puedes agregar elementos de menú aquí si es necesario -->
+            </ul>
+            <div class="labcare">Lab<span class="highlight">Care</span></div>
+            <a href="#" class="btn-1 login-btn">Inicio de Sesión</a>
+            <a href="#" class="btn-1 login-btn">Registrarse
+            </a>
+          </nav>
+        </div>
                                                                                                                                            
            </div>
    
@@ -77,7 +79,7 @@
    
            <h2>Portafolios</h2>
            <div class="portafolio">
-               <img src="@/assets/images/ilustracion1.svg" alt="">
+               <img src="@/assets/images/ilustrasion1.svg" alt="">
    
                <div class="portafolio-1">
    
@@ -89,9 +91,12 @@
                    <a href="#" class="btn-2">Informacion</a>
                </div>
            </div>
-       
+            <br>
+            <br>
+            <br>
+            <br>
            <div class="portafolio">
-               <img src="@/assets/images/ilustracion2.svg" alt="">
+               <img src="@/assets/images/ilustrasion2.svg" alt="">
                <div class="portafolio-1">
    
                    <h3>portafolio 2</h3>
