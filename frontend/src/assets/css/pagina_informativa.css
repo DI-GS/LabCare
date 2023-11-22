@@ -24,7 +24,7 @@
   
   .btn-container {
     display: flex;
-    gap: 10px; /* Espaciado entre los botones, ajusta según sea necesario */
+    gap: 300px; /* Espaciado entre los botones, ajusta según sea necesario */
     margin-right: 100px; /* Ajusta según sea necesario */
   }
   

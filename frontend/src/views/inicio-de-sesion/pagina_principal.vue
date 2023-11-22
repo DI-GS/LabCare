@@ -16,7 +16,7 @@
             </ul>
             <div class="labcare">Lab<span class="highlight">Care</span></div>
             <a href="#" class="btn-1 login-btn">Inicio de Sesión</a>
-            <a href="#" class="btn-1 login-btn">Registrarse
+            <a href="#" class="btn-1 register-btn">Registrarse
             </a>
           </nav>
         </div>
