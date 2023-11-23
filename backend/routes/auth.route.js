@@ -1,12 +1,10 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import {
-    // infoUser,
     login,
     logout,
     refreshToken,
     register,
-   // expediente
 } from "../controllers/auth.controller.js";
 import { requireRefreshToken } from "../middlewares/requireRefreshToken.js";
 import { requireToken } from "../middlewares/requireToken.js";

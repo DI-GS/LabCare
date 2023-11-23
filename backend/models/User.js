@@ -2,7 +2,15 @@ import bcryptjs from "bcryptjs";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    email: {
+    name: {
+        type: String,
+        required: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+    },
+    email:{
         type: String,
         required: true,
         trim: true,
@@ -10,30 +18,19 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         index: { unique: true },
     },
-    password: {
-        type: String,
-        required: true,
-    },
-    name:{
-        type: String,
-        required: true,
-    },
-    second_name:{
+    password:{
         type: String,
         required: true,
     },
     type_user:{
         type: String,
-        required: true,
     },
     membership:{   
         owner:{
             type: String,
-            required: true,
         },
         type_membership:{
             type: String,
-            required: true,
         }
     }
 });

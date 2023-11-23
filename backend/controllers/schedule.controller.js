@@ -1,7 +1,3 @@
-
-
-
-
 export const createSchedule = async (req, res) => {
     try {
 

@@ -15,9 +15,8 @@
               <!-- Puedes agregar elementos de menú aquí si es necesario -->
             </ul>
             <div class="labcare">Lab<span class="highlight">Care</span></div>
-            <a href="#" class="btn-1 login-btn">Inicio de Sesión</a>
-            <a href="#" class="btn-1 register-btn">Registrarse
-            </a>
+            <router-link :to="{name: 'formulario_i'}" class="btn-1 login-btn">Registrarse</router-link>
+            <router-link :to="{name: 'login'}" class="btn-1 login-btn">Iniciar sesión</router-link>
           </nav>
         </div>
                                                                                                                                            
