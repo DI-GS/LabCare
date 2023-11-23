@@ -24,7 +24,7 @@
           <li class="item">
             <router-link class="navlink" :to="{name: 'ViewUsers'}"><a href="#" class="nav_link">
               <span class="navlink_icon">
-                <i class="bx bx-calendar"></i>
+                <i class="bx bx-user-circle"></i>
               </span>
               <span class="navlink">Usuarios</span>
             </a></router-link>
