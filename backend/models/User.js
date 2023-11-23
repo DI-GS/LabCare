@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
             type: String,
         },
         type_membership:{
-            type: String,
+            type: Boolean,
         }
     }
 });

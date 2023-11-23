@@ -60,7 +60,6 @@ export const login = async (req, res) => {
 
 export const refreshToken = (req, res) => {
     try {
-        console.log("XDDgdfgdfgdfgdfgdfd", req.uid)
         const { token, expiresIn } = generateToken(req.uid);
         return res.json({ token, expiresIn });
     } catch (error) {
