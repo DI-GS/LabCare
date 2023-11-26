@@ -258,6 +258,15 @@ body {
   text-align: center;
 }
 
+.cuadroVisualizacion {
+  border: 1px solid #ccc;
+  height: 150px;
+}
+.btn-color:hover{
+  color: #FFD700 !important;
+}
+
+
 /* Fin estilo para vista de hoja de asignatura*/
 
 .padding{
