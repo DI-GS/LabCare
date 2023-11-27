@@ -11,7 +11,7 @@ const stripeSecretKey = 'sk_test_51ODDeLJTLy2ZpoEVxNsezWiL5dFzejtlPDV7gzXGc5sDUA
 const endpointSecret = 'whsec_1d06f6d7d1993eb22c4b2bb81b2581971cc776a01bdada287c54d1c3a752927d';
 const stripeInstance = stripe(stripeSecretKey);
 
-const whiteList = [process.env.DOMAIN, process.env.DOMAIN2];
+const whiteList = [process.env.DOMAIN, process.env.DOMAIN2, process.env.DOMAIN3];
 
 app.use(
   cors({

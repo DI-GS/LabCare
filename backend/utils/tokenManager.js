@@ -20,7 +20,9 @@ export const generateRefreshToken = (uid, res) => {
         httpOnly: true,
             secure: true,
             expires: new Date(Date.now() + expiresIn * 1000),
+            sameSite: 'None',
     });
+    console.log("SI HACE TODO")
     } catch (error) {
         console.log(error);
     }

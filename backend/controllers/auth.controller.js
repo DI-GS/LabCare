@@ -2,13 +2,12 @@ import { User } from "../models/User.js";
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
-    const { email, password } = req.body;
+    const { name, lastname, email, password } = req.body;
     try {
         // Alternativa buscando por email
         let user = await User.findOne({ email });
         if (user) throw { code: 11000 };
-
-        user = new User({ email, password});
+        user = new User({ name, lastname, email, password});
         await user.save();
 
         // Generar el token JWT

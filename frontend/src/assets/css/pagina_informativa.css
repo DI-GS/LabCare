@@ -1,0 +1,435 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-transform: capitalize;
+    text-decoration: none;
+    list-style: none;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+.login-btn {
+    background-color: #ccc;
+    border: 1px solid #1f2124;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: black;
+  }
+  
+  .login-btn:hover {
+    background-color: #efb810;
+  }
+  
+  .btn-container {
+    display: flex;
+    gap: 300px; /* Espaciado entre los botones, ajusta según sea necesario */
+    margin-right: 100px; /* Ajusta según sea necesario */
+  }
+  
+  
+
+body{
+    background-color: #dcdcdc;
+}
+
+header{
+    background-image: linear-gradient(to bottom, #6a6e73, #FFFFFF); /* Cambia los colores según tus preferencias */
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+
+.container{
+    max-width: 1100;
+    margin: 0 auto;
+}
+
+.menu {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.menu .logo{
+    font-weight: 700;
+    font-size: 25px;
+    color: black;
+}
+
+.menu .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #6a6e73;
+}
+
+.menu .navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Utiliza flexbox en el contenedor ul */
+    justify-content: space-between; /* Alinea los elementos a los extremos */
+    width: 100%; /* Ocupa el ancho completo del contenedor */
+}
+
+.menu .navbar ul li {
+    margin-left: 10px;
+}
+
+.menu .navbar ul li a {
+    font-size: 18px;
+    padding: 10px;
+    color: black;
+    border-radius: 15px;
+    display: block;
+}
+
+.menu .navbar .labcare {
+    color: black;
+    font-size: 20px;
+}
+
+.menu .navbar .labcare .highlight {
+    font-size: 20px;
+    color: #efb810;
+}
+
+
+
+
+#menu {
+    display: none;
+}
+
+.menu-icon {
+    width: 25px;
+}
+
+.menu label{
+    cursor: pointer;
+    display: none;
+}
+
+.header-content{
+    display: flex;
+}
+
+.content {
+    padding: 150px 150px 0px 0px;
+}
+
+.content h1 {
+    color: black;
+    font-size: 55px;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 55px;
+
+}
+
+.content p {
+    margin-top:  25px;
+    color: #535b61;
+    text-transform: uppercase;
+    font-size: 35PX;
+    line-height: 40px;
+}
+
+.btn-1 {
+    display: inline-block;
+    background-color: rgba(22, 22, 23, 0.3);
+    border: 1px solid #1f2124;
+    margin: 35px 10px 0px 0px; 
+    padding: 15px 25px;
+    color:aliceblue;
+    border-radius: 25px;
+    
+}
+
+.btn-1:hover{
+    background-color:#efb810;
+}
+
+.services {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.service{
+    padding: 25px;
+    margin: 0px 10px;
+    box-shadow: 0px 0px 20px rgba(135, 141, 214, 0.3);
+
+}
+
+.service img {
+    margin-top: -50px;
+}
+
+.service h3 {
+    font-size: 20px;
+    color: #0E0E0E;
+    margin-bottom: 10px;
+    
+}
+
+.service P {
+    color: #525254;
+    font-size: 14px;
+}
+
+.portafolios {
+    padding: 80px 0px;
+    text-align: center;
+    color:#0E0E0E;
+}
+
+.portafolios h2 {
+    font-size: 55px;
+}
+
+.portafolio {
+    display: flex;
+    align-items: center;
+}
+
+.portafolio img {
+    width: 200px;
+}
+
+.portafolio-1 {
+    text-align: left;
+    margin-left: 100px;
+}
+
+.portafolio-1 h3 {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.portafolio-1 p {
+    font-size: 15px;
+    color: #525254;
+    margin-bottom: 25px;
+}
+
+.btn-2 {
+    display: inline-block;
+    background-color: rgba(22, 22, 23, 0.3);
+    border: 1px solid #1f2124;
+    margin: 35px 10px 0px 0px; 
+    padding: 15px 25px;
+    color:aliceblue;
+    border-radius: 25px;
+}
+
+.btn-2:hover{
+    background-color:#efb810;
+}
+
+footer {
+    padding: 15px 0 30px 0;
+    background-image: linear-gradient(to bottom, #6a6e73, #FFFFFF); /* Cambia los colores según tus preferencias */
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.info-content {
+    display: flex;
+}
+
+.info-price {
+    padding: 35px;
+    text-align: center;
+    background-color: #ccc;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
+    margin: 0px 150px 0px 0px;
+    color: black;
+}
+
+.info-price h2 {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 14px;
+    color: red!important;
+    margin-bottom: 10px;
+}
+
+.info-price p {
+
+    font-size: 16px;
+    color: black;
+}
+
+.info-txt {
+    margin-left: 200px;
+    color: black;
+}
+
+hr{
+    margin: 45px 0px;
+    border: 0.5px solid black;
+}
+
+.enlaces {
+    display: flex;
+    justify-content: space-between;
+    color: #ccc;
+}
+
+.enlaces h3 {
+    font-size: 25px;
+}
+
+.enlace{
+    display: flex;
+
+}
+
+.enlace li a {
+    display: block;
+    margin: 20px;
+    color: black;
+}
+
+.enlace li a:hover {
+    color: #efb810;
+}
+
+@media(max-width:991px) {
+
+    .menu {
+        padding: 20px;
+    }
+
+    .menu label {
+        display: initial;
+    }
+
+    .menu .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #5050BC;
+        display: none;
+    }
+
+    .menu .navbar ul li {
+        width: 100%;
+    }
+
+    #menu:checked ~ .navbar {
+        display: initial;
+    }
+
+    .header {
+        height: 0vh;
+        padding: 400px 0px;
+        background-position: center center;
+    }
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 0px 30px;
+    }
+
+    .content {
+        padding: 0px;
+    }
+
+    .content h1 {
+        margin-top: 100px;
+        font-size: 45px;
+    }
+
+    .content p {
+        margin-top: 0px;
+    }
+
+    .header-content img {
+        width: 150px;
+    }
+
+    .services{
+        flex-direction: column;
+        padding: 50px 30px 0px 30px;
+
+    }
+
+    .service{
+        margin-bottom: 50px;
+    }
+
+    .portafolios {
+        padding: 0px 30px 30px 30px;
+    }
+
+    .portafolios h2 {
+        margin-bottom: 15px;
+    }
+
+    .portafolio{
+        flex-direction: column;
+    }
+
+    .portafolio img {
+        display: none;
+    }
+
+    .portafolio-1 {
+        text-align: center;
+        margin: 0px 0px 25px 0px;
+    }
+
+    .footer {
+        padding: 0px 30px 30px 30px;
+    }
+
+    .info-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .info-price {
+        margin: 0px 0px 20px 0px;
+
+    }
+
+    .info-txt {
+        margin: 0px;
+    }
+
+    hr{
+        margin:25px 0px;
+    }
+
+    .enlaces {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .enlace{
+        flex-direction: column;
+    }
+}

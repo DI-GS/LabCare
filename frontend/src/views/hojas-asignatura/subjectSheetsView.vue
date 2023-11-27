@@ -1,6 +1,6 @@
 <template>
     <headerComponent></headerComponent>
-    <title>Usuarios</title>
+    <title>Hojas de asignatura</title>
     <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -32,9 +32,9 @@
   </head>
   <body>
 <div class="main-container content padding">
-    <div><h1>Lista de usuarios</h1></div>
+    <div><h1>Lista de hojas de asignatura</h1></div>
     <div class="container my-5">
-      <router-link :to="{ name: 'addUser' }" class="btn btn-sm btn-success">Nuevo usuario</router-link>
+        <router-link :to="{name: 'subjectSheetsAdd'}" class="btn btn-sm btn-success">Agregar nuvea hoja</router-link>
       <div class="row">
         <table id="example" class="table table-striped" style="width: 100%">
             <thead>
@@ -62,7 +62,7 @@ import headerComponent from '@/components/header-component.vue';
 
   //import { store } from "@/stores/user-store";
   export default {
-    name: "viewSchedules",
+    name: "subjetSheetsView",
 components: {headerComponent},
   
   
@@ -341,5 +341,3 @@ window.addEventListener('load', async () => {
   
   };
   </script>
-  
-  

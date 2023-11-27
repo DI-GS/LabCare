@@ -5,6 +5,7 @@ import VueStripeElementsPlus from 'vue-stripe-elements-plus';
 import { createPinia } from 'pinia';
 import { store } from './stores/user-store.js';
 import router from './router/router';
+
 import axios from 'axios';
 const app = createApp(App);
 
@@ -30,6 +31,8 @@ router.beforeEach(async (to, from, next) => {
       return next();
     } else {
       return next('/');
+
+
     }
   }
 

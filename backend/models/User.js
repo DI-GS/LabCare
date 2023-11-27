@@ -2,7 +2,15 @@ import bcryptjs from "bcryptjs";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    email: {
+    name: {
+        type: String,
+        required: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+    },
+    email:{
         type: String,
         required: true,
         trim: true,
@@ -10,11 +18,21 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         index: { unique: true },
     },
-    password: {
+    password:{
         type: String,
         required: true,
+    },
+    type_user:{
+        type: String,
+    },
+    membership:{   
+        owner:{
+            type: String,
+        },
+        type_membership:{
+            type: Boolean,
+        }
     }
-    
 });
 
 userSchema.pre("save", async function (next) {

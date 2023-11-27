@@ -8,6 +8,8 @@ export const store = defineStore("user", () => {
   const token = ref(null);
   const expiresIn = ref(null);
 
+    /*#################################################### REGISTRO E INICIO DE SESION ####################################################*/
+
   const access = async (email, password) => {
     try {
     const res = await api.post("/auth/login", {
@@ -28,13 +30,14 @@ export const store = defineStore("user", () => {
   }
 };
 
-const register = async (email, password, repassword, person) => {
+const register = async (name, lastname, email, password, repassword) => {
   try {
   const res = await api.post("/auth/register", {
+    name,
+    lastname,
     email,
     password,
-    repassword,
-    person
+    repassword
   });
  
   token.value = res.data.token;
@@ -58,9 +61,12 @@ const register = async (email, password, repassword, person) => {
 
   const refreshToken = async () => {
     try {
+      console.log("ANTES DE LA LLAMADA")
       const res = await api.get("/auth/refresh");
+      console.log("DESPUES DE LA LLAMADA")
       token.value = res.data.token;
       expiresIn.value = res.data.expiresIn;
+      
       setTime();
     } catch (error) {
       console.log(error);
