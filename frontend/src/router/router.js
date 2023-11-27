@@ -6,6 +6,7 @@ import subjectSheets from '@/views/hojas-asignatura/subjectSheetsAdd.vue'
 import viewSchedules from '@/views/gestion-horarios/viewSchedules.vue'
 import schedulesAdd from '@/views/gestion-horarios/schedulesAdd.vue'
 import ViewUsers from '@/views/gestion-usuarios/viewUsers.vue'
+import viewPago from '@/views/pagos/pago.vue'
 import Pago from '@/views/pagos/pago.vue'
 import SuccessfulPayment from '@/views/pagos/SuccessfulPayment.vue';
 import AddUser from '@/views/gestion-usuarios/addUser.vue'
@@ -29,6 +30,7 @@ const routes = [
     { path: '/Visualizar-hoja-asignaturan/Agregar-hoja-asignatura', name: 'subjectSheetsAdd', meta:{auth:true}, component: subjectSheets },
     { path: '/home', name: 'home', meta:{auth:true}, component: header},
     { path: '/Realizar-pago', name: 'Pago', component: Pago },
+    { path: '/Visualizar-pagos', name: 'ViewPago', component: viewPago},
     { path: '/successful-payment', component: SuccessfulPayment },];
 
 //Configuración del router
