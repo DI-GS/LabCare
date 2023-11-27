@@ -29,6 +29,15 @@
               <span class="navlink">Usuarios</span>
             </a></router-link>
 </li>
+
+<li class="item">
+            <router-link class="navlink" :to="{name: 'ViewPago'}"><a href="#" class="nav_link">
+              <span class="navlink_icon">
+                <i class="bx bx-calendar"></i>
+              </span>
+              <span class="navlink">Pagos</span>
+            </a></router-link>
+</li>
           <!-- End -->
 
           <li class="item">
