@@ -25,7 +25,6 @@ app.use(
         credentials: true,
     })
 );
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -33,4 +32,5 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRouter);
 
 const PORT = process.env.PORT || 27017;
-app.listen(PORT, () => console.log(" http://localhost:" + PORT));
+app.listen(PORT, () => console.log(" http://localhost:" + PORT));
+
