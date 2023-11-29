@@ -9,7 +9,7 @@ import authRouter from "./routes/auth.route.js";
 
 const app = express();
 
-const whiteList = [process.env.DOMAIN, process.env.DOMAIN2];
+const whiteList = [process.env.DOMAIN, process.env.DOMAIN2, process.env.DOMAIN3];
 
 app.use(
     cors({
