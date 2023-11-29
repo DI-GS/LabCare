@@ -32,70 +32,70 @@
             <tbody>
                 <tr>
                     <td data-label="Horario">8:00 - 8:50</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">8:50 - 9:40</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">RECESO</td>
                 </tr>
                 <tr>
                     <td data-label="Horario">10:00 - 10:50</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">10:50 - 11:40</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">11:40 - 12:30</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">12:30 - 13:20</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">13:20 - 14:10</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
                 <tr>
                     <td data-label="Horario">14:10 - 15:00</td>
-                    <td data-label="Lunes" class="editable"></td>
-                    <td data-label="Martes" class="editable"></td>
-                    <td data-label="Miércoles" class="editable"></td>
-                    <td data-label="Jueves" class="editable"></td>
-                    <td data-label="Viernes" class="editable"></td>
+                    <td data-label="Lunes" class="editable" @click="openModal"></td>
+                    <td data-label="Martes" class="editable" @click="openModal"></td>
+                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
+                    <td data-label="Jueves" class="editable" @click="openModal"></td>
+                    <td data-label="Viernes" class="editable" @click="openModal"></td>
                 </tr>
             </tbody>
         </table>
@@ -108,7 +108,7 @@
     
 <div id="modal_horarios" class="modal_horarios">
     <div class="modal-horarios-content">
-        <span class="close">&times;</span>
+        <span class="close" @click="closeModal">&times;</span>
         <h2>Registro de Materia</h2>
         <div class="input-group">
             <label for="subject">Materia:</label>
@@ -155,7 +155,7 @@
                 <option value="F-210"></option>
             </datalist>
         </div>
-        <button id="save-changes">Guardar Cambios</button>
+        <button id="save-changes" @click="saveChanges">Guardar Cambios</button>
     </div>
 </div>
 </div>
@@ -164,7 +164,7 @@
   
   <script>
 import headerComponent from '@/components/header-component.vue';
-
+   //import { ref } from 'vue';
   //import { store } from "@/stores/user-store";
   export default {
     name: "schedulesAdd",
@@ -172,57 +172,60 @@ components: {headerComponent},
   
   
     setup() {
-        document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("modal_horarios");
-    const closeBtn = document.querySelector(".close");
-    const saveChangesBtn = document.getElementById("save-changes");
-
+    
     let selectedCell = null;
-
-    // Agregar un evento clic a las celdas editables para abrir el modal
-    const editableCells = document.querySelectorAll(".editable");
-    editableCells.forEach((cell) => {
-        cell.addEventListener("click", () => {
-            modal.style.display = "block";
-            selectedCell = cell;
-        });
-    });
+    const openModal = (cell) => {
+        selectedCell = cell
+        console.log(selectedCell)
+      const modal = document.getElementById('modal_horarios');
+        modal.style.display = 'block';
+    };
 
     // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
-    closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
+    const closeModal = () => {
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = "none";
+    };
 
     // Evento clic para guardar los cambios y actualizar las celdas
-    saveChangesBtn.addEventListener("click", () => {
-        if (selectedCell) {
-            const subjectInput = document.getElementById("subject");
-            const gradeInput = document.getElementById("grade");
-            const groupInput = document.getElementById("group");
-            //const teacherInput = document.getElementById("teacher");
-            const careerInput = document.getElementById("career");
-            const buildInput = document.getElementById("build");
-            const formattedContent = `${subjectInput.value}\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
-            selectedCell.innerHTML = `<pre>${formattedContent}</pre>`;
-            
-            modal.style.display = "none";
+    const saveChanges = () => {
+      if (selectedCell) {
+        const subjectInput = document.getElementById('subject');
+        const gradeInput = document.getElementById('grade');
+        const groupInput = document.getElementById('group');
+        const careerInput = document.getElementById('career');
+        const buildInput = document.getElementById('build');
 
-            // Limpiar los campos del modal después de guardar los cambios
-            subjectInput.value = "";
-            gradeInput.value = "";
-            groupInput.value = "";
-            careerInput.value = "";
-            buildInput.value = "";
 
-            selectedCell = null;
+        console.log(subjectInput)
+
+        //const formattedContent = `ddddddddddddddddddddddddddddd\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
+
+        selectedCell.innerHTML = `<pre>"FFFFFFFFFFFFFFFFFFFFF"</pre>`;
+
+          closeModal()
+
+          // Limpiar los campos del modal después de guardar los cambios
+          subjectInput.value = '';
+          gradeInput.value = '';
+          groupInput.value = '';
+          careerInput.value = '';
+          buildInput.value = '';
+
+          selectedCell = null;
+        } else {
+          console.error('Alguno de los elementos de entrada no se encontró en el DOM.');
         }
-    });
-});
+      }
+    
+
 
      
   
       return{
-
+        openModal,
+        saveChanges,
+        closeModal,
       }
       
     },
