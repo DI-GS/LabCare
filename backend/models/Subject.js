@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const subjectSchema = new Schema({
-    nombre_materia:{
+    name_subject:{
         type: String,
         required: true, 
      },
-     carrera:{
+     career:{
+        nombre:{type: String, require: true},
+        abreviacion:{type: String, require: true}
+     },
+     objetive:{
         nombre:{type: String, require: true},
         abreviacion:{type: String, require: true}
      },
