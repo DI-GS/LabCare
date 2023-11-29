@@ -25,12 +25,12 @@
               <input class="form-inputU" id="txt-input" type="text" placeholder="Nombre(s)" required>
               
             <br>
-            <input class="form-inputU" id="txt-input" type="text" placeholder="Apellido(S)" required>
+            <input class="form-inputU" id="txt-input2" type="text" placeholder="Apellido(S)" required>
            
             <br>
             
             
-            <input class="form-inputU" id="txt-input" type="email" placeholder="@Correo electronico" required>
+            <input class="form-inputU" id="txt-input3" type="email" placeholder="@Correo electronico" required>
            
             <br>
                  <!--   Password -->
@@ -39,7 +39,11 @@
 
             <br>
 
-            <select class="form-inputU" id="txt-input" type="text" placeholder="Selecciona el tipo" required></select>
+            <select class="form-inputU" id="roles" name="roles">
+              <option value="administrador">Administrador</option>
+              <option value="maestro">Maestro</option>
+            </select>
+
   
             <br>
 
