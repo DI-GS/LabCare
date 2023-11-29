@@ -9,7 +9,7 @@ import authRouter from "./routes/auth.route.js";
 
 const app = express();
 
-const whiteList = [process.env.DOMAIN, process.env.DOMAIN2, process.env.DOMAIN3];
+const whiteList = [process.env.DOMAIN, process.env.DOMAIN2];
 
 app.use(
     cors({
@@ -33,3 +33,4 @@ app.use("/api/v1/auth", authRouter);
 
 const PORT = process.env.PORT || 27017;
 app.listen(PORT, () => console.log(" http://localhost:" + PORT));
+
