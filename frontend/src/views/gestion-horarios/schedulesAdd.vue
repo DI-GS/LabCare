@@ -164,7 +164,7 @@
   
   <script>
 import headerComponent from '@/components/header-component.vue';
-   //import { ref } from 'vue';
+   import { ref } from 'vue';
   //import { store } from "@/stores/user-store";
   export default {
     name: "schedulesAdd",
@@ -173,13 +173,22 @@ components: {headerComponent},
   
     setup() {
     
-    let selectedCell = null;
-    const openModal = (cell) => {
-        selectedCell = cell
-        console.log(selectedCell)
+    const selectedCell = ref(null);
+    const openModal = (event) => {
+    // Verifica si el evento tiene un objetivo (target) y si es una celda editable
+    const cell = event?.target?.classList.contains('editable') ? event.target : null;
+
+    if (cell) {
+      selectedCell.value = cell;
+
       const modal = document.getElementById('modal_horarios');
+      if (modal) {
         modal.style.display = 'block';
-    };
+      } else {
+        console.error("No se pudo encontrar el modal con ID 'modal_horarios'");
+      }
+    }
+  };
 
     // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
     const closeModal = () => {
@@ -189,7 +198,7 @@ components: {headerComponent},
 
     // Evento clic para guardar los cambios y actualizar las celdas
     const saveChanges = () => {
-      if (selectedCell) {
+      if (selectedCell.value) {
         const subjectInput = document.getElementById('subject');
         const gradeInput = document.getElementById('grade');
         const groupInput = document.getElementById('group');
@@ -197,11 +206,8 @@ components: {headerComponent},
         const buildInput = document.getElementById('build');
 
 
-        console.log(subjectInput)
-
-        //const formattedContent = `ddddddddddddddddddddddddddddd\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
-
-        selectedCell.innerHTML = `<pre>"FFFFFFFFFFFFFFFFFFFFF"</pre>`;
+        const formattedContent = `${subjectInput.value}\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
+        selectedCell.value.innerHTML = `<pre>${formattedContent}</pre>`;
 
           closeModal()
 
@@ -212,7 +218,7 @@ components: {headerComponent},
           careerInput.value = '';
           buildInput.value = '';
 
-          selectedCell = null;
+          selectedCell.value = null;
         } else {
           console.error('Alguno de los elementos de entrada no se encontró en el DOM.');
         }
