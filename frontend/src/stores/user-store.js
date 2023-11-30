@@ -61,9 +61,7 @@ const register = async (name, lastname, email, password, repassword) => {
 
   const refreshToken = async () => {
     try {
-      console.log("ANTES DE LA LLAMADA")
       const res = await api.get("/auth/refresh");
-      console.log("DESPUES DE LA LLAMADA")
       token.value = res.data.token;
       expiresIn.value = res.data.expiresIn;
       
@@ -94,19 +92,18 @@ const register = async (name, lastname, email, password, repassword) => {
   /*#################################################### Hojas de asignatura ####################################################*/
 
   const careerFind = async ()=>{
-    try{
-      console.log(token.value)
+    try {
       const res=await api({
-        url:"/auth/getCareer",
-        method:"GET",
-        headers:{
-          Authorization: "Bearer" + token.value,
-        }
-      })
-      return res.data
-    }catch(error){
-      console.log("No funciona x2",error)
-    }
+      url:"/auth/getCareer",
+      method:"GET",
+      headers:{
+        Authorization: "Bearer " + token.value,
+      },
+    });
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
   }
   
   return {

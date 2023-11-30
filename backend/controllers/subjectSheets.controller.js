@@ -3,7 +3,8 @@ import {subject} from "../models/Subject.js"
 
 export const careerFind = async (req, res) => {
     try {
-        const career= new subject.find({ uid: req.uid });
+        const career= await subject.find({ uid: req.uid });
+        console.log(career)
         return res.status(201).json({career});
     } catch (error) {
         console.log(error);
