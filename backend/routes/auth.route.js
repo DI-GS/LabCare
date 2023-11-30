@@ -17,7 +17,7 @@ import {
 const router = Router();
 
 router.post("/register", bodyRegisterValidator, register);
-router.post("/registerUser", requireRefreshToken, bodyRegisterValidator, registerUser);
+router.post("/registerUser", requireToken, bodyRegisterValidator, registerUser);
 router.post("/login", bodyLoginValidator, login);
 // router.get("/protected", requireToken, infoUser);
 router.get("/refresh", requireRefreshToken, refreshToken);
