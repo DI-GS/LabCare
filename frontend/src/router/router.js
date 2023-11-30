@@ -15,6 +15,7 @@ import ViewLogin from '@/views/inicio-de-sesion/loginUser.vue'
 import ViewInformativa from '@/views/inicio-de-sesion/pagina_principal.vue'
 import subjectSheetsView from '@/views/hojas-asignatura/subjectSheetsView.vue'
 import header from '@/components/header-component.vue'
+import subjectAdd from '@/views/gestion-clases/subjectAdd.vue'
 
 //Creación de rutas
 const routes = [
@@ -31,7 +32,9 @@ const routes = [
     { path: '/home', name: 'home', meta:{auth:true}, component: header},
     { path: '/Realizar-pago', name: 'Pago', component: Pago },
     { path: '/Visualizar-pagos', name: 'ViewPago', component: viewPago},
-    { path: '/successful-payment', component: SuccessfulPayment },];
+    { path: '/successful-payment', component: SuccessfulPayment },
+    { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd}
+];
 
 //Configuración del router
 const router = createRouter({
