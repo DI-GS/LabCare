@@ -32,7 +32,6 @@
                    <a href="#" class="btn-1">Mas informacion</a>
                    <a href="#" class="btn-1">Mas informacion</a>
                </div>
-               <img src="@/assets/images/astronauta.png" alt="">
            </div>
        </header>
    

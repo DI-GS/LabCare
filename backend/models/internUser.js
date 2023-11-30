@@ -23,9 +23,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-     type_membership:{
-            type: Boolean,
-        },
+    type_user:{
+        type: String,
+    },
+    uid: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }
 });
 
 userSchema.pre("save", async function (next) {
@@ -47,4 +51,4 @@ userSchema.methods.comparePassword = async function (canditatePassword) {
     return await bcryptjs.compare(canditatePassword, this.password);
 };
 
-export const User = mongoose.model("User", userSchema);
+export const internUser = mongoose.model("InternUser", userSchema);

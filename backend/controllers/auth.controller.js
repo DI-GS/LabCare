@@ -1,13 +1,38 @@
 import { User } from "../models/User.js";
+import { internUser } from "../models/internUser.js";
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
-    const { name, lastname, email, password } = req.body;
+    const { name, lastname, email, password} = req.body;
     try {
         // Alternativa buscando por email
         let user = await User.findOne({ email });
         if (user) throw { code: 11000 };
         user = new User({ name, lastname, email, password});
+        await user.save();
+
+        // Generar el token JWT
+        const { token, expiresIn } = generateToken(user.id);
+        generateRefreshToken(user.id, res);
+
+        return res.status(201).json({ token, expiresIn });
+    } catch (error) {
+        console.log(error);
+        // Alternativa por defecto mongoose
+        if (error.code === 11000) {
+            return res.status(400).json({ error: "Ya existe este usuario" });
+        }
+        return res.status(500).json({ error: "Error de servidor" });
+    }
+};
+
+export const registerUser = async (req, res) => {
+    const { name, lastname, email, password, rol} = req.body;
+    try {
+        // Alternativa buscando por email
+        let user = await internUser.findOne({ email });
+        if (user) throw { code: 11000 };
+        user = new internUser({ name, lastname, email, password, rol, uid: req.uid});
         await user.save();
 
         // Generar el token JWT

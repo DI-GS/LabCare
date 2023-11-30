@@ -9,7 +9,7 @@
   <body id="adduser">
     <div  class="main-container content padding overlay" >
       <!-- LOGN IN FORM by Omar Dsoky -->
-      <form class="user">
+      <form class="user" @submit.prevent="handleSubmit">
          <!--   con = Container  for items in the form-->
          <div class="con">
          <!--     Start  header Content  -->
@@ -22,24 +22,25 @@
          <br>
          <div class="field-set">
               <!--   user name Input-->
-              <input class="form-inputU" id="txt-input" type="text" placeholder="Nombre(s)" required>
+              <input class="form-inputU" id="txt-input" type="text" placeholder="Nombre(s)" required v-model="name">
               
             <br>
-            <input class="form-inputU" id="txt-input2" type="text" placeholder="Apellido(S)" required>
+            <input class="form-inputU" id="txt-input2" type="text" placeholder="Apellido(S)" required  v-model="lastname">
            
             <br>
             
             
-            <input class="form-inputU" id="txt-input3" type="email" placeholder="@Correo electronico" required>
+            <input class="form-inputU" id="txt-input3" type="email" placeholder="@Correo electronico" required  v-model="email">
            
             <br>
-                 <!--   Password -->
-            <!--   Password Input-->
-            <input class="form-inputU" type="password" placeholder="Password" id="pwd"  name="Contraseña" required>
-
+            <input class="form-inputU" type="password" placeholder="Contraseña" name="Contraseña" required  v-model="password">
             <br>
 
-            <select class="form-inputU" id="roles" name="roles">
+            <input class="form-inputU" type="password" placeholder="Confirmar contraseña"  name="Contraseña" required  v-model="repassword">
+            
+
+
+            <select class="form-inputU" id="roles" name="roles" v-model="rol">
               <option value="administrador">Administrador</option>
               <option value="maestro">Maestro</option>
             </select>
@@ -64,25 +65,62 @@
   </template>
 
 <script>
-
-import headerComponent from '@/components/header-component.vue';
-
+import { ref } from 'vue';
+import { store } from "@/stores/user-store";
+import { useRouter } from "vue-router";
+import headerComponent from "@/components/header-component.vue"
 export default {
   name: "SubjectSheetsAdd",
   components: {headerComponent},
-
   setup() {
+    const email = ref("");
+    const password = ref("");
+    const repassword = ref("");
+    const name = ref("");
+    const lastname = ref("");
+    const rol = ref("");
+    const router = useRouter();
+    const userStore = store();
+
+
     
 
-    return{
-      
+    const handleSubmit = async () => {
+  try {
+      await userStore.createNewUser(name.value, lastname.value, email.value, password.value, repassword.value, rol.value);
+      email.value = "";
+      password.value = "";
+      repassword.value = "";
+      name.value = "";
+      lastname.value = "";
+      rol.value = "";
+      router.push("home");
+    
+  } catch (error) {
+    console.log("desde loginComponents: ", error);
+    if (error.error) {
+      // eslint-disable-next-line no-undef
+      alertError(error.error);
     }
-    
-  },
-
-
+    if (error.errors) {
+      // eslint-disable-next-line no-undef
+      alertError(error.errors[0].msg);
+    }
+  }
 };
-//Investigar para que sirve ref en vue
+
+    
+    return {
+      name,
+      email,
+      password,
+      repassword,
+      lastname,
+      rol,
+      handleSubmit,
+    };
+  },
+};
 </script>
 
 <style src="@/assets/css/style.css"></style>
