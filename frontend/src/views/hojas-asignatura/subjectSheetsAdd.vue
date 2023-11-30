@@ -78,6 +78,8 @@
 
 import headerComponent from '@/components/header-component.vue';
 import 'bootstrap/dist/css/bootstrap.css';
+import {ref} from 'vue';
+import {store} from "@/stores/user-store.js"
 
 
 export default {
@@ -87,6 +89,20 @@ export default {
   
 
   setup() {
+    const data=ref()
+    const userStore = store();
+    const getCareers = async ()=>{
+      try{
+        data.value=(await userStore.careerFind())
+        console.log(data.value)
+      }catch(error){
+        console.log("No sirve",error)
+      }
+    }
+
+    getCareers();
+
+
     let newTheme = {
       subjet: "",
       career: "",
@@ -126,7 +142,8 @@ export default {
 
     return{
         newTheme,
-        agregarTema
+        agregarTema,
+        getCareers,
     }
     
   },

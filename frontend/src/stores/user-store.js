@@ -91,6 +91,24 @@ const register = async (name, lastname, email, password, repassword) => {
     expiresIn.value = null;
   };
 
+  /*#################################################### Hojas de asignatura ####################################################*/
+
+  const careerFind = async ()=>{
+    try{
+      console.log(token.value)
+      const res=await api({
+        url:"/auth/getCareer",
+        method:"GET",
+        headers:{
+          Authorization: "Bearer" + token.value,
+        }
+      })
+      return res.data
+    }catch(error){
+      console.log("No funciona x2",error)
+    }
+  }
+  
   return {
     user,
     token,
@@ -99,5 +117,6 @@ const register = async (name, lastname, email, password, repassword) => {
     refreshToken,
     logout,
     register,
+    careerFind,
   };
 });

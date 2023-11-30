@@ -7,12 +7,12 @@ const subjectSchema = new Schema({
         required: true, 
      },
      career:{
-        nombre:{type: String, require: true},
-        abreviacion:{type: String, require: true}
+        name_career:{type: String, require: true},
+        short_name:{type: String, require: true}
      },
      objetive:{
-        nombre:{type: String, require: true},
-        abreviacion:{type: String, require: true}
+        type: String,
+        required: true, 
      },
     uid: {
         type: Schema.Types.ObjectId,
@@ -21,4 +21,4 @@ const subjectSchema = new Schema({
     },
 });
 
-export const ExpedienteFisica = model("Materia", subjectSchema);
+export const subject = model("Materia", subjectSchema);

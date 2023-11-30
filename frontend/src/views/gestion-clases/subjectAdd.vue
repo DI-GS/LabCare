@@ -62,6 +62,7 @@
 <script>
     import headerComponent from '@/components/header-component.vue';
     import 'bootstrap/dist/css/bootstrap.css';
+    
 
     export default {
         name: "SubjectAdd",
