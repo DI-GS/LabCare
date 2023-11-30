@@ -14,6 +14,10 @@ const subjectSchema = new Schema({
         type: String,
         required: true, 
      },
+     period:{
+        type: Number,
+        required: true, 
+     },
     uid: {
         type: Schema.Types.ObjectId,
         ref: "User",
