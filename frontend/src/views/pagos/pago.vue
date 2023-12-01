@@ -33,6 +33,7 @@ import { CardField } from 'vue-stripe-elements-plus';
 
 export default {
   name: "formularioPago",
+  // eslint-disable-next-line vue/no-unused-components
   components: { headerComponent, CardField },
 
   data() {

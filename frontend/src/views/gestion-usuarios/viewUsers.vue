@@ -42,6 +42,7 @@
               <th>#</th>
               <th>Nombre</th>
               <th>Email</th>
+              <th>Tipo</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -312,6 +313,7 @@ const listUsers = async () => {
                 <tr>
                     <td> ${index + 1} </td>
                     <td> ${user.name} </td>
+                    <td> ${user.email} </td>
                     <td> ${user.email} </td>
                     <td>
                         <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pencil"></i></button>
