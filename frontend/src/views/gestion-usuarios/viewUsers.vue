@@ -79,7 +79,7 @@ const userStore=store();
 const getUser = async () =>{
   try{
     data.value=(await userStore.getusers())
-    console.log(data.value)
+    console.log(data)
   }catch (error){
     console.log(error)
   }
@@ -323,6 +323,7 @@ const listUsers = async () => {
     
     
     let content = ``;
+    // eslint-disable-next-line no-undef
     users.forEach((user, index) => {
       content += `
                 <tr>
