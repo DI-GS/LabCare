@@ -88,6 +88,25 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
+  const getusers= async ()=>{
+    try {
+        const res=await api({
+        url:"/auth/getUser",
+        method:"GET",
+        headers:{
+          Authorization: "Bearer " + token.value,
+        }
+      });
+     
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  
+
   const refreshToken = async () => {
     try {
       console.log("ANTES DE LA LLAMADA")
@@ -114,6 +133,8 @@ const register = async (name, lastname, email, password, repassword) => {
     
   };
 
+
+
   const resetStore = () => {
     user.value = null;
     token.value = null;
@@ -128,6 +149,7 @@ const register = async (name, lastname, email, password, repassword) => {
     refreshToken,
     logout,
     register,
-    createNewUser
+    createNewUser,
+    getusers
   };
 });

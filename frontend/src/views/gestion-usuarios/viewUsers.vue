@@ -60,6 +60,8 @@ import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5";
 import headerComponent from '@/components/header-component.vue';
+import {ref} from "vue";
+import { store } from "@/stores/user-store";
 
   //import { store } from "@/stores/user-store";
   export default {
@@ -70,6 +72,21 @@ components: {headerComponent},
     setup() {
       let dataTable;
 let dataTableIsInitialized = false;
+
+const data=ref();
+const userStore=store(); 
+
+const getUser = async () =>{
+  try{
+    data.value=(await userStore.getusers())
+    console.log(data.value)
+  }catch (error){
+    console.log(error)
+  }
+}
+
+getUser();
+
 
 let dataTableOptions = {
   dom: 'Bfrtilp',
@@ -303,10 +320,8 @@ const initDataTable = async () => {
 
 const listUsers = async () => {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    const users = await response.json();
-    console.log(users);
-
+    
+    
     let content = ``;
     users.forEach((user, index) => {
       content += `
@@ -335,7 +350,7 @@ window.addEventListener('load', async () => {
      
   
       return{
-
+        getUser
       }
       
     },
