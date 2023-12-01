@@ -76,16 +76,57 @@ let dataTableIsInitialized = false;
 const data=ref([]);
 const userStore=store(); 
 
-const getUser = async () =>{
-  try{
-    data.value=(await userStore.getusers())
-    console.log(data.value)
-  }catch (error){
-    console.log(error)
-  }
-}
 
-getUser();
+const displayUserList = (dataArray) => {
+  let content = ``;
+  dataArray.forEach((user, index) => {
+    content += `
+      <tr>
+        <td> ${index + 1} </td>
+        <td> ${user.name} </td>
+        <td> ${user.email} </td>
+        <td> ${user.rol} </td>
+        <td>
+          <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pencil"></i></button>
+          <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+        </td>
+      </tr>`;
+  });
+
+  // eslint-disable-next-line no-undef
+  table_users.innerHTML = content;
+};
+
+const getUser = async () => {
+  try {
+    data.value = await userStore.getusers();
+    console.log(data.value);
+
+    // Supongamos que "data.value" es el objeto Proxy que envuelve al array
+    const proxyArray = data.value;
+
+    // Mostrar datos en la tabla
+    displayUserList(proxyArray);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const listUsers = async () => {
+  try {
+    // Obtener los datos de usuario
+    await getUser();
+  } catch (error) {
+    alert(error);
+  }
+};
+
+// Llamada inicial
+listUsers();
+
+
+
+//getUser();
 
 
 let dataTableOptions = {
@@ -318,31 +359,6 @@ const initDataTable = async () => {
   dataTableIsInitialized = true;
 };
 
-const listUsers = async () => {
-  try {
-    
-    
-    let content = ``;
-    data.value.forEach((user, index) => {
-      console.log("vacio",user.name)
-      content += `
-                <tr>
-                    <td> ${index + 1} </td>
-                    <td> ${user.name} </td>
-                    <td> ${user.email} </td>
-                    <td> ${user.email} </td>
-                    <td>
-                        <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                </tr>`;
-    });
-    // eslint-disable-next-line no-undef
-    table_users.innerHTML = content;
-  } catch (error) {
-    alert(error);
-  }
-};
 
 window.addEventListener('load', async () => {
   await initDataTable();
