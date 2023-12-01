@@ -73,13 +73,13 @@ components: {headerComponent},
       let dataTable;
 let dataTableIsInitialized = false;
 
-const data=ref();
+const data=ref([]);
 const userStore=store(); 
 
 const getUser = async () =>{
   try{
     data.value=(await userStore.getusers())
-    console.log(data)
+    console.log(data.value)
   }catch (error){
     console.log(error)
   }
@@ -323,8 +323,8 @@ const listUsers = async () => {
     
     
     let content = ``;
-    // eslint-disable-next-line no-undef
-    users.forEach((user, index) => {
+    data.value.forEach((user, index) => {
+      console.log("vacio",user.name)
       content += `
                 <tr>
                     <td> ${index + 1} </td>
@@ -351,7 +351,8 @@ window.addEventListener('load', async () => {
      
   
       return{
-        getUser
+        getUser,
+        data
       }
       
     },
