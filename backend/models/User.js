@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 import mongoose from "mongoose";
-
+import { pagoSchema } from "./Pago.js";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -32,7 +32,11 @@ const userSchema = new mongoose.Schema({
         type_membership:{
             type: Boolean,
         }
-    }
+    },
+    customId: {
+        type: String,
+    },
+    pagos: [pagoSchema]
 });
 
 userSchema.pre("save", async function (next) {

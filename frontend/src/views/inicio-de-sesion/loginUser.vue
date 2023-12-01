@@ -61,6 +61,7 @@ setup() {
 
   const handleSubmit = async () => {
   try {
+    localStorage.setItem('userEmail', email.value);
      await userStore.access(email.value, password.value);
       email.value = "";
       password.value = "";

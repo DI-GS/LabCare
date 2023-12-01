@@ -46,11 +46,12 @@ export default {
       async iniciarCheckout() {
       console.log("Iniciando el proceso de checkout..."); 
 
-     
+      const userEmail = localStorage.getItem('userEmail');
       try {
-        const response = await this.$axios.post('http://localhost:3000/create-checkout-session', {
+        const response = await this.$axios.post('http://localhost:27017/create-checkout-session', {
      lookup_key: 'pk_test_51ODDeLJTLy2ZpoEVmWLiarkHwuUVPJuhvVFkJPapVND4DXXcQtkcPThbpauzVw4JCGEz03LRzdhxdNTDz2ZgzhLB00vYXcX8iM',  // Reemplaza con tu lógica para obtener el lookup_key
-        });
+     userEmail: userEmail,   
+    });
 
         if (response.data.url) {
           console.log('Redirigiendo al usuario a la página de checkout de Stripe');
