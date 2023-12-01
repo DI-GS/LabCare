@@ -9,6 +9,7 @@ import ViewUsers from '@/views/gestion-usuarios/viewUsers.vue'
 import viewPago from '@/views/pagos/pago.vue'
 import Pago from '@/views/pagos/pago.vue'
 import SuccessfulPayment from '@/views/pagos/SuccessfulPayment.vue';
+
 import AddUser from '@/views/gestion-usuarios/addUser.vue'
 import ViewInicio from '@/views/inicio-de-sesion/signUp.vue'
 import ViewLogin from '@/views/inicio-de-sesion/loginUser.vue'
@@ -34,6 +35,7 @@ const routes = [
     { path: '/Visualizar-pagos', name: 'ViewPago', component: viewPago},
     { path: '/successful-payment', component: SuccessfulPayment },
     { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd}
+
 ];
 
 //Configuración del router
