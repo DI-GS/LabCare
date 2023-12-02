@@ -105,6 +105,54 @@ const register = async (name, lastname, email, password, repassword) => {
     console.log(error)
   }
   }
+
+   /*#################################################### Materias ####################################################*/
+  const newSubject = async (name_subject, name_career, short_name, objetive,period)=>{
+    try{
+      const res= await api.post("/auth/registerSubject",{
+        name_subject,
+        name_career,
+        short_name,
+        objetive,
+        period
+      });
+      
+      token.value = res.data.token;
+        expiresIn.value = res.data.expiresIn;
+        sessionStorage.setItem("user", "Sesion");
+        setTime();
+        return res.data;
+      } catch (error) {
+        if (error.response) {
+          throw error.response.data;
+        } else if (error.request)
+        throw { error: "error de servidor" };
+      }
+  }
+
+//   const register = async (name, lastname, email, password, repassword) => {
+//   try {
+//   const res = await api.post("/auth/register", {
+//     name,
+//     lastname,
+//     email,
+//     password,
+//     repassword
+//   });
+ 
+//   token.value = res.data.token;
+//   expiresIn.value = res.data.expiresIn;
+//   sessionStorage.setItem("user", "Sesion");
+//   setTime();
+//   return res.data;
+// } catch (error) {
+//   if (error.response) {
+//     throw error.response.data;
+//   } else if (error.request)
+//   throw { error: "error de servidor" };
+// }
+// };
+
   
   return {
     user,
@@ -115,5 +163,6 @@ const register = async (name, lastname, email, password, repassword) => {
     logout,
     register,
     careerFind,
+    newSubject,
   };
 });

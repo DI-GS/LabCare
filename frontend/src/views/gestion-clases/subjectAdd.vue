@@ -5,7 +5,7 @@
             <div class="form-group">
                 <div class="mb-3">
                     <label for="carrera">Carrera</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" v-model="name_career">
                 </div>
             </div>
 
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="carrera">No. Cuatrimestre</label>
-                        <select class="form-control" id="subjectSelected">
+                        <select class="form-control" id="subjectSelected" v-model="period">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="materia">Nemonico</label>
-                        <select class="form-control" id="subjectSelected">
+                        <select class="form-control" id="subjectSelected" v-model="short_name">
                             <option value="IDGS">IDGS</option>
                         </select>
                     </div>
@@ -40,18 +40,18 @@
             <div class="form-group mb-3">
                 <div>
                     <label for="carrera">Materia</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" v-model="name_subject">
                 </div>
             </div>
             <div class="form-group">
                 <div>
                     <label for="materia">Objetivo de aprendizaje</label>
-                    <input type="text" class="form-control form-objetive mb-3">
+                    <input type="text" class="form-control form-objetive mb-3" v-model="objetive">
                 </div>
             </div>
             <div class="form-group">
                 <div>
-                    <button class="btn btn-outline-secondary btn-color" type="button">Registrar materia</button>
+                    <button class="btn btn-outline-secondary btn-color" type="button" @submit.prevent="registerSubject">Registrar materia</button>
                 </div>
             </div>
         
@@ -62,15 +62,35 @@
 <script>
     import headerComponent from '@/components/header-component.vue';
     import 'bootstrap/dist/css/bootstrap.css';
-    
+    import {ref} from 'vue';
+    import {store} from "@/stores/user-store.js"
 
     export default {
         name: "SubjectAdd",
         components: {headerComponent},
     
         setup() {
-            return{
+            const data=ref()
+            const userStore = store();
+            const name_career = ref("");
+            const short_name = ref("");
+            const period = ref("");
+            const name_subject = ref("");
+            const objetive = ref("");
 
+            const registerSubject = async ()=>{
+                try{
+                    await userStore.registerSubject()
+                    data.value=(await userStore.newSubject())
+                    console.log(data.value)
+                }catch(error){
+                    console.log("No sirve",error)
+                }
+            }
+
+            
+            return{
+                registerSubject,
             }
 
         },
