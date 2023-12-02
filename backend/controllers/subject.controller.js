@@ -6,12 +6,12 @@ import {subject} from "../models/Subject.js";
 
 
 export const newSubject = async (req, res) => {
-    const { name_subject, name_career, short_name, objetive} = req.body;
+    const { name_subject, name_career, short_name, objetive, period} = req.body;
     try {
-        let newSubjects = await subject.findOne({ name_subject });
-        if (subject) throw { code: 11000 };
-        newSubjects = new subject({name_subject, career:{name_career,      short_name}, objetive,period,uid: req.uid});
-        await subject.save();       
+        let findSubjects = await subject.findOne({ name_subject });
+        if (findSubjects) throw { code: 11000 };
+        const newSubjects = new subject({name_subject, career:{name_career,short_name}, objetive,period,uid: req.uid});
+        await newSubjects.save();       
 
         return res.status(201).json({ message: "Materia registrada con éxito" });
     }catch (error) {

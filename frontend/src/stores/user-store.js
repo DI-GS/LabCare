@@ -109,49 +109,38 @@ const register = async (name, lastname, email, password, repassword) => {
    /*#################################################### Materias ####################################################*/
   const newSubject = async (name_subject, name_career, short_name, objetive,period)=>{
     try{
-      const res= await api.post("/auth/registerSubject",{
+      const res= await api({
+        url:"/auth/registerSubject",
+        method:"POST",
+        headers:{
+        "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
         name_subject,
         name_career,
         short_name,
         objetive,
         period
-      });
-      
-      token.value = res.data.token;
-        expiresIn.value = res.data.expiresIn;
-        sessionStorage.setItem("user", "Sesion");
-        setTime();
-        return res.data;
-      } catch (error) {
-        if (error.response) {
+      }
+    });
+      console.log(res)
+      return res
+    } catch (error) {
+      console.error("Error al registrar la materia:", error);
+
+      if (error.response) {
+          // Error en la respuesta del servidor
           throw error.response.data;
-        } else if (error.request)
-        throw { error: "error de servidor" };
+      } else if (error.request) {
+          // Error de red
+          throw { error: "Error de red al comunicarse con el servidor" };
+      } else {
+          // Otros errores
+          throw { error: "Error desconocido" };
       }
   }
-
-//   const register = async (name, lastname, email, password, repassword) => {
-//   try {
-//   const res = await api.post("/auth/register", {
-//     name,
-//     lastname,
-//     email,
-//     password,
-//     repassword
-//   });
- 
-//   token.value = res.data.token;
-//   expiresIn.value = res.data.expiresIn;
-//   sessionStorage.setItem("user", "Sesion");
-//   setTime();
-//   return res.data;
-// } catch (error) {
-//   if (error.response) {
-//     throw error.response.data;
-//   } else if (error.request)
-//   throw { error: "error de servidor" };
-// }
-// };
+};
 
   
   return {

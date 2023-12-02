@@ -51,7 +51,7 @@
             </div>
             <div class="form-group">
                 <div>
-                    <button class="btn btn-outline-secondary btn-color" type="button" @submit.prevent="registerSubject">Registrar materia</button>
+                    <button class="btn btn-outline-secondary btn-color" type="button" @click="registerSubject">Registrar materia</button>
                 </div>
             </div>
         
@@ -70,7 +70,6 @@
         components: {headerComponent},
     
         setup() {
-            const data=ref()
             const userStore = store();
             const name_career = ref("");
             const short_name = ref("");
@@ -78,18 +77,31 @@
             const name_subject = ref("");
             const objetive = ref("");
 
-            const registerSubject = async ()=>{
-                try{
-                    await userStore.registerSubject()
-                    data.value=(await userStore.newSubject())
-                    console.log(data.value)
-                }catch(error){
-                    console.log("No sirve",error)
+            const registerSubject = async () => {
+                try {
+                    await userStore.newSubject(name_subject.value, name_career.value, short_name.value, objetive.value, period.value);
+                    // Limpiar los campos después de un registro exitoso
+                    name_subject.value = "";
+                    name_career.value = "";
+                    short_name.value = "";
+                    objetive.value = "";
+                    period.value = "";
+
+                    // Puedes mostrar un mensaje de éxito al usuario si lo deseas
+                    console.log("Materia registrada con éxito");
+                } catch (error) {
+                    // Mostrar un mensaje de error al usuario
+                    console.log("Error al registrar la materia:", error);
                 }
-            }
+            };
 
             
             return{
+                name_subject,
+                name_career,
+                short_name,
+                objetive,
+                period,
                 registerSubject,
             }
 

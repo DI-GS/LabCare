@@ -7,8 +7,8 @@ const subjectSchema = new Schema({
         required: true, 
      },
      career:{
-        name_career:{type: String, require: true},
-        short_name:{type: String, require: true}
+        name_career:{type: String, required: true},
+        short_name:{type: String, required: true}
      },
      objetive:{
         type: String,

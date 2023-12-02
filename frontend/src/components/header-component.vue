@@ -73,6 +73,16 @@
               <span class="navlink">Hojas de asignatura</span>
             </a></router-link>
           </li>
+          <li class="item">
+            <!-- <router-link class="navlink" :to="{name: 'subjectsView'}"><a href="#" class="nav_link"></a> -->
+            <a href="#" class="nav_link">
+              <span class="navlink_icon">
+                <i class='bx bx-spreadsheet'></i>
+              </span>
+              <span class="navlink">Materias</span>
+            </a>
+          <!-- </router-link> -->
+          </li>
         </ul>
 
         <ul class="menu_items">
