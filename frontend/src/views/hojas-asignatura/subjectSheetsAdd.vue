@@ -7,9 +7,9 @@
         <div class="row">
           <div class="col-md-6 mb-3">
           <label for="carrera">Carrera</label>
-          <select class="form-control" id="careerSelected">
-            <option value="IDGS">IDGS</option>
-          </select>
+          <option v-for="career in data.value.careers" :key="career" :value="career">
+            {{ career }}
+          </option>
         </div>
 
         <div class="col-md-6 mb-3">

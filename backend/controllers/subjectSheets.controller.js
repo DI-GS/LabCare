@@ -3,12 +3,13 @@ import {subject} from "../models/Subject.js"
 
 export const careerFind = async (req, res) => {
     try {
-        const career= await subject.find({ uid: req.uid });
-        console.log(career)
-        return res.status(201).json({career});
+        const careers = await subject.find({ uid: req.uid }, { 'career.name_career': 1, _id: 0 });
+        console.log(careers);
+
+        return res.status(200).json({ careers: careers.map(item => item.career.name_career) });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ error: "error de servidor" });
+        return res.status(500).json({ error: "Error de servidor" });
     }
 };
 
