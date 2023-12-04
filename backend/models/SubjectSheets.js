@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const subjectSheetsSchema = new mongoose.Schema({
+    name_subject:{
+        type: String,
+        required: true,
+    },
     thematic_units: [{
         unit_number:{
             type: String,
@@ -12,10 +16,6 @@ const subjectSheetsSchema = new mongoose.Schema({
         },
         themes:[
             {
-                theme_number:{
-                    type: Number,
-                    required: true,
-                },
                 theme_name:{
                     type: String,
                     required: true,
@@ -36,4 +36,4 @@ const subjectSheetsSchema = new mongoose.Schema({
 
 
 
-export const subjectSheets = mongoose.model("subjectSheets", subjectSheetsSchema);
+export const subjectSheets = mongoose.model("Hojas_asignatura", subjectSheetsSchema);

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import {careerFind} from "../controllers/subjectSheets.controller.js";
+import {careerFind, subjectFind, updateSubject} from "../controllers/subjectSheets.controller.js";
 import {newSubject} from "../controllers/subject.controller.js"
 import {
     login,
@@ -22,8 +22,10 @@ router.post("/login", bodyLoginValidator, login);
 // router.get("/protected", requireToken, infoUser);
 router.get("/refresh", requireRefreshToken, refreshToken);
 router.get("/logout", logout);
-router.get("/getCareer", requireToken, careerFind)
-router.post("/registerSubject",requireToken,newSubject)
+router.get("/getCareer", requireToken, careerFind);
+router.post("/registerSubject",requireToken,newSubject);
+router.get("/getSubject", requireToken,subjectFind)
+router.post("/updateSheets", requireToken,updateSubject)
 
 
 export default router;
