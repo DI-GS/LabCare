@@ -43,4 +43,6 @@ export default {
 };
 </script>
 
-<style src="@/assets/css/pagina_informativa.css"></style>
+<style scoped>
+@import url('@/assets/css/pagina_informativa.css');
+</style>
