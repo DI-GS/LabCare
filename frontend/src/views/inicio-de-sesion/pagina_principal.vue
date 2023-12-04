@@ -15,7 +15,7 @@
             </ul>
             <div class="labcare">Lab<span class="highlight">Care</span></div>
             <router-link :to="{name: 'formulario_i'}" class="btn-1 login-btn">Registrarse</router-link>
-            <router-link :to="{name: 'login'}" class="btn-1 login-btn2">Iniciar sesión</router-link>
+            <router-link :to="{name: 'login'}" class="btn-1 singUp-btn2">Iniciar sesión</router-link>
           </nav>
         </div>
                                                                                                                                            

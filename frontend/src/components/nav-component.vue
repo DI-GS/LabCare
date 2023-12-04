@@ -9,7 +9,7 @@
           <!-- Puedes agregar elementos de menú aquí si es necesario -->
         </ul>
         <div class="labcare">Lab<span class="highlight">Care</span></div>
-        <router-link :to="{ name: '/' }" class="btn-1 login-btn2">Home</router-link>
+        <router-link :to="{ name: '/' }" class="btn-1 singUp-btn2">Home</router-link>
       </nav>
     </div>
   </div>
