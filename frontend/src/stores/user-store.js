@@ -59,6 +59,54 @@ const register = async (name, lastname, email, password, repassword) => {
     }, expiresIn.value * 1000 - 6000);
   };
 
+
+
+/*#################################################### REGISTRO DE USUARIOS INTERNOS ####################################################*/
+  const createNewUser= async (name, lastname, email, password, repassword, rol)=>{
+    try {
+        const res=await api({
+        url:"/auth/registerUser",
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          name,
+          lastname, 
+          email, 
+          password, 
+          repassword, 
+          rol, 
+        }
+      });
+      console.log(res)
+      return res
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getusers= async ()=>{
+    try {
+        const res=await api({
+        url:"/auth/getUser",
+        method:"GET",
+        headers:{
+          Authorization: "Bearer " + token.value,
+        }
+      });
+     
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  
+
   const refreshToken = async () => {
     try {
       console.log("ANTES DE LA LLAMADA")
@@ -85,6 +133,8 @@ const register = async (name, lastname, email, password, repassword) => {
     
   };
 
+
+
   const resetStore = () => {
     user.value = null;
     token.value = null;
@@ -99,5 +149,7 @@ const register = async (name, lastname, email, password, repassword) => {
     refreshToken,
     logout,
     register,
+    createNewUser,
+    getusers
   };
 });
