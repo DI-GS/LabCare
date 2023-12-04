@@ -29,8 +29,6 @@ const userSchema = new mongoose.Schema({
      type_membership:{
             type: Boolean,
         },
-        }
-    },
     customId: {
         type: String,
     },
