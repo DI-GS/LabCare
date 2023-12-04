@@ -23,6 +23,18 @@ body {
     max-width: 900px;
     transition: all is ease;
     margin: 10px;
+    margin-top: 10%; /* Ajusta el valor según sea necesario */
+}
+
+.container-form-register {
+    display: flex;
+    border-radius: 20px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, .1);
+    height: 500px;
+    max-width: 900px;
+    transition: all is ease;
+    margin: 10px;
+    margin-top: 10%; /* Ajusta el valor según sea necesario */
 }
 
 /* Estilos para la sección de información */
@@ -37,7 +49,7 @@ body {
 }
 
 /* Estilos para los elementos dentro de la sección de información */
-.info-childs {
+.info-childs  {
     width: 100%;
     padding: 0 30px;
 }
@@ -60,6 +72,42 @@ body {
     margin: 15px 0;
     color: black;
 }
+ .custom-button{
+    background-color: #FFD700;
+    outline: none;
+    border: solid 2px #FFD700;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: black;
+    cursor: pointer;
+    transition: background-color .3s ease;
+ }
+
+ .custom-button:hover{
+    background-color: #ccc;
+    border: none;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+
+ }
+ .custom-buttom2{
+    background-color: #FFD700;
+    outline: none;
+    border: solid 2px #FFD700;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: black;
+    cursor: pointer;
+    transition: background-color .3s ease;
+ }
+
+ .custom-buttom2:hover{
+    background-color: #ccc;
+    border: none;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+
+ }
 
 .info-childs input {
     background-color: transparent;
@@ -184,6 +232,12 @@ html {
         height: auto;
         flex-direction: column;
     }
+     
+    .container-form-register {
+        height: auto;
+        flex-direction: column;
+        margin-top: 70%; /* Ajusta el valor según sea necesario para pantallas más pequeñas */
+    }
 
     .information {
         width: 100%;
@@ -200,4 +254,6 @@ html {
         border-bottom-left-radius: 20px;
         border-top-right-radius: 20px;
     }
+  
+    
 }

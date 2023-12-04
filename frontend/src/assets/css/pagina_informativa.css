@@ -8,28 +8,6 @@
     font-family:Arial, Helvetica, sans-serif;
 }
 
-
-.login-btn {
-    background-color: #ccc;
-    border: 1px solid #1f2124;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 14px;
-    color: black;
-  }
-  
-  .login-btn:hover {
-    background-color: #efb810;
-  }
-  
-  .btn-container {
-    display: flex;
-    gap: 300px; /* Espaciado entre los botones, ajusta según sea necesario */
-    margin-right: 100px; /* Ajusta según sea necesario */
-  }
-  
-  
-
 body{
     background-color: #dcdcdc;
 }
@@ -42,6 +20,12 @@ header{
     min-height: 70vh;
     display: flex;
     align-items: center;
+}
+
+.small-image {
+    width: 25%;
+    height: auto;
+    margin-top: 80px; 
 }
 
 .container{
@@ -78,9 +62,9 @@ header{
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex; /* Utiliza flexbox en el contenedor ul */
-    justify-content: space-between; /* Alinea los elementos a los extremos */
-    width: 100%; /* Ocupa el ancho completo del contenedor */
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .menu .navbar ul li {
@@ -88,22 +72,47 @@ header{
 }
 
 .menu .navbar ul li a {
-    font-size: 18px;
-    padding: 10px;
+    font-size: 14px; /* Ajusta el tamaño del texto según tu preferencia */
+    padding: 6px 10px; /* Ajusta el padding según tu preferencia */
     color: black;
-    border-radius: 15px;
+    border-radius: 7px; /* Ajusta el radio del borde según tu preferencia */
     display: block;
 }
 
 .menu .navbar .labcare {
     color: black;
-    font-size: 20px;
+    font-size: 36px;
 }
 
 .menu .navbar .labcare .highlight {
-    font-size: 20px;
+    font-size: 36px;
     color: #efb810;
 }
+
+/* Colocar los botones a la derecha */
+.menu .navbar {
+    text-align: right; /* Alinea los elementos a la derecha */
+}
+
+.menu .navbar .login-btn,
+.menu .navbar .singUp-btn2 {
+    margin-top: -5px;
+    font-size: 14px;
+    padding: 6px 10px;
+    color: #ccc;
+    border-radius: 7px;
+    display: inline-block; /* Permite que los elementos estén en la misma línea */
+}
+
+.menu .navbar .login-btn {
+    margin-right: -70%; /* Agrega un margen a la izquierda del primer botón */
+}
+
+/* Elimina el margen izquierdo del segundo botón */
+.menu .navbar .singUp-btn2 {
+    margin-left: -5%;
+}
+
 
 
 
@@ -314,8 +323,7 @@ hr{
     color: #efb810;
 }
 
-@media(max-width:991px) {
-
+@media screen and (max-width: 991px){
     .menu {
         padding: 20px;
     }
@@ -325,12 +333,12 @@ hr{
     }
 
     .menu .navbar {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #5050BC;
-        display: none;
+        position: relative;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Alinea el menú en el centro */
+        margin: auto; /* Centra el menú en la pantalla */
     }
 
     .menu .navbar ul li {
@@ -338,12 +346,12 @@ hr{
     }
 
     #menu:checked ~ .navbar {
-        display: initial;
+        display: block;
     }
 
     .header {
-        height: 0vh;
-        padding: 400px 0px;
+        height: auto; /* Ajusta la altura según el contenido */
+        padding: 50px 0; /* Ajusta el relleno según tus preferencias */
         background-position: center center;
     }
 
@@ -351,45 +359,35 @@ hr{
         flex-direction: column;
         text-align: center;
         align-items: center;
-        padding: 0px 30px;
+        padding: 0  50px; /* Ajusta el relleno según tus preferencias */
     }
 
     .content {
-        padding: 0px;
+        padding: 200px; /* Ajusta el relleno según tus preferencias */
     }
 
     .content h1 {
-        margin-top: 100px;
-        font-size: 45px;
+        font-size: 30px; /* Ajusta el tamaño de fuente según tus preferencias */
     }
 
-    .content p {
-        margin-top: 0px;
-    }
-
-    .header-content img {
-        width: 150px;
-    }
-
-    .services{
+    .services {
         flex-direction: column;
-        padding: 50px 30px 0px 30px;
-
+        padding: 30px 20px;
     }
 
-    .service{
-        margin-bottom: 50px;
+    .service {
+        margin-bottom: 30px;
     }
 
     .portafolios {
-        padding: 0px 30px 30px 30px;
+        padding: 20px;
     }
 
     .portafolios h2 {
         margin-bottom: 15px;
     }
 
-    .portafolio{
+    .portafolio {
         flex-direction: column;
     }
 
@@ -399,11 +397,11 @@ hr{
 
     .portafolio-1 {
         text-align: center;
-        margin: 0px 0px 25px 0px;
+        margin: 0 0 15px 0;
     }
 
     .footer {
-        padding: 0px 30px 30px 30px;
+        padding: 20px;
     }
 
     .info-content {
@@ -412,16 +410,15 @@ hr{
     }
 
     .info-price {
-        margin: 0px 0px 20px 0px;
-
+        margin: 20px 0;
     }
 
     .info-txt {
-        margin: 0px;
+        margin: 0;
     }
 
-    hr{
-        margin:25px 0px;
+    hr {
+        margin: 20px 0;
     }
 
     .enlaces {
@@ -429,7 +426,174 @@ hr{
         align-items: center;
     }
 
-    .enlace{
+    .enlace {
         flex-direction: column;
     }
-}
+
+    .small-image {
+        width: 100%; /* Ajusta el ancho según tu preferencia en dispositivos más pequeños */
+        margin-top: 20px; /* Ajusta el margen superior en dispositivos más pequeños */
+    }
+
+    .menu .navbar .login-btn,
+    .menu .navbar .singUp-btn2 {
+        margin: 10px 10px 0 0px;
+        display: block;
+    }
+
+     @media screen and (max-width: 677px) {
+            .menu-container {
+              padding: 10px;
+            }
+          
+            .menu .navbar {
+              display: none;
+              position: absolute;
+              top: 0px;
+              left: 0;
+              right: 0;
+              flex-direction: row; /* Cambiado a fila para que los elementos se muevan a la izquierda */
+              justify-content: flex-start; /* Alinea los elementos a la izquierda */
+              align-items: center;
+              background-color: #6a6e73;
+              height: 30%; /* Ajusta la altura según tu diseño */
+            }
+          
+            .menu .navbar ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+              display: flex;
+              
+            }
+          
+            .menu .navbar ul li {
+              margin: 0 10px; /* Ajusta el espacio entre elementos según tu diseño */
+            }
+          
+            .menu label {
+              display: block;
+              cursor: pointer;
+              padding: 10px;
+              color: #fff; /* Ajusta el color del texto según tu diseño */
+            }
+          
+            #menu:checked ~ .navbar {
+              display: flex;
+            }
+          
+            .header-content {
+              padding: 10px;
+            }
+          
+            .content {
+              padding: 200px; /* Ajusta el relleno para pantallas pequeñas */
+            }
+          }
+          
+      }
+
+
+      @media screen and (max-width: 677px) {
+        .menu-container {
+          padding: 10px;
+        }
+      
+        .menu .navbar {
+          display: none;
+          position: absolute;
+          top: 0px;
+          left: 0;
+          right: 0;
+          flex-direction: row; /* Cambiado a fila para que los elementos se muevan a la izquierda */
+          justify-content: flex-start; /* Alinea los elementos a la izquierda */
+          align-items: center;
+          background-color: #6a6e73;
+          height: 10%; /* Ajusta la altura según tu diseño */
+        }
+      
+        .menu .navbar ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+        }
+      
+        .menu .navbar ul li {
+          margin: 0 10px; /* Ajusta el espacio entre elementos según tu diseño */
+        }
+      
+        .menu label {
+          display: block;
+          cursor: pointer;
+          padding: 10px;
+          color: #fff; /* Ajusta el color del texto según tu diseño */
+        }
+      
+        #menu:checked ~ .navbar {
+          display: flex;
+        }
+      
+        .header-content {
+          padding: 10px;
+        }
+      
+        .content {
+          padding: 200px; /* Ajusta el relleno para pantallas pequeñas */
+        }
+      }
+
+        @media screen and (max-width: 414px) {
+            .menu-container {
+              padding: 5%;
+            }
+          
+            .menu .navbar {
+              display: none;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              flex-direction: column;
+              justify-content: flex-start;
+              align-items: center;
+              background-color: #6a6e73;
+              height: 100%; /* Ajusta la altura según tu diseño */
+            }
+          
+            .menu .navbar ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+              display: flex;
+              flex-direction: column;
+              align-items: center; /* Alinea los elementos al centro */
+            }
+          
+            .menu .navbar ul li {
+              margin: 10px 0;
+            }
+          
+            .menu label {
+              display: block;
+              cursor: pointer;
+              padding: 10px;
+              color: #fff;
+            }
+          
+            #menu:checked ~ .navbar {
+              display: flex;
+            }
+          
+            .header-content {
+              padding: 10px;
+            }
+          
+            .content {
+              padding: 20px;
+            }
+          }
+        
+      
+      
+
