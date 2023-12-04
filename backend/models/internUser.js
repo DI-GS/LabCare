@@ -1,9 +1,6 @@
 import bcryptjs from "bcryptjs";
 import mongoose from "mongoose";
-import { pagoSchema } from "./Pago.js";
-
 const { Schema, model } = mongoose;
-
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -26,15 +23,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-     type_membership:{
-            type: Boolean,
-        },
-        }
-    },
-    customId: {
+    rol:{
         type: String,
+        required: true
     },
-    pagos: [pagoSchema]
+    uid: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    }
 });
 
 userSchema.pre("save", async function (next) {
@@ -56,4 +53,4 @@ userSchema.methods.comparePassword = async function (canditatePassword) {
     return await bcryptjs.compare(canditatePassword, this.password);
 };
 
-export const User = mongoose.model("User", userSchema);
+export const internUser = mongoose.model("InternUser", userSchema);
