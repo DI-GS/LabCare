@@ -1,4 +1,5 @@
 <template>
+  <NavComponent></NavComponent>
   <body>
     <div class="container-form loging">
       <div class="information">
@@ -8,7 +9,7 @@
             Si aún no has creado una cuenta, te invitamos a presionar el botón
             de registro.
           </p>
-          <input type="button" value="Registrarse" id="sign-up" @click="toggleForm('register')">
+          <router-link :to="{name: 'formulario_i'}" class="btn-1 login-btn custom-buttom2">Registrarse</router-link>
         </div>
       </div>
       <div class="form-information">
@@ -48,10 +49,17 @@
 </template>
 
 <script>
+import NavComponent from '@/components/nav-component.vue';
+
+
 import { ref } from 'vue';
 import { store } from "@/stores/user-store";
 import { useRouter } from "vue-router";
 export default {
+
+
+  components: {NavComponent},
+
 setup() {
   const email = ref("");
   const password = ref("");
