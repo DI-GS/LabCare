@@ -1,15 +1,16 @@
 <template>
+  <NavComponent></NavComponent>
     <body>
-      <div class="container-form register" v-show="!showLoginForm">
+      <div class="container-form-register" v-show="!showLoginForm">
         <div class="information">
           <div class="info-childs">
             <h3>Lab<span class="care">Care</span></h3>
             <p>
-              Si ya tienes una cuenta, simplemente presiona el botón de "Iniciar
+              Si ya tienes una cuenta, presiona el botón de "Iniciar
               Sesión" para acceder a tu cuenta. Ingresa tus credenciales de
               inicio de sesión
             </p>
-            <input type="button" value="Iniciar Sesión" id="button1" @click="toggleForm('login')">
+            <router-link :to="{name: 'login'}" class="btn-1 login-btn2 custom-button" >Iniciar sesión</router-link>
           </div>
         </div>
         <div class="form-information">
@@ -81,10 +82,14 @@
   </template>
   
   <script>
+  import NavComponent from '@/components/nav-component.vue';
+
 import { ref } from 'vue';
 import { store } from "@/stores/user-store";
 import { useRouter } from "vue-router";
 export default {
+  
+  components: {NavComponent},
   setup() {
     const email = ref("");
     const password = ref("");

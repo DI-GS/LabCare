@@ -6,7 +6,6 @@
                
                <input type="checkbox" id="menu">
                <label for="menu">
-                   <img src="@/assets/images/menu-btn.png" class="menu-icon" alt="">
                </label>
    
                <div class="menu">
@@ -16,7 +15,7 @@
             </ul>
             <div class="labcare">Lab<span class="highlight">Care</span></div>
             <router-link :to="{name: 'formulario_i'}" class="btn-1 login-btn">Registrarse</router-link>
-            <router-link :to="{name: 'login'}" class="btn-1 login-btn">Iniciar sesión</router-link>
+            <router-link :to="{name: 'login'}" class="btn-1 singUp-btn2">Iniciar sesión</router-link>
           </nav>
         </div>
                                                                                                                                            
@@ -32,7 +31,7 @@
                    <a href="#" class="btn-1">Mas informacion</a>
                    <a href="#" class="btn-1">Mas informacion</a>
                </div>
-               <img src="@/assets/images/astronauta.png" alt="">
+               <img src="@/assets/images/fondodos.png" alt="" class="small-image">
            </div>
        </header>
    
@@ -58,15 +57,6 @@
            <div class="service">
                <img src="@/assets/images/icon3.svg" alt="">
                <h3>Servicio 3</h3>
-               <p>
-                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta tempore magnam odio id ex blanditiis
-                   officia placeat,
-               </p>
-           </div>
-   
-           <div class="service">
-               <img src="@/assets/images/icon4.svg" alt="">
-               <h3>Servicio 4</h3>
                <p>
                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta tempore magnam odio id ex blanditiis
                    officia placeat,
@@ -134,7 +124,6 @@
                    <div class="enlaces">
                        <h3>logo</h3>
                        <div class="enlace">
-                           <li><a href="#">lorem</a></li>
                            <li><a href="#">lorem</a></li>
                            <li><a href="#">lorem</a></li>
                            <li><a href="#">lorem</a></li>

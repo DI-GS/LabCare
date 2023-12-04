@@ -18,9 +18,11 @@ import subjectSheetsView from '@/views/hojas-asignatura/subjectSheetsView.vue'
 import header from '@/components/header-component.vue'
 import subjectAdd from '@/views/gestion-clases/subjectAdd.vue'
 
+
+
 //Creación de rutas
 const routes = [
-    { path: '/', component: ViewInformativa },
+    { path: '/', name: "/", component: ViewInformativa },
     { path: '/:pathMatch(.*)*', component: ViewInformativa },
     { path: '/Visualizar-usuarios', name: 'ViewUsers', meta:{auth:true}, component: ViewUsers},
     { path: '/Visualizar-horarios', name: 'schedulesView', meta:{auth:true}, component: viewSchedules },
