@@ -151,11 +151,11 @@ components: {headerComponent, VueTimepicker},
         const allDays = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
          const availableDays = allDays.filter(day => day !== 'Domingo');
     const days = ref(availableDays.map((name, index) => ({ id: index + 1, name })));
-    const hours = ref([{ id: 1, startTime: '08:00', endTime: '09:00' }]); // Inicia con al menos un rango horario
+    const hours = ref([{ id: 1 }]); // Inicia con al menos un rango horario
     const selectedDay = ref(allDays[0]); // Inicia con el primer día seleccionado
 
     const addNewHour = () => {
-      hours.value.push({ id: generateId(), startTime: '08:00', endTime: '09:00' });
+      hours.value.push({ id: generateId() });
     };
 
     const removeHour = (hourId) => {

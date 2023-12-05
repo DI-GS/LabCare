@@ -137,7 +137,6 @@ export default {
     actualizarInformacion()
     closeModal();
     window.location.reload();
-  router.push({name:'ViewUsers'});
   console.log("ahora sin pasa")
 };
     
