@@ -54,7 +54,7 @@
               <td>{{ user.rol }}</td>
               <td>
                 <button class="btn btn-sm btn-secondary" @click="openModal">
-                  <i class="fa-solid fa-pencil"></i>
+                  <i class="fa-solid fa-pencil" ></i>
                 </button>
                 <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
               </td>
@@ -113,7 +113,7 @@
                 <option value="F-210"></option>
             </datalist>
         </div>
-        <button id="save-changes" @click="saveChanges">Guardar Cambios</button>
+        <button class="btn btn-sm btn-success" id="save-changes" @click="saveChanges">Guardar Cambios</button>
     </div>
 </div>
 
@@ -137,21 +137,9 @@ export default {
   setup() {
     const data = ref([]);
     const userStore = store();
-    const selectedCell = ref(null);
-    const openModal = (event) => {
-    // Verifica si el evento tiene un objetivo (target) y si es una celda editable
-    const cell = event?.target?.classList.contains('editable') ? event.target : null;
-
-    if (cell) {
-      selectedCell.value = cell;
-
+    const openModal = () => {
       const modal = document.getElementById('modal_horarios');
-      if (modal) {
         modal.style.display = 'block';
-      } else {
-        console.error("No se pudo encontrar el modal con ID 'modal_horarios'");
-      }
-    }
   };
 
     // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
@@ -162,31 +150,8 @@ export default {
 
     // Evento clic para guardar los cambios y actualizar las celdas
     const saveChanges = () => {
-      if (selectedCell.value) {
-        const subjectInput = document.getElementById('subject');
-        const gradeInput = document.getElementById('grade');
-        const groupInput = document.getElementById('group');
-        const careerInput = document.getElementById('career');
-        const buildInput = document.getElementById('build');
-
-
-        const formattedContent = `${subjectInput.value}\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
-        selectedCell.value.innerHTML = `<pre>${formattedContent}</pre>`;
-
-          closeModal()
-
-          // Limpiar los campos del modal después de guardar los cambios
-          subjectInput.value = '';
-          gradeInput.value = '';
-          groupInput.value = '';
-          careerInput.value = '';
-          buildInput.value = '';
-
-          selectedCell.value = null;
-        } else {
-          console.error('Alguno de los elementos de entrada no se encontró en el DOM.');
-        }
       }
+    
 
     const getUser = async () => {
       try {
@@ -428,8 +393,8 @@ $('#example').DataTable(dataTableOptions);
       getUser,
       openModal,
       saveChanges,
-      closeModal,};
+    closeModal,};
   },
 };
 </script>
-
+<style src="@/assets/css/style.css"></style>
