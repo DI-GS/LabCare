@@ -69,6 +69,8 @@ import { ref } from 'vue';
 import { store } from "@/stores/user-store";
 import { useRouter } from "vue-router";
 import headerComponent from "@/components/header-component.vue"
+import Swal from 'sweetalert2';
+
 export default {
   name: "SubjectSheetsAdd",
   components: {headerComponent},
@@ -94,7 +96,17 @@ export default {
       name.value = "";
       lastname.value = "";
       rol.value = "";
-      router.push("home");
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: '¡Usuario creado con éxito!',
+      }).then(() => {
+        // Redirige al usuario a la página de inicio después de hacer clic en "Aceptar" en la alerta
+        router.push("/Visualizar-usuarios");
+      });
+
+      
     
   } catch (error) {
     console.log("desde loginComponents: ", error);
