@@ -31,13 +31,13 @@
     />
   </head>
   <body>
-<div class="main-container content padding">
+    <div class="main-container content padding">
     <div><h1>Lista de usuarios</h1></div>
     <div class="container my-5">
       <router-link :to="{ name: 'addUser' }" class="btn btn-sm btn-success">Nuevo usuario</router-link>
       <div class="row">
         <table id="example" class="table table-striped" style="width: 100%">
-            <thead>
+          <thead>
             <tr>
               <th>#</th>
               <th>Nombre</th>
@@ -46,41 +46,160 @@
               <th>Opciones</th>
             </tr>
           </thead>
-          <tbody id="table_users"></tbody>
+          <tbody>
+            <tr v-for="(user, index) in data" :key="index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.rol }}</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" @click="openModal">
+                  <i class="fa-solid fa-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
-</div>
-  </body>
 
+    <div id="modal_horarios" class="modal_horarios">
+    <div class="modal-horarios-content">
+        <span class="close" @click="closeModal">&times;</span>
+        <h2>Registro de Materia</h2>
+        <div class="input-group">
+            <label for="subject">Materia:</label>
+            <input type="text" id="subject" name="subject" list="subjectOptions">
+            <datalist id="subjectOptions">
+                <option value="Integradora 1"></option>
+                <option value="Administración del tiempo"></option>
+                <option value="Matemáticas para ingeniería 1"></option>
+            </datalist>
+        </div>
+        <div class="input-group">
+            <label for="career">Carrera:</label>
+            <input type="text" id="career" name="career" list="careerOptions">
+            <datalist id="careerOptions">
+                <option value="IDGS"></option>
+                <option value="LINM"></option>
+                <option value="IER"></option>
+            </datalist>
+        </div>
+        <div class="input-group">
+            <label for="grade">Grado:</label>
+            <input type="text" id="grade" name="grade" list="gradeOptions">
+            <datalist id="gradeOptions">
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+            </datalist>
+        </div>
+        <div class="input-group">
+            <label for="group">Grupo:</label>
+            <input type="text" id="group" name="group" list="groupOptions">
+            <datalist id="groupOptions">
+                <option value="A"></option>
+                <option value="B"></option>
+                <option value="C"></option>
+            </datalist>
+        </div>
+        <div class="input-group">
+            <label for="build">Edificio/Aula:</label>
+            <input type="text" id="build" name="group" list="buildOptions">
+            <datalist id="buildOptions">
+                <option value="A-205"></option>
+                <option value="B-102"></option>
+                <option value="F-210"></option>
+            </datalist>
+        </div>
+        <button id="save-changes" @click="saveChanges">Guardar Cambios</button>
+    </div>
+</div>
+
+
+  </div>
+  </body>
   </template>
-  
-  <script>
+
+
+<script>
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5";
-import headerComponent from '@/components/header-component.vue';
-import {ref} from "vue";
+import headerComponent from "@/components/header-component.vue";
+import { ref, onMounted } from "vue";
 import { store } from "@/stores/user-store";
 
-  //import { store } from "@/stores/user-store";
-  export default {
-    name: "viewSchedules",
-components: {headerComponent},
-  
-  
-    setup() {
-      let dataTable;
-let dataTableIsInitialized = false;
+export default {
+  name: "viewSchedules",
+  components: { headerComponent },
+  setup() {
+    const data = ref([]);
+    const userStore = store();
+    const selectedCell = ref(null);
+    const openModal = (event) => {
+    // Verifica si el evento tiene un objetivo (target) y si es una celda editable
+    const cell = event?.target?.classList.contains('editable') ? event.target : null;
 
-const data=ref([]);
-const userStore=store(); 
+    if (cell) {
+      selectedCell.value = cell;
+
+      const modal = document.getElementById('modal_horarios');
+      if (modal) {
+        modal.style.display = 'block';
+      } else {
+        console.error("No se pudo encontrar el modal con ID 'modal_horarios'");
+      }
+    }
+  };
+
+    // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
+    const closeModal = () => {
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = "none";
+    };
+
+    // Evento clic para guardar los cambios y actualizar las celdas
+    const saveChanges = () => {
+      if (selectedCell.value) {
+        const subjectInput = document.getElementById('subject');
+        const gradeInput = document.getElementById('grade');
+        const groupInput = document.getElementById('group');
+        const careerInput = document.getElementById('career');
+        const buildInput = document.getElementById('build');
 
 
-//getUser();
+        const formattedContent = `${subjectInput.value}\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
+        selectedCell.value.innerHTML = `<pre>${formattedContent}</pre>`;
+
+          closeModal()
+
+          // Limpiar los campos del modal después de guardar los cambios
+          subjectInput.value = '';
+          gradeInput.value = '';
+          groupInput.value = '';
+          careerInput.value = '';
+          buildInput.value = '';
+
+          selectedCell.value = null;
+        } else {
+          console.error('Alguno de los elementos de entrada no se encontró en el DOM.');
+        }
+      }
+
+    const getUser = async () => {
+      try {
+        data.value = await userStore.getusers();
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
 
-let dataTableOptions = {
+
+    const initDataTable = () => {
+      const dataTableOptions = {
   dom: 'Bfrtilp',
   lengthMenu: [5, 10, 15, 20, 100, 200, 500],
   columnDefs: [
@@ -296,83 +415,21 @@ let dataTableOptions = {
     },
   },
 };
+$('#example').DataTable(dataTableOptions);
+    };
 
-const initDataTable = async () => {
-  if (dataTableIsInitialized) {
-    dataTable.destroy();
-  }
+    onMounted(async () => {
+      await getUser();
+      initDataTable();
+    });
 
-  await listUsers();
-
-  // eslint-disable-next-line no-undef
-  dataTable = $('#example').DataTable(dataTableOptions);
-
-  dataTableIsInitialized = true;
+    return { 
+      data,
+      getUser,
+      openModal,
+      saveChanges,
+      closeModal,};
+  },
 };
+</script>
 
-const displayUserList = (dataArray) => {
-  let content = ``;
-  dataArray.forEach((user, index) => {
-    content += `
-      <tr>
-        <td> ${index + 1} </td>
-        <td> ${user.name} </td>
-        <td> ${user.email} </td>
-        <td> ${user.rol} </td>
-        <td>
-          <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pencil"></i></button>
-          <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-        </td>
-      </tr>`;
-  });
-
-  // eslint-disable-next-line no-undef
-  table_users.innerHTML = content;
-};
-
-const getUser = async () => {
-  try {
-    data.value = await userStore.getusers();
-    console.log(data.value);
-
-    // Supongamos que "data.value" es el objeto Proxy que envuelve al array
-    const proxyArray = data.value;
-
-    // Mostrar datos en la tabla
-    displayUserList(proxyArray);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const listUsers = async () => {
-  try {
-    // Obtener los datos de usuario
-    await getUser();
-  } catch (error) {
-    alert(error);
-  }
-};
-
-// Llamada inicial
-listUsers();
-
-
-window.addEventListener('load', async () => {
-  await initDataTable();
-});
-
-     
-  
-      return{
-        getUser,
-        data
-      }
-      
-    },
-  
-  
-  };
-  </script>
-  
-  
