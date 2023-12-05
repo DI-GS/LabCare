@@ -67,22 +67,22 @@
     <div id="modal_horarios" class="modal_horarios">
     <div class="modal-horarios-content">
         <span class="close" @click="closeModal">&times;</span>
-        <h2>Actualizar un usuario</h2>
+        <h2>Actualizar usuario</h2>
         <div class="input-group">
             <label for="subject">Nombre:</label>
-            <input type="text" id="subject" name="subject" list="subjectOptions" v-model="name">
+            <input type="text"  v-model.lazy="dataUsuario.name" v-model="dataUsuario.name" required>
         </div>
         <div class="input-group">
             <label for="career">Apellido</label>
-            <input type="text" id="career" name="career" list="careerOptions" v-model="lastname">
+            <input type="text" v-model.lazy="dataUsuario.lastname" v-model="dataUsuario.lastname" required>
         </div>
         <div class="input-group">
             <label for="grade">Email</label>
-            <input type="text" id="grade" name="grade" list="gradeOptions" v-model="email">
+            <input type="text" v-model.lazy="dataUsuario.email" v-model="dataUsuario.email" required>
         </div>
         <div class="input-group">
             <label for="group">Tipo de usuario:</label>
-            <input type="text" id="group" name="group" list="groupOptions" v-model="type">
+            <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataUsuario.rol" v-model="dataUsuario.rol" required> 
             <datalist id="groupOptions">
                 <option value="Maestro"></option>
                 <option value="Administrador"></option>
@@ -111,24 +111,21 @@ export default {
   components: { headerComponent },
   setup() {
     const data = ref([]);
+    const dataUsuario = ref({
+  name: "",
+  lastname: "",
+  email: "",
+  rol: "",
+});
     const userStore = store();
-    const modalUserId = ref(null); 
-    const name = ref(null); 
-    const lastname = ref(null); 
-    const email = ref(null); 
     const type = ref(null); 
-  
-
+    var internUserId = ref("")
 
     const openModal = (user) => {
-      const modal = document.getElementById('modal_horarios');
-        modal.user=user;
-        modalUserId.value = user._id;
-        modal.style.display = 'block';
-
-     
+    getUsuario(user._id)
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = 'block';
   };
-
     // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
     const closeModal = () => {
     const modal = document.getElementById('modal_horarios');
@@ -136,11 +133,22 @@ export default {
     };
 
     // Evento clic para guardar los cambios y actualizar las celdas
-    const saveChanges = () => {
-      const userId = modalUserId.value;
-      console.log('UserID:', userId);
-      }
+    const saveChanges = async () => {
+    actualizarInformacion()
+    closeModal();
+    window.location.reload();
+  router.push({name:'ViewUsers'});
+  console.log("ahora sin pasa")
+};
     
+      const getUsuario = async (userId) => {
+      try {
+        internUserId.value = userId
+        dataUsuario.value = await userStore.getUsuario(userId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     const getUser = async () => {
       try {
@@ -150,7 +158,20 @@ export default {
       }
     };
 
-
+const actualizarInformacion = async () => {
+  const userId = internUserId.value;
+  try {
+    await userStore.updateUser(
+      userId,
+      dataUsuario.value.name,
+      dataUsuario.value.lastname,
+      dataUsuario.value.email,
+      dataUsuario.value.rol
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
 
     const initDataTable = () => {
       const dataTableOptions = {
@@ -379,14 +400,13 @@ $('#example').DataTable(dataTableOptions);
 
     return { 
       data,
+      actualizarInformacion,
       getUser,
+      getUsuario,
       openModal,
       saveChanges,
     closeModal,
-    modalUserId,
-    name,
-    lastname,
-    email,
+    dataUsuario,
     type
    };
   },
