@@ -13,6 +13,19 @@ export const careerFind = async (req, res) => {
     }
 };
 
+export const subjectSheetsFind = async (req, res) => {
+    
+    try {
+        const sheets = await subjectSheets.find({ uid: req.uid }); 
+        console.log(sheets)      
+        return res.json(sheets);
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Error de servidor" });
+    }
+};
+
 
 export const subjectFind = async (req, res) => {
     const {name_career} = req.body
@@ -35,9 +48,9 @@ export const subjectFind = async (req, res) => {
 export const updateSubject = async (req, res) => {
     const {name_subject, unit_number, unit_name, theme_name, theoretical_hours, practical_hours } = req.body;
     try {
-        let findSubjects = await subjectSheets.findOne({ name_subject });
-        if (findSubjects) throw { code: 11000 };
-        const newSubjectsSheets = new subjectSheets({name_subject, unit_number, unit_name, themes:[{theme_name}], theoretical_hours, practical_hours});
+        // let findSubjects = await subjectSheets.findOne({ name_subject });
+        // if (findSubjects) throw { code: 11000 };
+        const newSubjectsSheets = new subjectSheets({name_subject,thematic_units:[{unit_number, unit_name, themes:[{theme_name}], theoretical_hours, practical_hours}],uid: req.uid});
         await newSubjectsSheets.save();       
 
         return res.status(201).json({ message: "Hoja de asignatura registrada con éxito" });
@@ -52,20 +65,23 @@ export const updateSubject = async (req, res) => {
 };
 
 
-// export const getSchedule = async (req, res) => {
-//     try {
-//         const schedule = await scheduleFind.findOne({ uid: req.uid });
-//         return res.json({ schedule });
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({ error: "error de servidor" });
-//     }
-// };
 
-// export const deleteSchedule = async () => {
-//     try{
+export const deleteSubjectSheets = async (req, res) => {
+  const { SubjectSheetsId } = req.body; // Asumo que el ID de la hoja de asignatura está en los parámetros de la solicitud
 
-//     } catch (error) {
-        
-//     }
-// };
+  try {
+    // Intenta eliminar la hoja de asignatura por su ID
+    const result = await subjectSheets.deleteOne({ _id: SubjectSheetsId});
+
+    if (result.deletedCount === 1) {
+      // Se eliminó exitosamente
+      return res.status(200).json({ message: "Hoja de asignatura eliminada con éxito" });
+    } else {
+      // No se encontró la hoja de asignatura con el ID proporcionado
+      return res.status(404).json({ error: "No se encontró la hoja de asignatura con el ID proporcionado" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Error de servidor" });
+  }
+};

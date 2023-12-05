@@ -162,6 +162,53 @@ const register = async (name, lastname, email, password, repassword) => {
   }
   }
 
+  const subjectSheetsFind = async ()=>{
+    try {
+      const res=await api({
+      url:"/auth/listSheets",
+      method:"GET",
+      headers:{
+        Authorization: "Bearer " + token.value,
+      },
+    });
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+  }
+
+  const deleteSubjectSheets = async (SubjectSheetsId)=>{
+    try{
+      const res= await api({
+        url:"/auth/deleteSheets",
+        method:"POST",
+        headers:{
+        "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          SubjectSheetsId,
+          
+      }
+    });
+      console.log(res)
+      return res
+    } catch (error) {
+      console.error("Error al eliminar la materia:", error);
+
+      if (error.response) {
+          // Error en la respuesta del servidor
+          throw error.response.data;
+      } else if (error.request) {
+          // Error de red
+          throw { error: "Error de red al comunicarse con el servidor" };
+      } else {
+          // Otros errores
+          throw { error: "Error desconocido" };
+      }
+  }
+  }
+
   /*#################################################### Materias ####################################################*/
   const newSubject = async (name_subject, name_career, short_name, objetive,period)=>{
     try{
@@ -210,6 +257,8 @@ const register = async (name, lastname, email, password, repassword) => {
     careerFind,
     newSubject,
     subjectFind,
-    updateSheets
+    updateSheets,
+    subjectSheetsFind,
+    deleteSubjectSheets
   };
 });

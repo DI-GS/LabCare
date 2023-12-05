@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
 const subjectSheetsSchema = new mongoose.Schema({
     name_subject:{
@@ -31,9 +32,14 @@ const subjectSheetsSchema = new mongoose.Schema({
             required: true,
         }
     }],
+    uid: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true, 
+    },
         
 });
 
 
 
-export const subjectSheets = mongoose.model("Hojas_asignatura", subjectSheetsSchema);
+export const subjectSheets = model("Hojas_asignatura", subjectSheetsSchema);

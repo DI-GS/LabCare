@@ -18,6 +18,8 @@
             <label for="materia">Materia</label>
             <select class="form-control" v-model="name_subject">
               <option value="Metodologia">Metodologia</option>
+              <option value="Base de datos">Base de datos</option>
+              <option value="Aplicaciones web">Aplicaciones web</option>
             </select>
           </div>
         </div>
