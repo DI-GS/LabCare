@@ -40,7 +40,7 @@
             
 
 
-            <select class="form-inputU" id="roles" name="roles" v-model="rol">
+            <select class="form-inputU" id="roles" name="roles" v-model="rol" required>
               <option value="administrador">Administrador</option>
               <option value="maestro">Maestro</option>
             </select>
