@@ -31,13 +31,13 @@
     />
   </head>
   <body>
-<div class="main-container content padding">
+    <div class="main-container content padding">
     <div><h1>Lista de usuarios</h1></div>
     <div class="container my-5">
       <router-link :to="{ name: 'addUser' }" class="btn btn-sm btn-success">Nuevo usuario</router-link>
       <div class="row">
         <table id="example" class="table table-striped" style="width: 100%">
-            <thead>
+          <thead>
             <tr>
               <th>#</th>
               <th>Nombre</th>
@@ -46,41 +46,135 @@
               <th>Opciones</th>
             </tr>
           </thead>
-          <tbody id="table_users"></tbody>
+          <tbody>
+            <tr v-for="(user, index) in data" :key="index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ user.name+ " " + user.lastname }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.rol }}</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" @click="openModal(user)">
+                  <i class="fa-solid fa-pencil" ></i>
+                </button>
+                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
-</div>
-  </body>
 
+    <div id="modal_horarios" class="modal_horarios">
+    <div class="modal-horarios-content">
+        <span class="close" @click="closeModal">&times;</span>
+        <h2>Actualizar usuario</h2>
+        <div class="input-group">
+            <label for="subject">Nombre:</label>
+            <input type="text"  v-model.lazy="dataUsuario.name" v-model="dataUsuario.name" required>
+        </div>
+        <div class="input-group">
+            <label for="career">Apellido</label>
+            <input type="text" v-model.lazy="dataUsuario.lastname" v-model="dataUsuario.lastname" required>
+        </div>
+        <div class="input-group">
+            <label for="grade">Email</label>
+            <input type="text" v-model.lazy="dataUsuario.email" v-model="dataUsuario.email" required>
+        </div>
+        <div class="input-group">
+            <label for="group">Tipo de usuario:</label>
+            <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataUsuario.rol" v-model="dataUsuario.rol" required> 
+            <datalist id="groupOptions">
+                <option value="Maestro"></option>
+                <option value="Administrador"></option>
+            </datalist>
+        </div>
+        <button class="btn btn-sm btn-success" id="save-changes" @click="saveChanges">Guardar Cambios</button>
+    </div>
+</div>
+
+
+  </div>
+  </body>
   </template>
-  
-  <script>
+
+
+<script>
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5";
-import headerComponent from '@/components/header-component.vue';
-import {ref} from "vue";
+import headerComponent from "@/components/header-component.vue";
+import { ref, onMounted } from "vue";
 import { store } from "@/stores/user-store";
 
-  //import { store } from "@/stores/user-store";
-  export default {
-    name: "viewSchedules",
-components: {headerComponent},
-  
-  
-    setup() {
-      let dataTable;
-let dataTableIsInitialized = false;
+export default {
+  name: "viewSchedules",
+  components: { headerComponent },
+  setup() {
+    const data = ref([]);
+    const dataUsuario = ref({
+  name: "",
+  lastname: "",
+  email: "",
+  rol: "",
+});
+    const userStore = store();
+    const type = ref(null); 
+    var internUserId = ref("")
 
-const data=ref([]);
-const userStore=store(); 
+    const openModal = (user) => {
+    getUsuario(user._id)
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = 'block';
+  };
+    // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
+    const closeModal = () => {
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = "none";
+    };
 
+    // Evento clic para guardar los cambios y actualizar las celdas
+    const saveChanges = async () => {
+    actualizarInformacion()
+    closeModal();
+    window.location.reload();
+  router.push({name:'ViewUsers'});
+  console.log("ahora sin pasa")
+};
+    
+      const getUsuario = async (userId) => {
+      try {
+        internUserId.value = userId
+        dataUsuario.value = await userStore.getUsuario(userId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-//getUser();
+    const getUser = async () => {
+      try {
+        data.value = await userStore.getusers();
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+const actualizarInformacion = async () => {
+  const userId = internUserId.value;
+  try {
+    await userStore.updateUser(
+      userId,
+      dataUsuario.value.name,
+      dataUsuario.value.lastname,
+      dataUsuario.value.email,
+      dataUsuario.value.rol
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-let dataTableOptions = {
+    const initDataTable = () => {
+      const dataTableOptions = {
   dom: 'Bfrtilp',
   lengthMenu: [5, 10, 15, 20, 100, 200, 500],
   columnDefs: [
@@ -296,83 +390,26 @@ let dataTableOptions = {
     },
   },
 };
+$('#example').DataTable(dataTableOptions);
+    };
 
-const initDataTable = async () => {
-  if (dataTableIsInitialized) {
-    dataTable.destroy();
-  }
+    onMounted(async () => {
+      await getUser();
+      initDataTable();
+    });
 
-  await listUsers();
-
-  // eslint-disable-next-line no-undef
-  dataTable = $('#example').DataTable(dataTableOptions);
-
-  dataTableIsInitialized = true;
+    return { 
+      data,
+      actualizarInformacion,
+      getUser,
+      getUsuario,
+      openModal,
+      saveChanges,
+    closeModal,
+    dataUsuario,
+    type
+   };
+  },
 };
-
-const displayUserList = (dataArray) => {
-  let content = ``;
-  dataArray.forEach((user, index) => {
-    content += `
-      <tr>
-        <td> ${index + 1} </td>
-        <td> ${user.name} </td>
-        <td> ${user.email} </td>
-        <td> ${user.rol} </td>
-        <td>
-          <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pencil"></i></button>
-          <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-        </td>
-      </tr>`;
-  });
-
-  // eslint-disable-next-line no-undef
-  table_users.innerHTML = content;
-};
-
-const getUser = async () => {
-  try {
-    data.value = await userStore.getusers();
-    console.log(data.value);
-
-    // Supongamos que "data.value" es el objeto Proxy que envuelve al array
-    const proxyArray = data.value;
-
-    // Mostrar datos en la tabla
-    displayUserList(proxyArray);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const listUsers = async () => {
-  try {
-    // Obtener los datos de usuario
-    await getUser();
-  } catch (error) {
-    alert(error);
-  }
-};
-
-// Llamada inicial
-listUsers();
-
-
-window.addEventListener('load', async () => {
-  await initDataTable();
-});
-
-     
-  
-      return{
-        getUser,
-        data
-      }
-      
-    },
-  
-  
-  };
-  </script>
-  
-  
+</script>
+<style src="@/assets/css/style.css"></style>

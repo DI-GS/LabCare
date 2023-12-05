@@ -88,6 +88,31 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
+  const updateUser= async (userId, name, lastname, email, rol)=>{
+    try {
+        const res=await api({
+          url:"/auth/updateUser",
+        method:"PATCH",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          userId,
+          name,
+          lastname, 
+          email, 
+          rol, 
+        }
+      });
+      console.log(res)
+      return res
+    } catch (error) {
+      console.log("HMMMMMMMMMMMMMMM",error)
+    }
+  }
+  
+
   const getusers= async ()=>{
     try {
         const res=await api({
@@ -105,7 +130,23 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
-  
+  const getUsuario= async (userId)=>{
+    try {
+        const res=await api({
+          url: `/auth/getUsuario/${userId}`,
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+      });
+     
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const refreshToken = async () => {
     try {
@@ -150,6 +191,8 @@ const register = async (name, lastname, email, password, repassword) => {
     logout,
     register,
     createNewUser,
-    getusers
+    getusers,
+    updateUser,
+    getUsuario,
   };
 });

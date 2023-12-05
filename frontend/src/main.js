@@ -9,6 +9,7 @@ import router from './router/router';
 import axios from 'axios';
 const app = createApp(App);
 
+
 // Configuración de Pinia
 app.use(createPinia());
 app.config.globalProperties.$axios = axios;
