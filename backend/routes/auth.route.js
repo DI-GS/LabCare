@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import {getUsers} from "../controllers/user.controller.js"
+import {getUsers,updateUsers} from "../controllers/user.controller.js"
 import {
     login,
     logout,
@@ -24,6 +24,7 @@ router.post("/login", bodyLoginValidator, login);
 router.get("/refresh", requireRefreshToken, refreshToken);
 router.get("/logout", logout);
 router.get("/getUser", requireToken,getUsers);
+router.get("/updateUsers", requireToken,updateUsers);
 
 
 

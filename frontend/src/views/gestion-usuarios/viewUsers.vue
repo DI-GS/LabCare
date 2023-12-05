@@ -49,11 +49,11 @@
           <tbody>
             <tr v-for="(user, index) in data" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ user.name }}</td>
+              <td>{{ user.name+ " " + user.lastname }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.rol }}</td>
               <td>
-                <button class="btn btn-sm btn-secondary" @click="openModal">
+                <button class="btn btn-sm btn-secondary" @click="openModal(user)">
                   <i class="fa-solid fa-pencil" ></i>
                 </button>
                 <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
@@ -67,50 +67,25 @@
     <div id="modal_horarios" class="modal_horarios">
     <div class="modal-horarios-content">
         <span class="close" @click="closeModal">&times;</span>
-        <h2>Registro de Materia</h2>
+        <h2>Actualizar un usuario</h2>
         <div class="input-group">
-            <label for="subject">Materia:</label>
-            <input type="text" id="subject" name="subject" list="subjectOptions">
-            <datalist id="subjectOptions">
-                <option value="Integradora 1"></option>
-                <option value="Administración del tiempo"></option>
-                <option value="Matemáticas para ingeniería 1"></option>
-            </datalist>
+            <label for="subject">Nombre:</label>
+            <input type="text" id="subject" name="subject" list="subjectOptions" v-model="name">
         </div>
         <div class="input-group">
-            <label for="career">Carrera:</label>
-            <input type="text" id="career" name="career" list="careerOptions">
-            <datalist id="careerOptions">
-                <option value="IDGS"></option>
-                <option value="LINM"></option>
-                <option value="IER"></option>
-            </datalist>
+            <label for="career">Apellido</label>
+            <input type="text" id="career" name="career" list="careerOptions" v-model="lastname">
         </div>
         <div class="input-group">
-            <label for="grade">Grado:</label>
-            <input type="text" id="grade" name="grade" list="gradeOptions">
-            <datalist id="gradeOptions">
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"></option>
-            </datalist>
+            <label for="grade">Email</label>
+            <input type="text" id="grade" name="grade" list="gradeOptions" v-model="email">
         </div>
         <div class="input-group">
-            <label for="group">Grupo:</label>
-            <input type="text" id="group" name="group" list="groupOptions">
+            <label for="group">Tipo de usuario:</label>
+            <input type="text" id="group" name="group" list="groupOptions" v-model="type">
             <datalist id="groupOptions">
-                <option value="A"></option>
-                <option value="B"></option>
-                <option value="C"></option>
-            </datalist>
-        </div>
-        <div class="input-group">
-            <label for="build">Edificio/Aula:</label>
-            <input type="text" id="build" name="group" list="buildOptions">
-            <datalist id="buildOptions">
-                <option value="A-205"></option>
-                <option value="B-102"></option>
-                <option value="F-210"></option>
+                <option value="Maestro"></option>
+                <option value="Administrador"></option>
             </datalist>
         </div>
         <button class="btn btn-sm btn-success" id="save-changes" @click="saveChanges">Guardar Cambios</button>
@@ -137,9 +112,21 @@ export default {
   setup() {
     const data = ref([]);
     const userStore = store();
-    const openModal = () => {
+    const modalUserId = ref(null); 
+    const name = ref(null); 
+    const lastname = ref(null); 
+    const email = ref(null); 
+    const type = ref(null); 
+  
+
+
+    const openModal = (user) => {
       const modal = document.getElementById('modal_horarios');
+        modal.user=user;
+        modalUserId.value = user._id;
         modal.style.display = 'block';
+
+     
   };
 
     // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
@@ -150,6 +137,8 @@ export default {
 
     // Evento clic para guardar los cambios y actualizar las celdas
     const saveChanges = () => {
+      const userId = modalUserId.value;
+      console.log('UserID:', userId);
       }
     
 
@@ -393,7 +382,13 @@ $('#example').DataTable(dataTableOptions);
       getUser,
       openModal,
       saveChanges,
-    closeModal,};
+    closeModal,
+    modalUserId,
+    name,
+    lastname,
+    email,
+    type
+   };
   },
 };
 </script>

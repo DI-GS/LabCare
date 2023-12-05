@@ -88,6 +88,30 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
+  const updateUser= async (name, lastname, email, rol)=>{
+    try {
+        const res=await api({
+        url:"/auth/updateUsers",
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          name,
+          lastname, 
+          email, 
+          rol, 
+        }
+      });
+      console.log(res)
+      return res
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const getusers= async ()=>{
     try {
         const res=await api({
@@ -150,6 +174,7 @@ const register = async (name, lastname, email, password, repassword) => {
     logout,
     register,
     createNewUser,
-    getusers
+    getusers,
+    updateUser
   };
 });
