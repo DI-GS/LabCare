@@ -601,5 +601,27 @@ form .con {
     }
 }
 
+.remove-day-btn {
+  background-color: #808080;
+  color: #fff; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 50%; /* Bordes redondeados para que parezca un botón circular */
+  cursor: pointer;
+  padding: 5px 8px; /* Espaciado interno */
+  font-size: 14px; /* Tamaño del texto */
+  margin-left: 5px; /* Espaciado a la izquierda para separar del texto del día */
+}
 
+.time-picker-input {
+  display: inline-block ;
+}
+.remove-hour{
+  color: red; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 50%; /* Bordes redondeados para que parezca un botón circular */
+  cursor: pointer;
+  padding: 5px 8px; /* Espaciado interno */
+  font-size: 14px; /* Tamaño del texto */
+  margin-left: 5px; /* Espaciado a la izquierda para separar del texto del día */
+}
 /*Fin de resgitro de usuarios */

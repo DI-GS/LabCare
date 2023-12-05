@@ -1,6 +1,15 @@
 <template>
     <headerComponent></headerComponent>
     <head>
+ 
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
         <title>Registro de Horarios</title>
     </head>
 <body>
@@ -17,91 +26,54 @@
     </div>
 
 
-    <section class="schedules_section">
-        <table id="schedule-table">
-            <thead>
-                <tr>
-                    <th>Horario</th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td data-label="Horario">8:00 - 8:50</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">8:50 - 9:40</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">RECESO</td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">10:00 - 10:50</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">10:50 - 11:40</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">11:40 - 12:30</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">12:30 - 13:20</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">13:20 - 14:10</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-                <tr>
-                    <td data-label="Horario">14:10 - 15:00</td>
-                    <td data-label="Lunes" class="editable" @click="openModal"></td>
-                    <td data-label="Martes" class="editable" @click="openModal"></td>
-                    <td data-label="Miércoles" class="editable" @click="openModal"></td>
-                    <td data-label="Jueves" class="editable" @click="openModal"></td>
-                    <td data-label="Viernes" class="editable" @click="openModal"></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
 
-   <button id="save">Guardar</button>
+    <section class="schedules_section">
+      <table id="schedule-table">
+        <thead>
+          <tr>
+            <th>
+              Horario
+              <button class="remove-day-btn" @click="addNewHour" >+</button>
+            </th>
+            <th v-for="(day, index) in days" :key="index">
+              {{ day.name }}
+              <button class="remove-day-btn" @click="removeDay(index)" v-if="days.length > 1">&times;</button>
+            </th>
+            <th>
+    <select v-model="selectedDay">
+      <option v-for="(day, index) in allDays" :key="index" :value="day">
+        {{ day }}
+      </option>
+    </select>
+    <button class="remove-day-btn" @click="addNewDay">+</button>
+  </th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr v-for="hourRange in hours" :key="hourRange.id">
+      <td data-label="Horario">
+        <label for="hourRange"></label>
+        <VueTimepicker
+          v-model="hourRange.startTime"
+          format="HH:mm"
+          :time="{ min: '08:00', max: '15:30' }"
+          class="time-picker-input"
+        />
+        <label for="hourRange">- </label>
+        <VueTimepicker
+          v-model="hourRange.endTime"
+          format="HH:mm"
+          :time="{ min: '08:00', max: '15:30' }"
+          class="time-picker-input"
+        />
+        <button class="btn btn-sm btn-danger"  @click="removeHour(hourRange.id)"><i class="fa-solid fa-trash-can"></i></button>
+      </td>
+      <td v-for="(day, dayIndex) in days" :key="dayIndex" class="editable" @click="openModal"></td>
+    </tr>
+  </tbody>
+      </table>
+    </section>
+        <button id="save">Guardar</button>
 
     
 
@@ -163,17 +135,92 @@
   </template>
   
   <script>
-import headerComponent from '@/components/header-component.vue';
-   import { ref } from 'vue';
+import { ref } from 'vue';
+import { store } from "@/stores/user-store";
+import { useRouter } from "vue-router";
+import headerComponent from "@/components/header-component.vue"
+import VueTimepicker from 'vue3-timepicker'
+import 'vue3-timepicker/dist/VueTimepicker.css'
   //import { store } from "@/stores/user-store";
   export default {
     name: "schedulesAdd",
-components: {headerComponent},
+components: {headerComponent, VueTimepicker},
   
   
     setup() {
-    
+        const allDays = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+         const availableDays = allDays.filter(day => day !== 'Domingo');
+    const days = ref(availableDays.map((name, index) => ({ id: index + 1, name })));
+    const hours = ref([{ id: 1, startTime: '08:00', endTime: '09:00' }]); // Inicia con al menos un rango horario
+    const selectedDay = ref(allDays[0]); // Inicia con el primer día seleccionado
+
+    const addNewHour = () => {
+      hours.value.push({ id: generateId(), startTime: '08:00', endTime: '09:00' });
+    };
+
+    const removeHour = (hourId) => {
+      const index = hours.value.findIndex((hour) => hour.id === hourId);
+      if (index !== -1) {
+        hours.value.splice(index, 1);
+      }
+    };
+
+    const addNewDay = () => {
+  const selectedDayValue = selectedDay.value;
+  
+  // Verificar si el día ya está en la lista
+  const isDayAlreadyAdded = days.value.some(day => day.name === selectedDayValue);
+  
+  // Si no está en la lista, agrégalo
+  if (!isDayAlreadyAdded) {
+    days.value.push({ id: generateId(), name: selectedDayValue });
+  }
+};
+
+    const removeDay = (dayIndex) => {
+      if (days.value.length > 1) {
+        days.value.splice(dayIndex, 1);
+      }
+    };
+
+    const generateId = () => {
+      return '_' + Math.random().toString(36).substr(2, 9);
+    };
+
     const selectedCell = ref(null);
+    const email = ref("");
+    const password = ref("");
+    const repassword = ref("");
+    const name = ref("");
+    const lastname = ref("");
+    const rol = ref("");
+    const router = useRouter();
+    const userStore = store();
+
+    const handleSubmit = async () => {
+  try {
+      await userStore.createNewUser(name.value, lastname.value, email.value, password.value, repassword.value, rol.value);
+      email.value = "";
+      password.value = "";
+      repassword.value = "";
+      name.value = "";
+      lastname.value = "";
+      rol.value = "";
+      router.push("home");
+    
+  } catch (error) {
+    console.log("desde loginComponents: ", error);
+    if (error.error) {
+      // eslint-disable-next-line no-undef
+      alertError(error.error);
+    }
+    if (error.errors) {
+      // eslint-disable-next-line no-undef
+      alertError(error.errors[0].msg);
+    }
+  }
+};
+
     const openModal = (event) => {
     // Verifica si el evento tiene un objetivo (target) y si es una celda editable
     const cell = event?.target?.classList.contains('editable') ? event.target : null;
@@ -232,6 +279,15 @@ components: {headerComponent},
         openModal,
         saveChanges,
         closeModal,
+        handleSubmit,
+        days,
+      hours,
+      addNewHour,
+      removeDay,
+      removeHour,
+      addNewDay,
+      allDays,
+      selectedDay
       }
       
     },
@@ -240,4 +296,3 @@ components: {headerComponent},
   };
   </script>
   <style src="@/assets/css/style.css"></style>
-  
