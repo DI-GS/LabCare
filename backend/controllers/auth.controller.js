@@ -35,9 +35,6 @@ export const registerUser = async (req, res) => {
         user = new internUser({ name, lastname, email, password, rol, uid: req.uid});
         await user.save();
 
-        // Generar el token JWT
-        const { token, expiresIn } = generateToken(user.id);
-        generateRefreshToken(user.id, res);
 
         return res.status(201).json({ token, expiresIn });
     } catch (error) {
