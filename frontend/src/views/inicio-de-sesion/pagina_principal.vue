@@ -121,13 +121,11 @@
                        </div>
                    </div>
                    <hr>
-                   <div class="enlaces">
-                       <h3>logo</h3>
-                       <div class="enlace">
-                           <li><a href="#">lorem</a></li>
-                           <li><a href="#">lorem</a></li>
-                           <li><a href="#">lorem</a></li>
-                       </div>
+                   <div>
+                        <h1>Ubicación:</h1>
+
+                        <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18568.889146927526!2d-103.52029701190362!3d20.4856686560453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842f55f2173b24d1%3A0xb3fc2b0647d8a722!2sUniversidad%20Tecnol%C3%B3gica%20de%20la%20Zona%20Metropolitana%20de%20Guadalajara!5e0!3m2!1ses!2smx!4v1709657507515!5m2!1ses!2smx" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
                    </div>
                </div>
    
