@@ -50,16 +50,16 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
       const { userId } = req.body;
-  
+
       if (!userId) {
         return res.status(400).json({ error: 'Se requiere un ID de usuario para eliminar.' });
       }
-      
+
       const user = await internUser.findByIdAndDelete(userId);
   
-      return await user.save(); 
+      res.status(200).json({ message: 'Usuario eliminado exitosamente.', user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Error interno del servidor.' });
+      res.status(500).json({ error: 'Error interno del servidor. BACKENDDDD' });
     }
   };

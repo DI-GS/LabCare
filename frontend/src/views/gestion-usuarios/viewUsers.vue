@@ -56,7 +56,7 @@
                 <button class="btn btn-sm btn-secondary" @click="openModal(user)">
                   <i class="fa-solid fa-pencil" ></i>
                 </button>
-                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteUser(user)"></i></button>
               </td>
             </tr>
           </tbody>
@@ -137,7 +137,6 @@ export default {
     actualizarInformacion()
     closeModal();
     window.location.reload();
-  console.log("ahora sin pasa")
 };
     
       const getUsuario = async (userId) => {
@@ -156,6 +155,17 @@ export default {
         console.error(error);
       }
     };
+
+    const deleteUser = async (user) => {
+      try {
+        getUsuario(user._id)
+        await userStore.deleteInternUser(user._id);
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
 
 const actualizarInformacion = async () => {
   const userId = internUserId.value;
@@ -401,6 +411,7 @@ $('#example').DataTable(dataTableOptions);
       data,
       actualizarInformacion,
       getUser,
+      deleteUser,
       getUsuario,
       openModal,
       saveChanges,

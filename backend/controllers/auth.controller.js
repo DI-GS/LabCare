@@ -36,7 +36,7 @@ export const registerUser = async (req, res) => {
         await user.save();
 
 
-        return res.status(201).json({ token, expiresIn });
+        return res.status(201).json("Usuario registrado exitosamente");
     } catch (error) {
         console.log(error);
         // Alternativa por defecto mongoose

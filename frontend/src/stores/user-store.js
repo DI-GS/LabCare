@@ -130,6 +130,25 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
+  const deleteInternUser= async (userId)=>{
+    try {
+        const res=await api({
+        url:"/auth/deleteUser",
+        method:"DELETE",
+        headers:{
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          userId,
+        }
+      });
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const getUsuario= async (userId)=>{
     try {
         const res=await api({
@@ -150,9 +169,7 @@ const register = async (name, lastname, email, password, repassword) => {
 
   const refreshToken = async () => {
     try {
-      console.log("ANTES DE LA LLAMADA")
       const res = await api.get("/auth/refresh");
-      console.log("DESPUES DE LA LLAMADA")
       token.value = res.data.token;
       expiresIn.value = res.data.expiresIn;
       
@@ -194,5 +211,6 @@ const register = async (name, lastname, email, password, repassword) => {
     getusers,
     updateUser,
     getUsuario,
+    deleteInternUser
   };
 });
