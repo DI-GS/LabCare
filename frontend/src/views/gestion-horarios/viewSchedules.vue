@@ -32,19 +32,28 @@
   </head>
   <body>
 <div class="main-container content padding">
-    <div class="container my-5">
-        <router-link :to="{ name: 'schedulesAdd' }" class="btn btn-sm btn-success">Nuevo horario</router-link>
+  <div class="container my-5">
+      <router-link :to="{ name: 'schedulesAdd' }" class="btn btn-sm btn-success">Nuevo Horario</router-link>
       <div class="row">
         <table id="example" class="table table-striped" style="width: 100%">
-            <thead>
+          <thead>
             <tr>
               <th>#</th>
               <th>Nombre</th>
-              <th>Email</th>
-              <th>Opciones</th>
             </tr>
           </thead>
-          <tbody id="table_users"></tbody>
+          <tbody>
+            <tr v-for="(user, index) in data" :key="index">
+              <td>{{ index + 1 }}</td>
+              <td>{{ user.name+ " " + user.lastname }}</td>
+              <td>
+                <button class="btn btn-sm btn-secondary" @click="openModal(user)">
+                  <i class="fa-solid fa-pencil" ></i>
+                </button>
+                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteUser(user)"></i></button>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -57,19 +66,88 @@
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5";
-import headerComponent from '@/components/header-component.vue';
+import headerComponent from "@/components/header-component.vue";
+import { ref, onMounted } from "vue";
+import { store } from "@/stores/user-store";
 
-  //import { store } from "@/stores/user-store";
-  export default {
-    name: "viewSchedules",
-components: {headerComponent},
-  
-  
-    setup() {
-      let dataTable;
-let dataTableIsInitialized = false;
+export default {
+  name: "viewSchedules",
+  components: { headerComponent },
+  setup() {
+    const data = ref([]);
+    const dataUsuario = ref({
+  name: "",
+  lastname: "",
+  email: "",
+  rol: "",
+});
+    const userStore = store();
+    const type = ref(null); 
+    var internUserId = ref("")
 
-let dataTableOptions = {
+    const openModal = (user) => {
+    getUsuario(user._id)
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = 'block';
+  };
+    // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
+    const closeModal = () => {
+    const modal = document.getElementById('modal_horarios');
+    modal.style.display = "none";
+    };
+
+    // Evento clic para guardar los cambios y actualizar las celdas
+    const saveChanges = async () => {
+    actualizarInformacion()
+    closeModal();
+    window.location.reload();
+};
+    
+      const getUsuario = async (userId) => {
+      try {
+        internUserId.value = userId
+        dataUsuario.value = await userStore.getUsuario(userId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const getUser = async () => {
+      try {
+        data.value = await userStore.getusers();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const deleteUser = async (user) => {
+      try {
+        getUsuario(user._id)
+        await userStore.deleteInternUser(user._id);
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+
+const actualizarInformacion = async () => {
+  const userId = internUserId.value;
+  try {
+    await userStore.updateUser(
+      userId,
+      dataUsuario.value.name,
+      dataUsuario.value.lastname,
+      dataUsuario.value.email,
+      dataUsuario.value.rol
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+    const initDataTable = () => {
+      const dataTableOptions = {
   dom: 'Bfrtilp',
   lengthMenu: [5, 10, 15, 20, 100, 200, 500],
   columnDefs: [
@@ -285,60 +363,28 @@ let dataTableOptions = {
     },
   },
 };
+$('#example').DataTable(dataTableOptions);
+    };
 
-const initDataTable = async () => {
-  if (dataTableIsInitialized) {
-    dataTable.destroy();
-  }
-
-  await listUsers();
-
-  // eslint-disable-next-line no-undef
-  dataTable = $('#example').DataTable(dataTableOptions);
-
-  dataTableIsInitialized = true;
-};
-
-const listUsers = async () => {
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    const users = await response.json();
-    console.log(users);
-
-    let content = ``;
-    users.forEach((user, index) => {
-      content += `
-                <tr>
-                    <td> ${index + 1} </td>
-                    <td> ${user.name} </td>
-                    <td> ${user.email} </td>
-                    <td>
-                        <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-                    </td>
-                </tr>`;
+    onMounted(async () => {
+      await getUser();
+      initDataTable();
     });
-    // eslint-disable-next-line no-undef
-    table_users.innerHTML = content;
-  } catch (error) {
-    alert(error);
-  }
+
+    return { 
+      data,
+      actualizarInformacion,
+      getUser,
+      deleteUser,
+      getUsuario,
+      openModal,
+      saveChanges,
+    closeModal,
+    dataUsuario,
+    type
+   };
+  },
 };
-
-window.addEventListener('load', async () => {
-  await initDataTable();
-});
-
-     
-  
-      return{
-
-      }
-      
-    },
-  
-  
-  };
-  </script>
-  
+</script>
+<style src="@/assets/css/style.css"></style>
   
