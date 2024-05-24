@@ -47,7 +47,7 @@
               <td>{{ index + 1 }}</td>
               <td>{{ user.name+ " " + user.lastname }}</td>
               <td>
-                <button class="btn btn-sm btn-secondary" @click="openModal(user)">
+                <button class="btn btn-sm btn-secondary">
                   <i class="fa-solid fa-pencil" ></i>
                 </button>
                 <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteUser(user)"></i></button>
@@ -85,23 +85,6 @@ export default {
     const type = ref(null); 
     var internUserId = ref("")
 
-    const openModal = (user) => {
-    getUsuario(user._id)
-    const modal = document.getElementById('modal_horarios');
-    modal.style.display = 'block';
-  };
-    // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
-    const closeModal = () => {
-    const modal = document.getElementById('modal_horarios');
-    modal.style.display = "none";
-    };
-
-    // Evento clic para guardar los cambios y actualizar las celdas
-    const saveChanges = async () => {
-    actualizarInformacion()
-    closeModal();
-    window.location.reload();
-};
     
       const getUsuario = async (userId) => {
       try {
@@ -130,21 +113,6 @@ export default {
       }
     };
 
-
-const actualizarInformacion = async () => {
-  const userId = internUserId.value;
-  try {
-    await userStore.updateUser(
-      userId,
-      dataUsuario.value.name,
-      dataUsuario.value.lastname,
-      dataUsuario.value.email,
-      dataUsuario.value.rol
-    );
-  } catch (error) {
-    console.log(error);
-  }
-}
 
     const initDataTable = () => {
       const dataTableOptions = {
@@ -373,13 +341,9 @@ $('#example').DataTable(dataTableOptions);
 
     return { 
       data,
-      actualizarInformacion,
       getUser,
       deleteUser,
       getUsuario,
-      openModal,
-      saveChanges,
-    closeModal,
     dataUsuario,
     type
    };
