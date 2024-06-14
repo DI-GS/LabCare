@@ -8,6 +8,8 @@ import { User } from "./models/User.js";
 import authRouter from "./routes/auth.route.js";
 import stripe from 'stripe';
 
+
+
 const app = express();
 const stripeSecretKey = 'sk_test_51ODDeLJTLy2ZpoEVxNsezWiL5dFzejtlPDV7gzXGc5sDUAn05LXmQVyzDC6jTsFcaHAheeAy1wApUID6orTZrpQP00SqbAgJRx';
 const endpointSecret = 'whsec_1d06f6d7d1993eb22c4b2bb81b2581971cc776a01bdada287c54d1c3a752927d';
@@ -32,6 +34,43 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.post('/validar-pagos-usuario', async (req, res) => {
+  try {
+      const userEmail = req.body.userEmail;
+      const user = await User.findOne({ email: userEmail });
+
+      if (!user) {
+          // Si no se encuentra ningún usuario, devuelve un código de estado 404 y un mensaje de error
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+
+      // Ordenar los pagos en orden descendente por fecha (del más reciente al más antiguo)
+      user.pagos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+      const respuesta = {
+          name: user.name,
+          lastname: user.lastname,
+          email: user.email,
+          pagos: user.pagos.map(pago => ({
+              fecha: pago.fecha,
+              fechaSuscripcion: pago.fechaSuscripcion,
+              correoPago: pago.correoPago
+          }))
+      };
+
+      // Si se encuentra el usuario, devuelve el objeto de usuario con la lista de pagos ordenada
+      return res.json(respuesta);
+  } catch (error) {
+      // Si hay algún error durante la búsqueda del usuario, devuelve un código de estado 500 y un mensaje de error
+      console.error('Error al validar los pagos del usuario:', error.message);
+      return res.status(500).json({ error: 'Error al validar los pagos del usuario' });
+  }
+});
+
+
+
+
+
 // Ruta para manejar la creación de la sesión de checkout
 app.post('/create-checkout-session', async (req, res) => {
     const  userEmail  = req.body.userEmail;
@@ -145,7 +184,8 @@ app.use("/api/v1/auth", authRouter);
 
 // Ruta para el éxito del pago
 app.get('/successful-payment', (req, res) => {
-  res.send('Pago exitoso');
+  // Redirige al frontend a la ruta correspondiente para indicar que el pago fue exitoso
+  res.redirect('http://127.0.0.1:5173/Visualizar-pagos?success=true');
 });
 const PORT = process.env.PORT || 27017;
 app.listen(PORT, () => console.log(" http://localhost:" + PORT));

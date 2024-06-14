@@ -1,9 +1,13 @@
 import Order from "../models/Order.js";
 
+import { User } from "../models/User.js";
+
+
 const generateUniqueOrderId = () => {
   // Lógica para generar un ID único para el pedido
   // ...
 };
+
 
 const handleSuccessfulPayment = (req, res) => {
 
@@ -35,5 +39,4 @@ const handleSuccessfulPayment = (req, res) => {
       res.status(500).json({ error: 'Error interno del servidor' });
     });
 };
-
-module.exports = { handleSuccessfulPayment };
+export { validarPagosUsuario };

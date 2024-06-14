@@ -1,7 +1,6 @@
 import bcryptjs from "bcryptjs";
 import mongoose from "mongoose";
 import { pagoSchema } from "./Pago.js";
-
 const { Schema, model } = mongoose;
 
 
