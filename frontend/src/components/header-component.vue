@@ -97,12 +97,13 @@
           </a>
         </li>
         <li class="item">
+          <router-link class="navlink" :to="{name: 'ViewGraphics'}"><a href="#" class="nav_link"></a>
           <a href="#" class="nav_link">
             <span class="navlink_icon">
               <i class="bx bx-bar-chart-alt-2"></i>
             </span>
             <span class="navlink">Estadísticas</span>
-          </a>
+          </a></router-link>
         </li>
       </ul>
 
