@@ -167,6 +167,41 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
+   /*#################################################### Materias ####################################################*/
+   const newSubject = async (name_subject, name_career, short_name, objetive, period) => {
+    try {
+        const res = await api({
+            url: "/auth/newSubject",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token.value,
+            },
+            data: {
+                name_subject,
+                name_career,
+                short_name,
+                objetive,
+                period
+            }
+        });
+        console.log(res);
+        console.log('estra a user-store',name_career,short_name);
+        return res;
+    } catch (error) {
+        console.error("Error al registrar la materia:", error);
+
+        if (error.response) {
+            throw error.response.data;
+        } else if (error.request) {
+            throw { error: "Error de red al comunicarse con el servidor" };
+        } else {
+            throw { error: "Error desconocido" };
+        }
+    }
+};
+
+
   const refreshToken = async () => {
     try {
       const res = await api.get("/auth/refresh");
@@ -211,6 +246,7 @@ const register = async (name, lastname, email, password, repassword) => {
     getusers,
     updateUser,
     getUsuario,
-    deleteInternUser
+    deleteInternUser,
+    newSubject
   };
 });

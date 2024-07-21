@@ -6,13 +6,17 @@ const subjectSchema = new Schema({
         type: String,
         required: true, 
      },
+     period:{
+        type: Number,
+        requiered: true,
+     },
      career:{
         nombre:{type: String, require: true},
         abreviacion:{type: String, require: true}
      },
      objetive:{
-        nombre:{type: String, require: true},
-        abreviacion:{type: String, require: true}
+        type: String,
+        required: true, 
      },
     uid: {
         type: Schema.Types.ObjectId,
@@ -21,4 +25,4 @@ const subjectSchema = new Schema({
     },
 });
 
-export const ExpedienteFisica = model("Materia", subjectSchema);
+export const Subject = model("Subject", subjectSchema);
