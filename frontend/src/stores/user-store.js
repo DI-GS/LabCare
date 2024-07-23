@@ -200,7 +200,24 @@ const register = async (name, lastname, email, password, repassword) => {
         }
     }
 };
+  const getSubjects= async ()=>{
+    try {
+      const res=await api({
+        url:"/auth/getSubjects",
+        method:"GET",
+        headers:{
+        Authorization: "Bearer " + token.value,
+        } 
+      });
+   
+      return res.data
+    
+    } catch (error) {
+      console.log(error)
+    }
+}
 
+/////////Finaliza materias////////////////////////////////////////////////777
 
   const refreshToken = async () => {
     try {
@@ -247,6 +264,7 @@ const register = async (name, lastname, email, password, repassword) => {
     updateUser,
     getUsuario,
     deleteInternUser,
-    newSubject
+    newSubject,
+    getSubjects
   };
 });

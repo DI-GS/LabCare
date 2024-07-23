@@ -13,6 +13,7 @@ export const newSubject = async (req, res) => {
                 abreviacion: short_name
             }, 
             objetive, 
+            uid: req.uid
         });
         await newSubjects.save();       
 
@@ -25,3 +26,14 @@ export const newSubject = async (req, res) => {
         return res.status(500).json({ error: "Error de servidor" });
     }
 };
+
+export const getSubjects = async (req, res) => {
+    try {
+        const subjects = await Subject.find({ uid: req.uid });
+        return res.json(subjects);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "error de servidor" });
+    }
+};
+
