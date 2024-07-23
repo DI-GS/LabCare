@@ -18,11 +18,6 @@ const subjectSchema = new Schema({
         type: String,
         required: true, 
      },
-    uid: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true, 
-    },
 });
 
 export const Subject = model("Subject", subjectSchema);

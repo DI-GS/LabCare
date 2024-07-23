@@ -13,7 +13,6 @@ export const newSubject = async (req, res) => {
                 abreviacion: short_name
             }, 
             objetive, 
-            uid: req.uid
         });
         await newSubjects.save();       
 
