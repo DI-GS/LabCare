@@ -280,10 +280,91 @@ app.post('/api/createSchedules', async (req, res) => {
 });
 
 
+app.get('/api/teachersWithSchedules', async (req, res) => {
+  try {
+    const teachersWithSchedules = await Schedules.aggregate([
+      {
+        $lookup: {
+          from: 'internusers',
+          localField: 'profesor',
+          foreignField: '_id',
+          as: 'teacher'
+        }
+      },
+      {
+        $unwind: '$teacher'
+      },
+      {
+        $group: {
+          _id: '$teacher._id',
+          name: { $first: '$teacher.name' },
+          lastname: { $first: '$teacher.lastname' }
+        }
+      }
+    ]);
+
+    res.json(teachersWithSchedules);
+  } catch (error) {
+    console.error('Error fetching teachers with schedules:', error);
+    res.status(500).json({ error: 'Error al obtener la lista de maestros con horarios' });
+  }
+});
+
+app.get('/api/schedules/:teacherId', async (req, res) => {
+  const { teacherId } = req.params;
+
+  try {
+    const schedule = await Schedules.findOne({ profesor: teacherId });
+    if (!schedule) {
+      return res.status(404).json({ error: 'Horarios no encontrados para el maestro' });
+    }
+    res.json(schedule);
+  } catch (error) {
+    console.error('Error fetching schedules:', error);
+    res.status(500).json({ error: 'Error al obtener horarios' });
+  }
+});
+
+app.post('/api/updateSchedules', async (req, res) => {
+  const { teacher, schedule } = req.body;
+
+  if (!teacher || !Array.isArray(schedule)) {
+    return res.status(400).json({ error: 'Datos inválidos' });
+  }
+
+  try {
+    const updatedSchedule = await Schedules.findOneAndUpdate(
+      { profesor: teacher },
+      { horario: schedule },
+      { new: true }
+    );
+
+    if (!updatedSchedule) {
+      return res.status(404).json({ error: 'Horarios no encontrados para el maestro' });
+    }
+
+    res.status(200).json({ message: 'Horarios actualizados con éxito', data: updatedSchedule });
+  } catch (error) {
+    console.error('Error updating schedules:', error);
+    res.status(500).json({ error: 'Error al actualizar horarios' });
+  }
+});
 
 
+app.delete('/api/deleteSchedules/:teacherId', async (req, res) => {
+  const { teacherId } = req.params;
 
-
+  try {
+    const result = await Schedules.deleteMany({ profesor: teacherId });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'No se encontraron horarios para eliminar' });
+    }
+    res.status(200).json({ message: 'Horarios eliminados con éxito' });
+  } catch (error) {
+    console.error('Error deleting schedules:', error);
+    res.status(500).json({ error: 'Error al eliminar horarios' });
+  }
+});
 // Ruta para el éxito del pago
 app.get('/successful-payment', (req, res) => {
   // Redirige al frontend a la ruta correspondiente para indicar que el pago fue exitoso
