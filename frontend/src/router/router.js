@@ -39,7 +39,7 @@ const routes = [
     { path: '/Visualizar-pagos', name: 'ViewPago', component: viewPago},
     { path: '/successful-payment', component: SuccessfulPayment },
     { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd},
-    { path: '/Agregar-clase', name: 'subjectView', meta:{auth:true}, component:subjectView},
+    { path: '/Visualizar-clases', name: 'subjectView', meta:{auth:true}, component:subjectView},
     { path: '/Visualizar-graficas', name: 'ViewGraphics', component: ViewGraphics}
 
 ];

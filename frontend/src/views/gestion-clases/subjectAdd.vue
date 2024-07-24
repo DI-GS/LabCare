@@ -22,7 +22,8 @@
               <div class="col-md-6 mb-3">
                 <label for="materia">Nemonico</label>
                 <select class="form-control" v-model="short_name">
-                  <option value="IDGS">IDGS</option>
+                  <option>IDGS</option>
+                  <option>IMT</option>
                   <!-- otros valores -->
                 </select>
               </div>

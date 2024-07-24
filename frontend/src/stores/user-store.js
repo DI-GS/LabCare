@@ -209,7 +209,6 @@ const register = async (name, lastname, email, password, repassword) => {
         Authorization: "Bearer " + token.value,
         } 
       });
-   
       return res.data
     
     } catch (error) {
