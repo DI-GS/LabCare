@@ -4,10 +4,13 @@ import "./database/connectdb.js";
 import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
-import { User } from "./models/User.js";
+import { User } from "./models/User.js"; 
+import { Subject } from './models/subject.js';
+import { Schedules } from './models/Schedules.js';
+import { internUser } from './models/internUser.js'; // O ajusta el camino relativo si es necesario
+import Aula from './models/Aula.js'; 
 import authRouter from "./routes/auth.route.js";
 import stripe from 'stripe';
-
 
 
 const app = express();
@@ -68,7 +71,16 @@ app.post('/validar-pagos-usuario', async (req, res) => {
 });
 
 
-
+app.post('/registroQR', async (req, res) => {
+  try {
+      // Devuelve el cuerpo de la solicitud
+      return res.json(req.body);
+  } catch (error) {
+      // Si hay algún error durante el proceso, devuelve un código de estado 500 y un mensaje de error
+      console.error('Error al validar los pagos del usuario:', error.message);
+      return res.status(500).json({ error: 'Error al validar los pagos del usuario' });
+  }
+});
 
 
 // Ruta para manejar la creación de la sesión de checkout
@@ -178,9 +190,99 @@ app.post('/stripe-webhook', async (req, res) => {
   }
 });
 
+app.get('/api/aulas', async (req, res) => {
+  try {
+      const aulas = await Aula.find({}, 'Aula Edificio');
+      res.json(aulas);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
 
+app.get('/api/materias', async (req, res) => {
+  const { career } = req.query; // Obtén el nombre de la carrera desde los parámetros de consulta
+
+  try {
+    const materias = await Subject.find({ 'career.abreviacion': career });
+    res.json(materias);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/carreras', async (req, res) => {
+  try {
+    const carreras = await Subject.distinct('career.nombre'); // Obtener todos los nombres de carrera distintos
+    res.json(carreras);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.use("/api/v1/auth", authRouter);
+
+// Endpoint para obtener la lista de maestros
+app.get('/api/teachers', async (req, res) => {
+  try {
+    const teachers = await internUser.find({ rol: 'maestro' }).select('name lastname');
+    const teacherOptions = teachers.map(teacher => ({
+      value: `${teacher.name} ${teacher.lastname}`, // Combina nombre y apellido
+      id: teacher._id // Incluye el id del maestro para referencia
+    }));
+    res.json(teacherOptions);
+  } catch (error) {
+    console.error('Error fetching teachers:', error);
+    res.status(500).json({ error: 'Error al obtener la lista de maestros' });
+  }
+});
+
+
+
+
+app.post('/api/createSchedules', async (req, res) => {
+  const { teacher, cycle, schedule } = req.body;
+
+  // Validaciones básicas
+  if (!teacher || !cycle || !Array.isArray(schedule) || schedule.length === 0) {
+    return res.status(400).json({ error: 'Datos inválidos' });
+  }
+
+  // Suponiendo que el nombre completo puede tener más de un nombre y apellido
+  const [teacherName, ...teacherLastNames] = teacher.split(' ');
+  const teacherLastName = teacherLastNames.join(' '); // Unir el resto como apellido
+
+  try {
+    // Buscar el ID del maestro por nombre y apellido
+    const teacherRecord = await internUser.findOne({
+      name: teacherName,
+      lastname: teacherLastName
+    });
+
+    if (!teacherRecord) {
+      return res.status(404).json({ error: 'Maestro no encontrado' });
+    }
+    
+    // Crear nuevo documento de horarios
+    const nuevoHorario = new Schedules({
+      profesor: teacherRecord._id,
+      ciclo: cycle,
+      horario: schedule
+    });
+
+    // Guardar en la base de datos
+    await nuevoHorario.save();
+
+    res.status(201).json({ message: 'Horario guardado con éxito', data: nuevoHorario });
+  } catch (err) {
+    console.error('Error al guardar el horario:', err); // Log para depuración
+    res.status(500).json({ error: 'Error al guardar el horario', details: err });
+  }
+});
+
+
+
+
+
 
 // Ruta para el éxito del pago
 app.get('/successful-payment', (req, res) => {
