@@ -16,7 +16,12 @@ const subjectSchema = new Schema({
     },
     objetive: {
         type: String,
-        required: true,
+        required: true, 
+     },
+    uid: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true, 
     },
 });
 

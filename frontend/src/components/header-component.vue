@@ -74,7 +74,7 @@
             </a></router-link>
           </li>
           <li class="item">
-            <router-link class="navlink" :to="{name: 'subjectAdd'}"><a href="#" class="nav_link"></a>
+            <router-link class="navlink" :to="{name: 'subjectView'}"><a href="#" class="nav_link"></a>
             <a href="#" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-spreadsheet"></i>
