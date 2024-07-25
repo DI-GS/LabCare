@@ -214,7 +214,70 @@ const register = async (name, lastname, email, password, repassword) => {
     } catch (error) {
       console.log(error)
     }
-}
+  };
+
+  const getSubject= async (subjectId)=>{
+    try {
+        const res=await api({
+          url: `/auth/getSubject/${subjectId}`,
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+      });
+      console.log("Entra a userstore", subjectId)
+     
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const updateSubject= async (subjectId, name_subject, period,  name_career, short_name,objetive,)=>{
+    try {
+        const res=await api({
+          url:"/auth/updateSubject",
+        method:"PATCH",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          subjectId,
+          name_subject,
+          period,
+          name_career,
+          short_name,  
+          objetive
+        }
+      });
+      console.log(res)
+      return res
+    } catch (error) {
+      console.log("Error se servidor",error)
+    }
+  };
+
+  const deleteSubject= async (subjectId)=>{
+    try {
+        const res=await api({
+        url:"/auth/deleteSubject",
+        method:"DELETE",
+        headers:{
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          subjectId,
+        }
+      });
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 /////////Finaliza materias////////////////////////////////////////////////777
 
@@ -264,6 +327,9 @@ const register = async (name, lastname, email, password, repassword) => {
     getUsuario,
     deleteInternUser,
     newSubject,
-    getSubjects
+    getSubjects,
+    getSubject,
+    updateSubject,
+    deleteSubject
   };
 });

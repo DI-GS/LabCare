@@ -53,10 +53,10 @@
             <td>{{ subject.career.abreviacion }}</td>
             <td>{{ subject.name_subject }}</td>
             <td>
-              <button class="btn btn-sm btn-secondary" @click="openModal(user)">
+              <button class="btn btn-sm btn-secondary" @click="openModal(subject)">
                 <i class="fa-solid fa-pencil" ></i>
               </button>
-              <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteUser(user)"></i></button>
+              <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteSubject(subject)"></i></button>
             </td>
           </tr>
         </tbody>
@@ -64,29 +64,29 @@
     </div>
   </div>
 
-  <div id="modal_horarios" class="modal_horarios">
+  <div id="modal_materias" class="modal_horarios">
   <div class="modal-horarios-content">
       <span class="close" @click="closeModal">&times;</span>
-      <h2>Actualizar usuario</h2>
+      <h2>Información de la materia</h2>
       <div class="input-group">
-          <label for="subject">Nombre:</label>
-          <input type="text"  v-model.lazy="dataSubject.name" v-model="dataSubject.name" required>
+          <label for="subject">Cuatrimestre:</label>
+          <input type="text"  v-model.lazy="dataSubject.period" v-model="dataSubject.period" required>
       </div>
       <div class="input-group">
-          <label for="career">Apellido</label>
-          <input type="text" v-model.lazy="dataSubject.lastname" v-model="dataSubject.lastname" required>
+          <label for="career">Carrera</label>
+          <input type="text" v-model.lazy="dataSubject.career.nombre" v-model="dataSubject.career.nombre" required>
       </div>
       <div class="input-group">
-          <label for="grade">Email</label>
-          <input type="text" v-model.lazy="dataSubject.email" v-model="dataSubject.email" required>
+          <label for="career">Nemónico</label>
+          <input type="text" v-model.lazy="dataSubject.career.abreviacion" v-model="dataSubject.career.abreviacion" required>
       </div>
       <div class="input-group">
-          <label for="group">Tipo de usuario:</label>
-          <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataSubject.rol" v-model="dataSubject.rol" required>
-          <datalist id="groupOptions">
-              <option value="Maestro"></option>
-              <option value="Administrador"></option>
-          </datalist>
+          <label for="grade">Materia</label>
+          <input type="text" v-model.lazy="dataSubject.subject" v-model="dataSubject.name_subject" required>
+      </div>
+      <div class="input-group">
+          <label for="group">Objetivo:</label>
+          <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataSubject.objetive" v-model="dataSubject.objetive" required>         
       </div>
       <button class="btn btn-sm btn-success" id="save-changes" @click="saveChanges">Guardar Cambios</button>
   </div>
@@ -105,6 +105,7 @@ import "datatables.net-bs5";
 import headerComponent from "@/components/header-component.vue";
 import { ref, onMounted } from "vue";
 import { store } from "@/stores/user-store";
+import Swal from 'sweetalert2';
 
 export default {
 name: "viewSubject",
@@ -118,34 +119,36 @@ subject: "",
 });
   const userStore = store();
   const type = ref(null);
-  //var internUserId = ref("")
+  var internSubjectId = ref("")
 
-//   const openModal = (user) => {
-//   getUsuario(user._id)
-//   const modal = document.getElementById('modal_horarios');
-//   modal.style.display = 'block';
-// };
+  const openModal = (subject) => {
+    getMateria(subject._id)
+    console.log("Entra al modal",subject._id)
+    const modal = document.getElementById('modal_materias');
+    modal.style.display = 'block';
+  };
+
   // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
-  // const closeModal = () => {
-  // const modal = document.getElementById('modal_horarios');
-  // modal.style.display = "none";
-  // };
+  const closeModal = () => {
+  const modal = document.getElementById('modal_materias');
+  modal.style.display = "none";
+  };
 
-  // Evento clic para guardar los cambios y actualizar las celdas
-//   const saveChanges = async () => {
-//   actualizarInformacion()
-//   closeModal();
-//   window.location.reload();
-// };
+  //Evento clic para guardar los cambios y actualizar las celdas
+  const saveChanges = async () => {
+  actualizarInformacion();
+  window.location.reload();
+ 
+};
 
-// const getMaterias = async (userId) => {
-//       try {
-//         internUserId.value = userId
-//         dataUsuario.value = await userStore.getUsuario(userId);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
+const getMateria = async (subjectId) => {
+      try {
+        internSubjectId.value = subjectId;
+        dataSubject.value = await userStore.getSubject(subjectId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   const getMaterias = async () => {
     try {
@@ -155,31 +158,58 @@ subject: "",
     }
   };
 
-  // const deleteUser = async (user) => {
-  //   try {
-  //     getUsuario(user._id)
-  //     await userStore.deleteInternUser(user._id);
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  const deleteSubject = async (subject) => {
+    try {
+      getMateria(subject._id)
+      await userStore.deleteSubject(subject._id);
+      window.location.reload();
+    } catch (error) {
+       console.error(error);
+    }
+  }; 
 
 
-// const actualizarInformacion = async () => {
-// const userId = internUserId.value;
-// try {
-//   await userStore.updateUser(
-//     userId,
-//     dataUsuario.value.name,
-//     dataUsuario.value.lastname,
-//     dataUsuario.value.email,
-//     dataUsuario.value.rol
-//   );
-// } catch (error) {
-//   console.log(error);
-// }
-// }
+const actualizarInformacion = async () => {
+  const subjectId = internSubjectId.value;
+  try {
+    await userStore.updateSubject(
+      subjectId,
+      dataSubject.value.name_subject,
+      dataSubject.value.period,
+      dataSubject.value.career.nombre,
+      dataSubject.value.career.abreviacion,
+      dataSubject.value.objetive
+    );
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Información actualizada',
+      text: '¡Materiaactualizada con éxito!',
+    });
+
+  } catch (error) {
+      console.log("Error al actalizar la materia:", error);
+      if (error.response) {
+        Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response.data.error,
+        });
+      } else if (error.request) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de red',
+          text: 'No se pudo comunicar con el servidor',
+          });
+        } else {
+          Swal.fire({
+          icon: 'error',
+          title: 'Error desconocido',
+          text: 'Ocurrió un error inesperado',
+          });
+        }
+  }
+};
 
   const initDataTable = () => {
     const dataTableOptions = {
@@ -412,12 +442,15 @@ $('#example').DataTable(dataTableOptions);
     // getUser,
     // deleteUser,
     getMaterias,
+    openModal,
+    closeModal,
     //openModal,
-  //   saveChanges,
+    saveChanges,
   // closeModal,
-  dataSubject,
-  type
- };
+    dataSubject,
+    deleteSubject,
+    type
+   };
 },
 };
 </script>

@@ -10,7 +10,7 @@ import {
 } from "../controllers/auth.controller.js";
 import { requireRefreshToken } from "../middlewares/requireRefreshToken.js";
 import { requireToken } from "../middlewares/requireToken.js";
-import {newSubject,getSubjects} from "../controllers/subject.controller.js";
+import {newSubject,getSubjects,getSubject,updateSubject,deleteSubject} from "../controllers/subject.controller.js";
 import {
     bodyLoginValidator,
     bodyRegisterValidator,
@@ -30,6 +30,9 @@ router.patch("/updateUser", requireToken, updateUser);
 router.delete("/deleteUser", requireToken, deleteUser);
 router.post("/newSubject",requireToken,newSubject);
 router.get("/getSubjects",requireToken,getSubjects);
+router.get("/getSubject/:subjectId",requireToken,getSubject);
+router.patch("/updateSubject", requireToken,updateSubject);
+router.delete("/deleteSubject",requireToken,deleteSubject);
 
 
 

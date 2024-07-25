@@ -13,11 +13,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="carrera">No. Cuatrimestre</label>
-                <select class="form-control" v-model="period">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <!-- otros valores -->
-                </select>
+                <input type="text" class="form-control" v-model="period">
               </div>
               <div class="col-md-6 mb-3">
                 <label for="materia">Nemonico</label>
@@ -75,7 +71,7 @@
           Swal.fire({
             icon: 'success',
             title: 'Registro exitoso',
-            text: '¡Materia creada con éxito!',
+            text: '¡Materia registrada con éxito!',
           }).then(() => {
             // Redirige al usuario a la página de visualización de materias después de hacer clic en "Aceptar" en la alerta
             //router.push("/Visualizar-materias");
