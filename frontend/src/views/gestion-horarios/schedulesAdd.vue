@@ -13,17 +13,25 @@
         <title>Registro de Horarios</title>
     </head>
 <body>
-    <div class="main-container content padding">
+  <div class="main-container content padding">
     <div class="teacher-select">
-        <label for="teacherInput" class="teacher_label">Seleccione un Maestro: </label>
-        <input type="text" class="teacher_input" id="teacher" list="teacherOptions" placeholder="Buscar Maestro...">
-        <datalist id="teacherOptions">
-            <option value="Lizbeth Noriega"></option>
-            <option value="Mildred Green"></option>
-            <option value="Brenda Mariana"></option>
-            <!-- Agregar más opciones según necesites -->
+    <label for="teacherInput" class="teacher_label">Seleccione un Maestro: </label>
+    <input type="text" class="teacher_input" id="teacher" list="teacherOptions" v-model="selectedTeacher" placeholder="Buscar Maestro...">
+    <datalist id="teacherOptions">
+          <option v-for="teacher in teacherOptions" :key="teacher.id" :value="teacher.value">
+            {{ teacher.value }}
+          </option>
         </datalist>
-    </div>
+</div>
+<div class="cycle-select">
+    <label for="cycleInput" class="cycle_label">Ingrese el Ciclo: </label>
+    <input type="text" class="cycle_input" id="cycle" list="cycleOptions" v-model="selectedCycle" placeholder="Selecciona un ciclo...">
+    <datalist id="cycleOptions">
+        <option v-for="cycle in cycleOptions" :key="cycle" :value="cycle">
+            {{ cycle }}
+        </option>
+    </datalist>
+</div>
 
 
 
@@ -68,65 +76,105 @@
         />
         <button class="btn btn-sm btn-danger"  @click="removeHour(hourRange.id)"><i class="fa-solid fa-trash-can"></i></button>
       </td>
-      <td v-for="(day, dayIndex) in days" :key="dayIndex" class="editable" @click="openModal"></td>
+      <td v-for="(day, dayIndex) in days" :key="dayIndex" class="editable" @click="openModal" :data-day="day.name"></td>
+
     </tr>
   </tbody>
       </table>
     </section>
-        <button id="save">Guardar</button>
+        <button id="save" @click="guardar()">Guardar</button>
 
     
 
-    
-<div id="modal_horarios" class="modal_horarios">
+        <div id="modal_horarios" class="modal_horarios">
     <div class="modal-horarios-content">
         <span class="close" @click="closeModal">&times;</span>
-        <h2>Registro de Materia</h2>
-        <div class="input-group">
-            <label for="subject">Materia:</label>
-            <input type="text" id="subject" name="subject" list="subjectOptions">
-            <datalist id="subjectOptions">
-                <option value="Integradora 1"></option>
-                <option value="Administración del tiempo"></option>
-                <option value="Matemáticas para ingeniería 1"></option>
-            </datalist>
-        </div>
+        
+        <!-- Input para Carrera -->
         <div class="input-group">
             <label for="career">Carrera:</label>
-            <input type="text" id="career" name="career" list="careerOptions">
+            <input 
+                type="text" 
+                id="career" 
+                list="careerOptions" 
+                v-model="selectedCareer" 
+                @input="fetchSubjects"
+                placeholder="Selecciona una carrera..."
+            />
             <datalist id="careerOptions">
-                <option value="IDGS"></option>
-                <option value="LINM"></option>
-                <option value="IER"></option>
+                <option v-for="career in careers" :key="career.nombre" :value="career.nombre">
+                    {{ career.nombre }}
+                </option>
             </datalist>
         </div>
+
+        <!-- Input para Materia -->
+        <div v-if="subjects.length" class="input-group">
+            <label for="subject">Materia:</label>
+            <input 
+                type="text" 
+                id="subject" 
+                v-model="selectedSubject" 
+                list="subjectOptions"
+                placeholder="Selecciona una materia..."
+            />
+            <datalist id="subjectOptions">
+                <option v-for="subject in subjects" :key="subject.id" :value="subject.name_subject">
+                    {{ subject.name_subject }}
+                </option>
+            </datalist>
+        </div>
+
+        <!-- Input para Grado -->
         <div class="input-group">
             <label for="grade">Grado:</label>
-            <input type="text" id="grade" name="grade" list="gradeOptions">
+            <input 
+                type="text" 
+                id="grade" 
+                list="gradeOptions"
+                placeholder="Selecciona un grado..."
+            />
             <datalist id="gradeOptions">
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
             </datalist>
         </div>
+
+        <!-- Input para Grupo -->
         <div class="input-group">
             <label for="group">Grupo:</label>
-            <input type="text" id="group" name="group" list="groupOptions">
+            <input 
+                type="text" 
+                id="group" 
+                list="groupOptions"
+                placeholder="Selecciona un grupo..."
+            />
             <datalist id="groupOptions">
-                <option value="A"></option>
-                <option value="B"></option>
-                <option value="C"></option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
             </datalist>
         </div>
+
+        <!-- Input para Edificio/Aula -->
         <div class="input-group">
-            <label for="build">Edificio/Aula:</label>
-            <input type="text" id="build" name="group" list="buildOptions">
+          <label for="build">Edificio/Aula:</label>
+            <input 
+                type="text" 
+                id="build" 
+                list="buildOptions" 
+                v-model="selectedBuildOption"  
+                placeholder="Selecciona un edificio/aula..."
+            />
             <datalist id="buildOptions">
-                <option value="A-205"></option>
-                <option value="B-102"></option>
-                <option value="F-210"></option>
+                <option v-for="option in buildOptions" :key="option.id" :value="option.display">
+                    <!-- Aquí solo muestra el valor del option -->
+                </option>
             </datalist>
         </div>
+
+        <!-- Botón para guardar cambios -->
         <button id="save-changes" @click="saveChanges">Guardar Cambios</button>
     </div>
 </div>
@@ -135,12 +183,13 @@
   </template>
   
   <script>
-import { ref } from 'vue';
+import { ref,onMounted, watch  } from 'vue';
 import { store } from "@/stores/user-store";
 import { useRouter } from "vue-router";
 import headerComponent from "@/components/header-component.vue"
 import VueTimepicker from 'vue3-timepicker'
 import 'vue3-timepicker/dist/VueTimepicker.css'
+
   //import { store } from "@/stores/user-store";
   export default {
     name: "schedulesAdd",
@@ -148,12 +197,25 @@ components: {headerComponent, VueTimepicker},
   
   
     setup() {
+      const cycleOptions = ref([]);
+      const teacherOptions  = ref([]);
+      const selectedTeacher= ref(''); // Para almacenar el maestro seleccionado
+      const selectedCycle= ref('');
+      const selectedCell = ref(null);
+    const dataUsuario = ref([]);
+    const userStore = store();
+      const selectedCareer = ref('');
+    const selectedSubject = ref('');
+    const careers = ref([]);
+    const subjects = ref([]);
+    const buildOptions = ref([]);
+    const selectedBuildOption = ref('');
         const allDays = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
          const availableDays = allDays.filter(day => day !== 'Domingo');
     const days = ref(availableDays.map((name, index) => ({ id: index + 1, name })));
     const hours = ref([{ id: 1 }]); // Inicia con al menos un rango horario
     const selectedDay = ref(allDays[0]); // Inicia con el primer día seleccionado
-
+      
     const addNewHour = () => {
       hours.value.push({ id: generateId() });
     };
@@ -164,6 +226,63 @@ components: {headerComponent, VueTimepicker},
         hours.value.splice(index, 1);
       }
     };
+    const guardar = async () => {
+  const scheduleData = [];
+
+  // Obtén todas las filas del cuerpo de la tabla
+  const rows = document.querySelectorAll('#schedule-table tbody tr');
+
+  rows.forEach((row, rowIndex) => {
+    // Obtén el rango de horas de la fila
+    const hourRange = hours.value[rowIndex] || {};
+    
+    // Recorre cada celda en la fila
+    const cells = row.querySelectorAll('td');
+    cells.forEach((cell) => {
+      if (cell.dataset.cellData) {
+        const cellData = JSON.parse(cell.dataset.cellData);
+        const day = cell.dataset.day;  // Obtén el día desde el dataset de la celda
+
+        // Agrega los datos al array scheduleData
+        scheduleData.push({
+          hourRange: {
+            startTime: hourRange.startTime || { HH: "", mm: "" },
+            endTime: hourRange.endTime || { HH: "", mm: "" }
+          },
+          dia_semana: day, // Usa 'dia_semana' en lugar de 'day'
+          ...cellData
+        });
+      }
+    });
+  });
+
+  const data = {
+    teacher: selectedTeacher.value,
+    cycle: selectedCycle.value,
+    schedule: scheduleData
+  };
+
+  try {
+    const response = await fetch('http://localhost:27017/api/createSchedules', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      alert('Horarios guardados exitosamente');
+    } else {
+      const errorData = await response.json();
+      console.error('Error al guardar horarios:', errorData);
+    }
+  } catch (error) {
+    console.error('Error al guardar horarios:', error);
+  }
+};
+
+
 
     const addNewDay = () => {
   const selectedDayValue = selectedDay.value;
@@ -187,39 +306,9 @@ components: {headerComponent, VueTimepicker},
       return '_' + Math.random().toString(36).substr(2, 9);
     };
 
-    const selectedCell = ref(null);
-    const email = ref("");
-    const password = ref("");
-    const repassword = ref("");
-    const name = ref("");
-    const lastname = ref("");
-    const rol = ref("");
-    const router = useRouter();
-    const userStore = store();
+ 
 
-    const handleSubmit = async () => {
-  try {
-      await userStore.createNewUser(name.value, lastname.value, email.value, password.value, repassword.value, rol.value);
-      email.value = "";
-      password.value = "";
-      repassword.value = "";
-      name.value = "";
-      lastname.value = "";
-      rol.value = "";
-      router.push("home");
-    
-  } catch (error) {
-    console.log("desde loginComponents: ", error);
-    if (error.error) {
-      // eslint-disable-next-line no-undef
-      alertError(error.error);
-    }
-    if (error.errors) {
-      // eslint-disable-next-line no-undef
-      alertError(error.errors[0].msg);
-    }
-  }
-};
+   
 
     const openModal = (event) => {
     // Verifica si el evento tiene un objetivo (target) y si es una celda editable
@@ -245,41 +334,115 @@ components: {headerComponent, VueTimepicker},
 
     // Evento clic para guardar los cambios y actualizar las celdas
     const saveChanges = () => {
-      if (selectedCell.value) {
-        const subjectInput = document.getElementById('subject');
-        const gradeInput = document.getElementById('grade');
-        const groupInput = document.getElementById('group');
-        const careerInput = document.getElementById('career');
-        const buildInput = document.getElementById('build');
+  if (selectedCell.value) {
+    const subjectInput = document.getElementById('subject');
+    const gradeInput = document.getElementById('grade');
+    const groupInput = document.getElementById('group');
+    const careerInput = document.getElementById('career');
+    const buildInput = document.getElementById('build');
 
+    // Crea un objeto con la información
+    const cellData = {
+      subject: subjectInput.value,
+      grade: gradeInput.value,
+      group: groupInput.value,
+      career: careerInput.value,
+      build: buildInput.value
+    };
 
-        const formattedContent = `${subjectInput.value}\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}`;
-        selectedCell.value.innerHTML = `<pre>${formattedContent}</pre>`;
+    // Almacena la información en la celda
+    selectedCell.value.dataset.cellData = JSON.stringify(cellData);
+    selectedCell.value.innerHTML = `<pre>${subjectInput.value}\n${gradeInput.value}°${groupInput.value} - ${careerInput.value}\n${buildInput.value}</pre>`;
 
-          closeModal()
+    closeModal();
 
-          // Limpiar los campos del modal después de guardar los cambios
-          subjectInput.value = '';
-          gradeInput.value = '';
-          groupInput.value = '';
-          careerInput.value = '';
-          buildInput.value = '';
+    // Limpiar los campos del modal después de guardar los cambios
+    subjectInput.value = '';
+    gradeInput.value = '';
+    groupInput.value = '';
+    careerInput.value = '';
+    buildInput.value = '';
 
-          selectedCell.value = null;
-        } else {
-          console.error('Alguno de los elementos de entrada no se encontró en el DOM.');
-        }
-      }
+    selectedCell.value = null;
+  } else {
+    console.error('Alguno de los elementos de entrada no se encontró en el DOM.');
+  }
+};
+
     
 
+      const fetchSubjects = async () => {
+      if (selectedCareer.value) {
+        try {
+          const response = await fetch(`http://localhost:27017/api/materias?career=${encodeURIComponent(selectedCareer.value)}`); // Cambia la URL a tu endpoint
+          subjects.value = await response.json();
+        } catch (error) {
+          console.error('Error al cargar las materias:', error);
+        }
+      } else {
+        subjects.value = [];
+      }
+    };  
+watch(selectedCareer, (newCareer) => {
+  fetchSubjects();
+});
 
+const fetchCareers = async () => {
+      try {
+        const response = await fetch('http://localhost:27017/api/carreras'); // Cambia la URL a tu endpoint
+        careers.value = await response.json();
+      } catch (error) {
+        console.error('Error al cargar las carreras:', error);
+      }
+    };
+    const fetchBuildOptions = async () => {
+      try {
+        const response = await fetch('http://localhost:27017/api/aulas');
+        const data = await response.json();
+       
+        buildOptions.value = data.map(item => ({
+          id: item.id,
+          display: `${item.Edificio}-${item.Aula}` // Combina edificio y aula
+        }));
+      } catch (error) {
+        console.error('Error fetching build options:', error);
+      }
+    };
+
+    const loadTeachers = async () => {
+      try {
+        const response = await fetch('http://localhost:27017/api/teachers');
+        const data = await response.json();
+
+        teacherOptions.value = data.map(item => ({
+          id: item.id,
+          value: item.value
+        }));
+      } catch (error) {
+        console.error('Error fetching teacher options:', error);
+      }
+};
+
+const generateCycleOptions = () => {
+      const currentYear = new Date().getFullYear();
+      const cycleLetters = ['S', 'M', 'E']; // Letras específicas para los ciclos
+
+      const cycles = cycleLetters.map(letter => `${currentYear}${letter}`);
+      cycleOptions.value = cycles;
+    };
+    onMounted(() => {
+        fetchBuildOptions();
+        fetchCareers();
+        loadTeachers();
+        generateCycleOptions();
+      });
      
   
       return{
         openModal,
         saveChanges,
         closeModal,
-        handleSubmit,
+        cycleOptions,
         days,
       hours,
       addNewHour,
@@ -287,7 +450,20 @@ components: {headerComponent, VueTimepicker},
       removeHour,
       addNewDay,
       allDays,
-      selectedDay
+      selectedDay,
+      guardar,
+      buildOptions, 
+      dataUsuario,
+      selectedCareer,
+      selectedSubject,
+      careers,
+      subjects,
+      fetchSubjects,
+      selectedBuildOption,
+       selectedTeacher, 
+       selectedCycle,
+       teacherOptions
+      
       }
       
     },
