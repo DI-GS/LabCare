@@ -18,6 +18,28 @@ const subjectSchema = new Schema({
         type: String,
         required: true, 
      },
+     thematic_units: [{
+        unit_number:{
+            type: String,
+        },
+        unit_name:{
+            type: String,
+        },
+        themes:[
+            {
+                theme_name:{
+                    type: String,
+    
+                }
+            }
+        ],
+        theoretical_hours:{
+            type: Number,
+        },
+        practical_hours:{
+            type: Number,
+        }
+    }],
     uid: {
         type: Schema.Types.ObjectId,
         ref: "User",
