@@ -24,12 +24,7 @@
    
            <div class="header-content container">
                <div class="content">
-                   <h1>Lorem ipsum ipsum sit</h1>
-                   <p>
-                       Lorem ipsum dolor sit awet consectetur
-                   </p>
-                   <a href="#" class="btn-1">Mas informacion</a>
-                   <a href="#" class="btn-1">Mas informacion</a>
+                   <h1>La inversión en conocimiento paga el mejor interés</h1>
                </div>
                <img src="@/assets/images/fondodos.png" alt="" class="small-image">
            </div>
@@ -38,46 +33,50 @@
        <main class="services container">
            <div class="service">
                <img src="@/assets/images/icon1.svg" alt="">
-               <h3>Servicio 1</h3>
+               <h3>Servicios </h3>
                <p>
-                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta tempore magnam odio id ex blanditiis
-                   officia placeat,
+                  Instalación,
+                  Servicio de Hosting,
+                  Soporte técnico.
                </p>
            </div>
    
            <div class="service">
                <img src="@/assets/images/icon2.svg" alt="">
-               <h3>Servicio 2</h3>
+               <h3>Beneficios</h3>
                <p>
-                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta tempore magnam odio id ex blanditiis
-                   officia placeat,
+                 Al contratar nuestros servicios, tendrás acceso a todos los beneficios de nuestra página web y al servicio móvil.
                </p>
            </div>
    
            <div class="service">
                <img src="@/assets/images/icon3.svg" alt="">
-               <h3>Servicio 3</h3>
+               <h3> Pagos</h3>
                <p>
-                   Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta tempore magnam odio id ex blanditiis
-                   officia placeat,
+                  Pago inicial: $1800
+
+                  Pago mensual: $1000
+                 
                </p>
            </div>
        </main>
    
        <section class="portafolios container">
    
-           <h2>Portafolios</h2>
+           
            <div class="portafolio">
                <img src="@/assets/images/ilustrasion1.svg" alt="">
    
                <div class="portafolio-1">
    
-                   <h3>portafolio 1</h3>
-                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis jdsfpakjakjafja
-                       ahdfojasojdfaowsjdfajdfakjodfokjdalkfjsljfajfjasjfkldawsjdf
-                       ANSDJFDASNOGAOSXJXIJM;OD
+                   <h3>Propósito Central</h3>
+                   <p>En LabCare, nos comprometemos a ofrecer soluciones tecnológicas innovadoras
+                    para el control de acceso en entornos académicos, facilitando la gestión eficiente de
+                    laboratorios, aulas y áreas comunes en universidades  Nuestra misión es
+                    proporcionar herramientas que garanticen la seguridad, el orden y la transparencia
+                    en el uso de estos espacios, permitiendo un seguimiento preciso de las actividades
+                    realizadas por el personal docente y administrativo
                    </p>
-                   <a href="#" class="btn-2">Informacion</a>
                </div>
            </div>
             <br>
@@ -88,12 +87,12 @@
                <img src="@/assets/images/ilustrasion2.svg" alt="">
                <div class="portafolio-1">
    
-                   <h3>portafolio 2</h3>
-                   <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis jdsfpakjakjafja
-                       ahdfojasojdfaowsjdfajdfakjodfokjdalkfjsljfajfjasjfkldawsjdf
-                       ANSDJFDASNOGAOSXJXIJM;OD
+                   <h3>Alcance</h3>
+                   <p>Desarrollar un sistema de control del espacio de trabajo 
+                   para registrar y gestionar actividades y uso de recursos,
+                    así como implementar un sistema de control de acceso 
+                    para garantizar la seguridad y evitar accesos no autorizados
                    </p>
-                   <a href="#" class="btn-2">Informacion</a>
                </div>
                
    
@@ -108,17 +107,22 @@
                    <div class="info-content">
    
                        <div class="info-price">
-                           <h2>costo</h2>
-                           <p class="price">$5000</p>
-                           <p>kwfadsjklgnsaklnmdflkasdnmf</p>
+                           <h2>Pagos</h2>
+                           <p>Pago Inicial</p>
+                           <p class="price">$1800</p>
+                           
+                           <p>Pago Mensual</p>
+                           <p class="price">$1000</p>
                        </div>
-                       <div class="info-txt">
-                           <h2>Princing list</h2>
-                           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ipsam non iure porro
-                               
-                           </p>
-                           <a href="#" class="btn-1">informacion</a>
-                       </div>
+                       <div class="info-txt" style="width: 100%; margin: 70px auto 0 auto; text-align: left;">
+    <h2>Servicio Y Pagos</h2>
+    <p>Ofrecemos servicios de alta calidad para satisfacer todas tus necesidades. 
+       Nuestro equipo está comprometido a brindarte el mejor servicio posible, 
+       asegurando que cada centavo invertido valga la pena. 
+       Si tienes alguna pregunta o necesitas más información, 
+       no dudes en contactarnos.
+    </p>
+    </div>
                    </div>
                    <hr>
                    <div>
