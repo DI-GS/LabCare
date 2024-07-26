@@ -1,38 +1,7 @@
 <template>
-    <headerComponent></headerComponent>
-    <head>
-        <title>Horarios</title>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- DataTable -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.bootstrap5.min.css"
-    />
-    <!-- Bootstrap-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-    />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-<div class="main-container content padding">
-  <div class="container my-5">
+  <headerComponent></headerComponent>
+  <div class="main-container content padding">
+    <div class="container my-5">
       <router-link :to="{ name: 'schedulesAdd' }" class="btn btn-sm btn-success">Nuevo Horario</router-link>
       <div class="row">
         <table id="example" class="table table-striped" style="width: 100%">
@@ -40,315 +9,215 @@
             <tr>
               <th>#</th>
               <th>Nombre</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(user, index) in data" :key="index">
+            <tr v-for="(user, index) in data" :key="user._id">
               <td>{{ index + 1 }}</td>
-              <td>{{ user.name+ " " + user.lastname }}</td>
+              <td>{{ user.name + " " + user.lastname }}</td>
               <td>
-                <button class="btn btn-sm btn-secondary">
-                  <i class="fa-solid fa-pencil" ></i>
+                <button class="btn btn-sm btn-secondary" @click="openModal(user)">
+                  <i class="fa-solid fa-pencil"></i>
                 </button>
-                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteUser(user)"></i></button>
+                <button class="btn btn-sm btn-danger" @click="deleteUser(user)">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-</div>
-  </body>
 
-  </template>
-  
-  <script>
-import $ from "jquery";
-import "datatables.net";
-import "datatables.net-bs5";
+    <!-- Modal personalizado -->
+<div v-if="showModal" class="custom-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Horarios de {{ selectedTeacher.name }} {{ selectedTeacher.lastname }}</h5>
+      <button type="button" class="btn-close" @click="closeModal">Cerrar</button>
+    </div>
+    <div class="modal-body">
+      <form @submit.prevent="saveSchedules">
+        <div v-for="(schedule, index) in schedules" :key="index" class="mb-3">
+          <div class="form-group">
+            <label for="day">Día</label>
+            <input type="text" class="form-control" v-model="schedule.dia_semana" placeholder="Día" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Materia</label>
+            <input type="text" class="form-control" v-model="schedule.subject" placeholder="Materia" required />
+          </div>
+          <div class="form-group">
+            <label for="hourRange">Rango de Horas</label>
+            <div class="d-flex">
+              <input type="number" class="form-control me-2" v-model.number="schedule.hourRange.startTime.HH" placeholder="Hora Inicio (HH)" min="0" max="23" required />
+              <input type="number" class="form-control me-2" v-model.number="schedule.hourRange.startTime.mm" placeholder="Minuto Inicio (mm)" min="0" max="59" required />
+              <input type="number" class="form-control me-2" v-model.number="schedule.hourRange.endTime.HH" placeholder="Hora Fin (HH)" min="0" max="23" required />
+              <input type="number" class="form-control" v-model.number="schedule.hourRange.endTime.mm" placeholder="Minuto Fin (mm)" min="0" max="59" required />
+            </div>
+          </div>
+          <!-- Agrega otros campos según sea necesario -->
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      </form>
+    </div>
+  </div>
+</div>
+<div v-if="showModal" class="modal-backdrop" @click="closeModal"></div>
+
+  </div>
+</template>
+
+
+<script>
 import headerComponent from "@/components/header-component.vue";
-import { ref, onMounted } from "vue";
-import { store } from "@/stores/user-store";
 
 export default {
   name: "viewSchedules",
   components: { headerComponent },
-  setup() {
-    const data = ref([]);
-    const dataUsuario = ref({
-  name: "",
-  lastname: "",
-  email: "",
-  rol: "",
-});
-    const userStore = store();
-    const type = ref(null); 
-    var internUserId = ref("")
-
-    
-      const getUsuario = async (userId) => {
-      try {
-        internUserId.value = userId
-        dataUsuario.value = await userStore.getUsuario(userId);
-      } catch (error) {
-        console.error(error);
-      }
+  data() {
+    return {
+      data: [],
+      selectedTeacher: {},
+      schedules: [],
+      showModal: false
     };
-
-    const getUser = async () => {
-      try {
-        data.value = await userStore.getusers();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const deleteUser = async (user) => {
-      try {
-        getUsuario(user._id)
-        await userStore.deleteInternUser(user._id);
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-
-    const initDataTable = () => {
-      const dataTableOptions = {
-  dom: 'Bfrtilp',
-  lengthMenu: [5, 10, 15, 20, 100, 200, 500],
-  columnDefs: [
-    { searchable: false, targets:[0,2]},
-  ],
-  pageLength: 3,
-  destroy: true,
-  language: {
-    processing: 'Procesando...',
-    lengthMenu: 'Mostrar _MENU_ registros',
-    zeroRecords: 'No se encontraron resultados',
-    emptyTable: 'Ningún dato disponible en esta tabla',
-    infoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
-    infoFiltered: '(filtrado de un total de _MAX_ registros)',
-    search: 'Buscar:',
-    infoThousands: ',',
-    loadingRecords: 'Cargando...',
-    paginate: {
-      first: 'Primero',
-      last: 'Último',
-      next: 'Siguiente',
-      previous: 'Anterior',
-    },
-    aria: {
-      sortAscending: ': Activar para ordenar la columna de manera ascendente',
-      sortDescending: ': Activar para ordenar la columna de manera descendente',
-    },
-
-    autoFill: {
-      cancel: 'Cancelar',
-      fill: 'Rellene todas las celdas con <i>%d</i>',
-      fillHorizontal: 'Rellenar celdas horizontalmente',
-      fillVertical: 'Rellenar celdas verticalmentemente',
-    },
-    decimal: ',',
-    searchBuilder: {
-      add: 'Añadir condición',
-      button: {
-        0: 'Constructor de búsqueda',
-        _: 'Constructor de búsqueda (%d)',
-      },
-      clearAll: 'Borrar todo',
-      condition: 'Condición',
-      conditions: {
-        date: {
-          after: 'Despues',
-          before: 'Antes',
-          between: 'Entre',
-          empty: 'Vacío',
-          equals: 'Igual a',
-          notBetween: 'No entre',
-          notEmpty: 'No Vacio',
-          not: 'Diferente de',
-        },
-        number: {
-          between: 'Entre',
-          empty: 'Vacio',
-          equals: 'Igual a',
-          gt: 'Mayor a',
-          gte: 'Mayor o igual a',
-          lt: 'Menor que',
-          lte: 'Menor o igual que',
-          notBetween: 'No entre',
-          notEmpty: 'No vacío',
-          not: 'Diferente de',
-        },
-        string: {
-          contains: 'Contiene',
-          empty: 'Vacío',
-          endsWith: 'Termina en',
-          equals: 'Igual a',
-          notEmpty: 'No Vacio',
-          startsWith: 'Empieza con',
-          not: 'Diferente de',
-          notContains: 'No Contiene',
-          notStartsWith: 'No empieza con',
-          notEndsWith: 'No termina con',
-        },
-        array: {
-          not: 'Diferente de',
-          equals: 'Igual',
-          empty: 'Vacío',
-          contains: 'Contiene',
-          notEmpty: 'No Vacío',
-          without: 'Sin',
-        },
-      },
-      data: 'Data',
-      deleteTitle: 'Eliminar regla de filtrado',
-      leftTitle: 'Criterios anulados',
-      logicAnd: 'Y',
-      logicOr: 'O',
-      rightTitle: 'Criterios de sangría',
-      title: {
-        0: 'Constructor de búsqueda',
-        _: 'Constructor de búsqueda (%d)',
-      },
-      value: 'Valor',
-    },
-    searchPanes: {
-      clearMessage: 'Borrar todo',
-      collapse: {
-        0: 'Paneles de búsqueda',
-        _: 'Paneles de búsqueda (%d)',
-      },
-      count: '{total}',
-      countFiltered: '{shown} ({total})',
-      emptyPanes: 'Sin paneles de búsqueda',
-      loadMessage: 'Cargando paneles de búsqueda',
-      title: 'Filtros Activos - %d',
-      showMessage: 'Mostrar Todo',
-      collapseMessage: 'Colapsar Todo',
-    },
-    select: {
-      cells: {
-        1: '1 celda seleccionada',
-        _: '%d celdas seleccionadas',
-      },
-      columns: {
-        1: '1 columna seleccionada',
-        _: '%d columnas seleccionadas',
-      },
-      rows: {
-        1: '1 fila seleccionada',
-        _: '%d filas seleccionadas',
-      },
-    },
-    thousands: '.',
-    datetime: {
-      previous: 'Anterior',
-      next: 'Proximo',
-      hours: 'Horas',
-      minutes: 'Minutos',
-      seconds: 'Segundos',
-      unknown: '-',
-      amPm: ['AM', 'PM'],
-      months: {
-        0: 'Enero',
-        1: 'Febrero',
-        10: 'Noviembre',
-        11: 'Diciembre',
-        2: 'Marzo',
-        3: 'Abril',
-        4: 'Mayo',
-        5: 'Junio',
-        6: 'Julio',
-        7: 'Agosto',
-        8: 'Septiembre',
-        9: 'Octubre',
-      },
-      weekdays: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-    },
-    editor: {
-      close: 'Cerrar',
-      create: {
-        button: 'Nuevo',
-        title: 'Crear Nuevo Registro',
-        submit: 'Crear',
-      },
-      edit: {
-        button: 'Editar',
-        title: 'Editar Registro',
-        submit: 'Actualizar',
-      },
-      remove: {
-        button: 'Eliminar',
-        title: 'Eliminar Registro',
-        submit: 'Eliminar',
-        confirm: {
-          _: '¿Está seguro que desea eliminar %d filas?',
-          1: '¿Está seguro que desea eliminar 1 fila?',
-        },
-      },
-      error: {
-        system:
-          'Ha ocurrido un error en el sistema (<a target="\\" rel="\\ nofollow" href="\\">Más información&lt;\\/a&gt;).</a>',
-      },
-      multi: {
-        title: 'Múltiples Valores',
-        info: 'Los elementos seleccionados contienen diferentes valores para este registro. Para editar y establecer todos los elementos de este registro con el mismo valor, hacer click o tap aquí, de lo contrario conservarán sus valores individuales.',
-        restore: 'Deshacer Cambios',
-        noMulti:
-          'Este registro puede ser editado individualmente, pero no como parte de un grupo.',
-      },
-    },
-    info: 'Mostrando _START_ a _END_ de _TOTAL_ registros',
-    stateRestore: {
-      creationModal: {
-        button: 'Crear',
-        name: 'Nombre:',
-        order: 'Clasificación',
-        paging: 'Paginación',
-        search: 'Busqueda',
-        select: 'Seleccionar',
-        columns: {
-          search: 'Búsqueda de Columna',
-          visible: 'Visibilidad de Columna',
-        },
-        title: 'Crear Nuevo Estado',
-        toggleLabel: 'Incluir:',
-      },
-      emptyError: 'El nombre no puede estar vacio',
-      removeConfirm: '¿Seguro que quiere eliminar este %s?',
-      removeError: 'Error al eliminar el registro',
-      removeJoiner: 'y',
-      removeSubmit: 'Eliminar',
-      renameButton: 'Cambiar Nombre',
-      renameLabel: 'Nuevo nombre para %s',
-      duplicateError: 'Ya existe un Estado con este nombre.',
-      emptyStates: 'No hay Estados guardados',
-      removeTitle: 'Remover Estado',
-      renameTitle: 'Cambiar Nombre Estado',
-    },
   },
-};
-$('#example').DataTable(dataTableOptions);
-    };
-
-    onMounted(async () => {
-      await getUser();
-      initDataTable();
+  mounted() {
+    this.fetchTeachersWithSchedules();
+  },
+  methods: {
+    async fetchTeachersWithSchedules() {
+      try {
+        const response = await fetch('http://localhost:27017/api/teachersWithSchedules');
+        const result = await response.json();
+        this.data = result;
+      } catch (error) {
+        console.error('Error fetching teachers with schedules:', error);
+      }
+    },
+    openModal(teacher) {
+  this.selectedTeacher = teacher;
+  this.fetchSchedules(teacher._id);
+  console.log('Selected Teacher:', teacher); // Verifica el objeto teacher
+  console.log('Fetching schedules for:', teacher._id);
+  this.showModal = true;
+},
+    closeModal() {
+      this.showModal = false;
+    },
+    async fetchSchedules(teacherId) {
+  try {
+    const response = await fetch(`http://localhost:27017/api/schedules/${teacherId}`);
+    const result = await response.json();
+    this.schedules = result.horario || []; // Asegúrate de que schedules siempre sea un array
+    console.log('Fetched schedules:', this.schedules); // Verifica los horarios obtenidos
+  } catch (error) {
+    console.error('Error fetching schedules:', error);
+  }
+},
+    async saveSchedules() {
+      try {
+        const response = await fetch('http://localhost:27017/api/updateSchedules', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            teacher: this.selectedTeacher._id,
+            schedule: this.schedules
+          })
+        });
+        if (response.ok) {
+          alert('Horarios actualizados con éxito');
+          this.closeModal();
+        } else {
+          alert('Error al actualizar horarios');
+        }
+      } catch (error) {
+        console.error('Error updating schedules:', error);
+      }
+    },
+    async deleteUser(user) {
+  try {
+    const response = await fetch(`http://localhost:27017/api/deleteSchedules/${user._id}`, {
+      method: 'DELETE'
     });
 
-    return { 
-      data,
-      getUser,
-      deleteUser,
-      getUsuario,
-    dataUsuario,
-    type
-   };
-  },
+    if (response.ok) {
+      // Actualiza la interfaz de usuario si es necesario
+      alert('Horarios eliminados con éxito');
+    } else {
+      alert('Error al eliminar horarios');
+    }
+  } catch (error) {
+    console.error('Error deleting schedules:', error);
+  }
+}
+  }
 };
 </script>
-<style src="@/assets/css/style.css"></style>
-  
+<style scoped>/* Estilos para el modal personalizado */
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Para asegurarse de que esté sobre otros contenidos */
+}
+
+.modal-content {
+  background: white;
+  border-radius: 0.3rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  width: 100%;
+  max-width: 600px; /* Ajusta el ancho máximo según sea necesario */
+  max-height: 80vh; /* Ajusta la altura máxima del modal */
+  overflow: hidden; /* Evita el desbordamiento */
+  position: relative; /* Permite posicionar el botón de cerrar dentro del modal */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0; /* Línea de separación */
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem; /* Espacio debajo del encabezado */
+  position: relative;
+}
+
+.modal-body {
+  overflow-y: auto; /* Añade scrollbar vertical si el contenido es demasiado largo */
+  max-height: calc(80vh - 3rem); /* Ajusta la altura máxima del contenido del modal */
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: absolute; /* Asegura que el botón esté siempre en la esquina superior derecha */
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040; /* Para asegurarse de que esté detrás del modal */
+}
+
+
+</style>
+

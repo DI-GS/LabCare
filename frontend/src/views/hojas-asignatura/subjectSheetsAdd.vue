@@ -2,22 +2,22 @@
   <div class="main-container">
     <headerComponent></headerComponent>
 
-    <div class="content content-width" >
+    <div class="content content-width">
       <div class="form-group">
         <div class="row">
           <div class="col-md-6 mb-3">
-          <label for="carrera">Carrera</label>
-          <select class="form-control" id="careerSelected">
-            <option value="IDGS">IDGS</option>
-          </select>
-        </div>
+            <label for="carrera">Carrera</label>
+            <select class="form-control" id="careerSelected">
+              <option value="IDGS">IDGS</option>
+            </select>
+          </div>
 
-        <div class="col-md-6 mb-3">
-          <label for="materia">Materia</label>
-          <select class="form-control" id="subjectSelected">
-            <option value="BD">BD</option>
-          </select>
-        </div>
+          <div class="col-md-6 mb-3">
+            <label for="materia">Materia</label>
+            <select class="form-control" id="subjectSelected">
+              <option value="BD">BD</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -44,16 +44,16 @@
 
         <div class="row">
           <div class="col-6 mb-3">
-            <label for="numero">Horas teoricas</label>
+            <label for="numero">Horas teóricas</label>
             <input type="number" class="form-control" name="NumberSheets" id="HourTSheets">
           </div>
 
           <div class="col-6 mb-3">
-            <label for="nameSubject">Horas practicas</label>
+            <label for="nameSubject">Horas prácticas</label>
             <input type="number" class="form-control" id="HourPSheets">
           </div>
         </div>
-        
+
         <label for="temas">Temas</label>
         <div class="input-group mb-3">
           <input type="text" class="form-control" id="ThemeSheets">
@@ -64,76 +64,72 @@
         <div class="cuadroVisualizacion form-group" id="subjectRecolect">
           <ul>
             <li v-for="(theme, index) in newTheme.themes" :key="index">
-              {{ theme.theme }}
+              {{ theme }}
             </li>
-      </ul>
+          </ul>
         </div>
+        <button @click="subirUnidad" class="btn btn-primary mt-3" type="button">Subir Unidad Temática</button>
       </div>
     </div>
   </div>
 </template>
 
-
 <script>
-
+import { reactive } from 'vue';
 import headerComponent from '@/components/header-component.vue';
 import 'bootstrap/dist/css/bootstrap.css';
 
-
 export default {
-  name: "SubjectSheetsAdd",
-  components: {headerComponent},
-  
-  
+  name: 'SubjectSheetsAdd',
+  components: { headerComponent },
 
   setup() {
-    let newTheme = {
-      subjet: "",
-      career: "",
-      NameSheets: "",
-      NumberSheets:"",
+    const newTheme = reactive({
       themes: []
+    });
+
+    const agregarTema = () => {
+      const themeSheets = document.getElementById('ThemeSheets').value;
+
+      if (themeSheets) {
+        newTheme.themes.push(themeSheets);
+        document.getElementById('ThemeSheets').value = '';
+      }
+
+      console.log('Temas después de agregar:', newTheme.themes);
     };
 
-    const agregarTema = function () {
+    const subirUnidad = () => {
       const career = document.getElementById('careerSelected').value;
       const subject = document.getElementById('subjectSelected').value;
       const numberSheets = document.getElementById('NumberSheets').value;
       const nameSheets = document.getElementById('NameSheets').value;
       const hourTSheets = document.getElementById('HourTSheets').value;
       const hourPSheets = document.getElementById('HourPSheets').value;
-      const themeSheets = document.getElementById('ThemeSheets').value;
 
-      const nuevoTema = {  
-        theme: themeSheets,
-        hourTeoSheets: hourTSheets,
-        hourPracSheets: hourPSheets,
+      const unidadTematica = {
+        carrera: career,
+        materia: subject,
+        unidad_tematica: {
+          numero_unidad: numberSheets,
+          nombre: nameSheets,
+          horas_pract: hourPSheets,
+          horas_teor: hourTSheets,
+          temas: newTheme.themes
+        }
       };
 
-      newTheme.NameSheets = nameSheets;
-      newTheme.NumberSheets= numberSheets;
-      newTheme.career = career;
-      newTheme.subjet = subject;
-      newTheme.themes.push(nuevoTema);
-
-      document.getElementById('HourTSheets').value = '';
-      document.getElementById('HourPSheets').value = '';
-      document.getElementById('ThemeSheets').value = '';
-      
-      console.log('Temas después de agregar:', newTheme.themes[0].theme);
-      console.log('Nuevo tema:', this.newTheme);
+      console.log('Unidad temática subida:', JSON.stringify(unidadTematica, null, 2));
+      // Aquí puedes agregar la lógica para subir la unidad temática, por ejemplo, enviar los datos a un servidor.
     };
 
-    return{
-        newTheme,
-        agregarTema
-    }
-    
-  },
-
-
+    return {
+      newTheme,
+      agregarTema,
+      subirUnidad
+    };
+  }
 };
-//Investigar para que sirve ref en vue
 </script>
 
 <style src="@/assets/css/style.css"></style>

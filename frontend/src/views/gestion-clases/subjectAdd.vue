@@ -1,83 +1,117 @@
 <template>
     <div class="main-container">
-        <headerComponent></headerComponent>
-        <div class="content content-width" >
-            <div class="form-group">
-                <div class="mb-3">
-                    <label for="carrera">Carrera</label>
-                    <input type="text" class="form-control">
-                </div>
+      <headerComponent></headerComponent>
+      <div class="content content-width">
+        <form @submit.prevent="handleSubmit">
+          <div class="form-group">
+            <div class="mb-3">
+              <label for="carrera">Carrera</label>
+              <input type="text" class="form-control" v-model="name_career">
             </div>
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="carrera">No. Cuatrimestre</label>
-                        <select class="form-control" id="subjectSelected">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="materia">Nemonico</label>
-                        <select class="form-control" id="subjectSelected">
-                            <option value="IDGS">IDGS</option>
-                        </select>
-                    </div>
-                </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="carrera">No. Cuatrimestre</label>
+                <input type="text" class="form-control" v-model="period">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="materia">Nemonico</label>
+                <select class="form-control" v-model="short_name">
+                  <option>IDGS</option>
+                  <option>IMT</option>
+                  <!-- otros valores -->
+                </select>
+              </div>
             </div>
-        
-        
-            <div class="form-group mb-3">
-                <div>
-                    <label for="carrera">Materia</label>
-                    <input type="text" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <label for="materia">Objetivo de aprendizaje</label>
-                    <input type="text" class="form-control form-objetive mb-3">
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <button class="btn btn-outline-secondary btn-color" type="button">Registrar materia</button>
-                </div>
-            </div>
-        
-        </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="carrera">Materia</label>
+            <input type="text" class="form-control" v-model="name_subject">
+          </div>
+          <div class="form-group">
+            <label for="materia">Objetivo de aprendizaje</label>
+            <input type="text" class="form-control form-objetive mb-3" v-model="objetive">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-secondary btn-color" type="submit">Registrar materia</button>
+          </div>
+        </form>
+      </div>
     </div>
-</template>
-
-<script>
-    import headerComponent from '@/components/header-component.vue';
-    import 'bootstrap/dist/css/bootstrap.css';
-
-    export default {
-        name: "SubjectAdd",
-        components: {headerComponent},
-    
-        setup() {
-            return{
-
-            }
-
-        },
-
-
-    };
-
-    //Investigar para que sirve ref en vue
-</script>
-
-<style src="@/assets/css/style.css"></style>
+  </template>
+  
+  <script>
+  import { ref } from 'vue';
+  import { store } from "@/stores/user-store";
+  //import { useRouter } from "vue-router";
+  import headerComponent from '@/components/header-component.vue';
+  import Swal from 'sweetalert2';
+  
+  export default {
+    name: "SubjectAdd",
+    components: { headerComponent },
+    setup() {
+      const name_career = ref("");
+      const period = ref("");
+      const short_name = ref("");
+      const name_subject = ref("");
+      const objetive = ref("");
+      //const router = useRouter();
+      const userStore = store();
+  
+      const handleSubmit = async () => {
+        try {
+          await userStore.newSubject(name_subject.value, name_career.value, short_name.value, objetive.value, period.value);
+  
+          // Limpiar los campos después de un registro exitoso
+          name_subject.value = "";
+          objetive.value = "";
+  
+          Swal.fire({
+            icon: 'success',
+            title: 'Registro exitoso',
+            text: '¡Materia registrada con éxito!',
+          }).then(() => {
+            // Redirige al usuario a la página de visualización de materias después de hacer clic en "Aceptar" en la alerta
+            //router.push("/Visualizar-materias");
+          });
+  
+        } catch (error) {
+          console.log("Error al registrar la materia:", error);
+          if (error.response) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error.response.data.error,
+            });
+          } else if (error.request) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error de red',
+              text: 'No se pudo comunicar con el servidor',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error desconocido',
+              text: 'Ocurrió un error inesperado',
+            });
+          }
+        }
+      };
+  
+      return {
+        name_career,
+        period,
+        short_name,
+        name_subject,
+        objetive,
+        handleSubmit,
+      };
+    },
+  };
+  </script>
+  
+  <style src="@/assets/css/style.css"></style>
+  

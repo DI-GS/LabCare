@@ -18,7 +18,8 @@ import subjectSheetsView from '@/views/hojas-asignatura/subjectSheetsView.vue'
 import header from '@/components/header-component.vue'
 import subjectAdd from '@/views/gestion-clases/subjectAdd.vue'
 import ViewClassroom from '@/views/gestion-aulas/viewClassrooms.vue'
-
+import subjectView from '@/views/gestion-clases/subjectView.vue'
+import ViewGraphics from '@/views/graficas/viewGraphics.vue'
 
 
 //Creación de rutas
@@ -39,6 +40,9 @@ const routes = [
     { path: '/successful-payment', component: SuccessfulPayment },
     { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd},
     { path: '/Visualizar-aulas', name: 'ViewClassrooms', meta:{auth:true}, component: ViewClassroom}
+    { path: '/Visualizar-clases', name: 'subjectView', meta:{auth:true}, component:subjectView},
+    { path: '/Visualizar-graficas', name: 'ViewGraphics', component: ViewGraphics}
+
 
 ];
 

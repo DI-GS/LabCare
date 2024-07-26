@@ -2,17 +2,21 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const subjectSchema = new Schema({
-    name_subject:{
+    name_subject: {
+        type: String,
+        required: true,
+    },
+    period: {
+        type: Number,
+        required: true,
+    },
+    career: {
+        nombre: { type: String, required: true },
+        abreviacion: { type: String, required: true }
+    },
+    objetive: {
         type: String,
         required: true, 
-     },
-     career:{
-        nombre:{type: String, require: true},
-        abreviacion:{type: String, require: true}
-     },
-     objetive:{
-        nombre:{type: String, require: true},
-        abreviacion:{type: String, require: true}
      },
     uid: {
         type: Schema.Types.ObjectId,
@@ -21,4 +25,6 @@ const subjectSchema = new Schema({
     },
 });
 
-export const ExpedienteFisica = model("Materia", subjectSchema);
+const Subject = mongoose.models.Subject || model("Subject", subjectSchema);
+
+export { Subject };

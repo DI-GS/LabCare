@@ -167,6 +167,120 @@ const register = async (name, lastname, email, password, repassword) => {
     }
   }
 
+   /*#################################################### Materias ####################################################*/
+   const newSubject = async (name_subject, name_career, short_name, objetive, period) => {
+    try {
+        const res = await api({
+            url: "/auth/newSubject",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token.value,
+            },
+            data: {
+                name_subject,
+                name_career,
+                short_name,
+                objetive,
+                period
+            }
+        });
+        console.log(res);
+        console.log('estra a user-store',name_career,short_name);
+        return res;
+    } catch (error) {
+        console.error("Error al registrar la materia:", error);
+
+        if (error.response) {
+            throw error.response.data;
+        } else if (error.request) {
+            throw { error: "Error de red al comunicarse con el servidor" };
+        } else {
+            throw { error: "Error desconocido" };
+        }
+    }
+};
+  const getSubjects= async ()=>{
+    try {
+      const res=await api({
+        url:"/auth/getSubjects",
+        method:"GET",
+        headers:{
+        Authorization: "Bearer " + token.value,
+        } 
+      });
+      return res.data
+    
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const getSubject= async (subjectId)=>{
+    try {
+        const res=await api({
+          url: `/auth/getSubject/${subjectId}`,
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+      });
+      console.log("Entra a userstore", subjectId)
+     
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const updateSubject= async (subjectId, name_subject, period,  name_career, short_name,objetive,)=>{
+    try {
+        const res=await api({
+          url:"/auth/updateSubject",
+        method:"PATCH",
+        headers:{
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          subjectId,
+          name_subject,
+          period,
+          name_career,
+          short_name,  
+          objetive
+        }
+      });
+      console.log(res)
+      return res
+    } catch (error) {
+      console.log("Error se servidor",error)
+    }
+  };
+
+  const deleteSubject= async (subjectId)=>{
+    try {
+        const res=await api({
+        url:"/auth/deleteSubject",
+        method:"DELETE",
+        headers:{
+          Authorization: "Bearer " + token.value,
+        },
+        data:{
+          subjectId,
+        }
+      });
+      return res.data
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+/////////Finaliza materias////////////////////////////////////////////////777
+
   const refreshToken = async () => {
     try {
       const res = await api.get("/auth/refresh");
@@ -211,6 +325,11 @@ const register = async (name, lastname, email, password, repassword) => {
     getusers,
     updateUser,
     getUsuario,
-    deleteInternUser
+    deleteInternUser,
+    newSubject,
+    getSubjects,
+    getSubject,
+    updateSubject,
+    deleteSubject
   };
 });
