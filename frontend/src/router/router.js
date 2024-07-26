@@ -17,6 +17,7 @@ import ViewInformativa from '@/views/inicio-de-sesion/pagina_principal.vue'
 import subjectSheetsView from '@/views/hojas-asignatura/subjectSheetsView.vue'
 import header from '@/components/header-component.vue'
 import subjectAdd from '@/views/gestion-clases/subjectAdd.vue'
+import ViewClassroom from '@/views/gestion-aulas/viewClassrooms.vue'
 
 
 
@@ -36,7 +37,8 @@ const routes = [
     { path: '/Realizar-pago', name: 'Pago', component: Pago },
     { path: '/Visualizar-pagos', name: 'ViewPago', component: viewPago},
     { path: '/successful-payment', component: SuccessfulPayment },
-    { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd}
+    { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd},
+    { path: '/Visualizar-aulas', name: 'ViewClassrooms', meta:{auth:true}, component: ViewClassroom}
 
 ];
 
