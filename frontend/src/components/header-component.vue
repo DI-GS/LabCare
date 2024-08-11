@@ -48,7 +48,7 @@
               <span class="navlink">Horarios</span>
             </a></router-link>
           </li>
-          <li class="item">
+         <li class="item">
             <router-link class="navlink" :to="{name: 'ViewClassrooms'}" ><a href="#" class="nav_link">
               <span class="navlink_icon">
                 <i class="bx bx-home-alt-2"></i>
