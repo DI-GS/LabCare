@@ -1,71 +1,48 @@
 <template>
-    <headerComponent></headerComponent>
-    <head>
-        <title>Gráficas</title>
+  <headerComponent></headerComponent>
+  <head>
+    <title>Gráficas</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
+  </head>
 
-    <div class="main-container content padding">
-        <canvas ref="chartCanvas"></canvas>
-    <div>
-      <label for="dataInput">Enter new data (comma separated):</label>
-      <input id="dataInput" v-model="newData" placeholder="10, 20, 30, 40" />
-      <button @click="updateChartData">Update Chart</button>
+  <div class="main-container content padding">
+    <div class="chart-container">
+      <canvas ref="chartCanvas1"></canvas>
     </div>
-    <div>
-      <label for="periodSelect">Select Period:</label>
-      <select id="periodSelect" v-model="selectedPeriod" @change="updateChartPeriod">
-        <option value="monthly">Monthly</option>
-        <option value="quarterly">Quarterly</option>
-        <option value="yearly">Yearly</option>
-      </select>
+
+    <div class="chart-container">
+      <canvas ref="chartCanvas2"></canvas>
     </div>
-    </div>
-  </template>
-  
-  <script>
-  import { ref, onMounted } from 'vue';
-  import { Chart, registerables } from 'chart.js';
-  import headerComponent from "@/components/header-component.vue";
-  
-  Chart.register(...registerables);
-  
-  export default {
-    name: "viewGraphics",
+  </div>
+</template>
+
+<script>
+import { ref, onMounted } from 'vue';
+import { Chart, registerables } from 'chart.js';
+import headerComponent from "@/components/header-component.vue";
+
+Chart.register(...registerables);
+
+export default {
+  name: "viewGraphics",
   components: { headerComponent },
   setup() {
-    const chartCanvas = ref(null);
-    const chartInstance = ref(null);
-    const newData = ref('');
-    const selectedPeriod = ref('monthly');
+    const chartCanvas1 = ref(null);
+    const chartCanvas2 = ref(null);
+    const chartInstance1 = ref(null);
+    const chartInstance2 = ref(null);
 
-    const dataSets = {
-      monthly: {
-        labels: ['January', 'February', 'March', 'April'],
-        data: [65, 59, 80, 81]
-      },
-      quarterly: {
-        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-        data: [150, 200, 250, 300]
-      },
-      yearly: {
-        labels: ['2020', '2021', '2022', '2023'],
-        data: [500, 600, 700, 800]
-      }
-    };
-
-    const initializeChart = (period) => {
-      const ctx = chartCanvas.value.getContext('2d');
-      const { labels, data } = dataSets[period];
-      chartInstance.value = new Chart(ctx, {
+    const initializeChart1 = () => {
+      const ctx1 = chartCanvas1.value.getContext('2d');
+      chartInstance1.value = new Chart(ctx1, {
         type: 'bar',
         data: {
-          labels,
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Dieciembre'],
           datasets: [{
-            label: 'Usage Statistics',
-            data,
+            label: 'Uso Mensual de Aulas',
+            data: [158, 139, 170, 149, 132, 148, 122, 110, 140, 132, 98, 34],
             backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
             borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
             borderWidth: 1
@@ -81,38 +58,65 @@
       });
     };
 
-    const updateChartData = () => {
-      const data = newData.value.split(',').map(Number);
-      chartInstance.value.data.datasets[0].data = data;
-      chartInstance.value.update();
-    };
-
-    const updateChartPeriod = () => {
-      const period = selectedPeriod.value;
-      chartInstance.value.destroy();
-      initializeChart(period);
+    const initializeChart2 = () => {
+      const ctx2 = chartCanvas2.value.getContext('2d');
+      chartInstance2.value = new Chart(ctx2, {
+        type: 'line',
+        data: {
+          labels: ['2020', '2021', '2022', '2023'],
+          datasets: [{
+            label: 'Uso Anual de Laboratorios',
+            data: [130, 129, 100, 150],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: true
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
     };
 
     onMounted(() => {
-      initializeChart(selectedPeriod.value);
+      initializeChart1();
+      initializeChart2();
     });
 
     return {
-      chartCanvas,
-      newData,
-      selectedPeriod,
-      updateChartData,
-      updateChartPeriod
+      chartCanvas1,
+      chartCanvas2
     };
   }
 };
 </script>
 
 <style scoped>
-canvas {
-  max-width: 600px;
+.main-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-div {
-  margin-top: 20px;
+
+.chart-container {
+  width: 45%;
+  margin: 20px 0;
+}
+
+canvas {
+  width: 100%;
+  height: 400px; /* Ajusta la altura como desees */
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    width: 100%;
+  }
 }
 </style>
