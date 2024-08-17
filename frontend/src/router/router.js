@@ -21,7 +21,7 @@ import subjectView from '@/views/gestion-clases/subjectView.vue'
 import ViewGraphics from '@/views/graficas/viewGraphics.vue'
 import ViewClassrooms from '@/views/gestion-aulas/ViewClassrooms.vue'
 import AddClassrooms from '@/views/gestion-aulas/AddClassrooms.vue'
-
+import ViewReportes from '@/views/reportes-pdf/informes.vue'
 
 
 //Creación de rutas
@@ -44,8 +44,8 @@ const routes = [
     { path: '/Visualizar-clases', name: 'subjectView', meta:{auth:true}, component:subjectView},
     { path: '/Visualizar-graficas', name: 'ViewGraphics', component: ViewGraphics},
     { path: '/Visualizar-aulas', name: 'ViewClassrooms', component: ViewClassrooms},
-    { path: '/Visualizar-aulas/Agregar-aula', name: 'AddClassrooms', meta:{auth:true}, component: AddClassrooms}
-    
+    { path: '/Visualizar-aulas/Agregar-aula', name: 'AddClassrooms', meta:{auth:true}, component: AddClassrooms},
+    { path: '/informes', name: 'reportes-pdf', meta:{auth:true}, component: ViewReportes}
 
 
 ];

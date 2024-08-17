@@ -89,12 +89,14 @@
         </ul>
         <ul class="menu_items">
         <li class="item">
+        <router-link class="navlink" :to="{name: 'reportes-pdf'}"><a href="#" class="nav_link"></a>
           <a href="#" class="nav_link">
             <span class="navlink_icon">
               <i class="bx bx-notepad"></i>
             </span>
             <span class="navlink">Informes</span>
           </a>
+         </router-link>
         </li>
         <li class="item">
           <router-link class="navlink" :to="{name: 'ViewGraphics'}"><a href="#" class="nav_link"></a>
