@@ -63,7 +63,7 @@ iframe {
   background: transparent; /* Elimina el fondo gris */
   position: relative; /* Permite ajustar la posición del iframe */
   left: 10px; /* Ajusta el valor para mover el iframe a la derecha */
-}
+}          
 </style>
 
 
