@@ -280,7 +280,111 @@ const register = async (name, lastname, email, password, repassword) => {
   }
 
 /////////Finaliza materias////////////////////////////////////////////////777
+//////////////////////Aulas////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+const newClassroom= async (aula, edificio, tipo)=>{
+  try {
+    console.log(aula)
+      const res=await api({
+      url:"/auth/newClassroom",
+      method:"POST",
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token.value,
+      },
+      data:{
+        aula,
+        edificio, 
+        tipo 
+      }
+    });
+    console.log(res)
+    return res
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 
+const updateClassroom= async (classroomId, aula, edificio, tipo)=>{
+  try {
+      const res=await api({
+        url:"/auth/updateClassrooms",
+      method:"PATCH",
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token.value,
+      },
+      data:{
+        classroomId,
+        aula,
+        edificio, 
+        tipo
+      }
+    });
+    console.log(res)
+    return res
+  } catch (error) {
+    console.log("HMMMMMMMMMMMMMMM",error)
+  }
+}
+
+
+const getClassrooms= async ()=>{
+  try {
+      const res=await api({
+      url:"/auth/getClassrooms",
+      method:"GET",
+      headers:{
+        Authorization: "Bearer " + token.value,
+     }
+    });
+   
+    return res.data
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const getClassroom= async (classroomId)=>{
+  try {
+      const res=await api({
+        url: `/auth/getClassroom/${classroomId}`,
+      method:"GET",
+      headers:{
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token.value,
+      },
+    });
+    console.log("Entra a userstore", subjectId)
+   
+    return res.data
+    
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+const deleteClassroom= async (classroomId)=>{
+  try {
+      const res=await api({
+      url:"/auth/deleteClassroom",
+      method:"DELETE",
+      headers:{
+        Authorization: "Bearer " + token.value,
+      },
+      data:{
+        classroomId,
+      }
+    });
+    return res.data
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const refreshToken = async () => {
     try {
       const res = await api.get("/auth/refresh");
@@ -330,6 +434,11 @@ const register = async (name, lastname, email, password, repassword) => {
     getSubjects,
     getSubject,
     updateSubject,
-    deleteSubject
+    deleteSubject,
+    newClassroom,
+    getClassroom,
+    deleteClassroom,
+    updateClassroom,
+    getClassrooms
   };
 });

@@ -47,16 +47,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(user, index) in data" :key="index">
+            <tr v-for="(classroom, index) in data" :key="index">
               <td>{{ index + 1 }}</td>
-              <td>{{ user.name }}</td>
-              <td>{{ user.edificio }}</td>
-              <td>{{ user.tipo }}</td>
+              <td>{{ classroom.aula }}</td>
+              <td>{{ classroom.edificio }}</td>
+              <td>{{ classroom.tipo }}</td>
               <td>
-                <button class="btn btn-sm btn-secondary" @click="openModal(user)">
+                <button class="btn btn-sm btn-secondary" @click="openModal(classroom)">
                   <i class="fa-solid fa-pencil" ></i>
                 </button>
-                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteUser(user)"></i></button>
+                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can" @click="deleteAula(classroom)"></i></button>
               </td>
             </tr>
           </tbody>
@@ -64,29 +64,21 @@
       </div>
     </div>
 
-    <div id="modal_horarios" class="modal_horarios">
+  <div id="modal_horarios" class="modal_horarios">
     <div class="modal-horarios-content">
         <span class="close" @click="closeModal">&times;</span>
         <h2>Actualizar aula</h2>
         <div class="input-group">
             <label for="subject">Nombre:</label>
-            <input type="text"  v-model.lazy="dataUsuario.name" v-model="dataUsuario.name" required>
+            <input type="text" v-model.lazy="dataClassroom.aula" v-model="dataClassroom.aula" required>
         </div>
         <div class="input-group">
             <label for="group">Edificio:</label>
-            <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataUsuario.rol" v-model="dataUsuario.rol" required> 
-            <datalist id="groupOptions">
-                <option value="Maestro"></option>
-                <option value="Administrador"></option>
-            </datalist>
+            <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataClassroom.edificio" v-model="dataClassroom.edificio" required> 
         </div>
         <div class="input-group">
             <label for="group">Tipo de aula</label>
-            <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataUsuario.rol" v-model="dataUsuario.rol" required> 
-            <datalist id="groupOptions">
-                <option value="Maestro"></option>
-                <option value="Administrador"></option>
-            </datalist>
+            <input type="text" id="group" name="group" list="groupOptions" v-model.lazy="dataClassroom.tipo" v-model="dataClassroom.tipo" required> 
         </div>
         <button class="btn btn-sm btn-success" id="save-changes" @click="saveChanges">Guardar Cambios</button>
     </div>
@@ -105,24 +97,24 @@ import "datatables.net-bs5";
 import headerComponent from "@/components/header-component.vue";
 import { ref, onMounted } from "vue";
 import { store } from "@/stores/user-store";
+import Swal from 'sweetalert2';
 
 export default {
-  name: "viewSchedules",
+  name: "viewClassrooms",
   components: { headerComponent },
   setup() {
     const data = ref([]);
-    const dataUsuario = ref({
-  name: "",
-  lastname: "",
-  email: "",
-  rol: "",
+    const dataClassroom = ref({
+  aula: "",
+  edificio: "",
+  tipo: "",
 });
     const userStore = store();
     const type = ref(null); 
-    var internUserId = ref("")
+    var internClassroomId = ref("")
 
-    const openModal = (user) => {
-    getUsuario(user._id)
+    const openModal = (classroom) => {
+    getAula(classroom._id)
     const modal = document.getElementById('modal_horarios');
     modal.style.display = 'block';
   };
@@ -134,33 +126,40 @@ export default {
 
     // Evento clic para guardar los cambios y actualizar las celdas
     const saveChanges = async () => {
-    actualizarInformacion()
+   // actualizarInformacion()
     closeModal();
     window.location.reload();
 };
     
-      const getUsuario = async (userId) => {
+      const getAula = async (ClassroomId) => {
       try {
-        internUserId.value = userId
-        dataUsuario.value = await userStore.getUsuario(userId);
+        internClassroomId.value = ClassroomId
+        dataClassroom.value = await userStore.getClassroom(ClassroomId);
       } catch (error) {
         console.error(error);
       }
     };
 
-    const getUser = async () => {
+    const getAulas = async () => {
       try {
-        data.value = await userStore.getusers();
+        data.value = await userStore.getClassrooms();
       } catch (error) {
         console.error(error);
       }
     };
+   
 
-    const deleteUser = async (user) => {
+    const deleteAula = async (aula) => {
       try {
-        getUsuario(user._id)
-        await userStore.deleteInternUser(user._id);
-        window.location.reload();
+        getAula(aula._id)
+        await userStore.deleteClassroom(aula._id);
+        Swal.fire({
+        icon: 'success',
+        title: 'Se a eliminado correctamente',
+        text: '¡El aula se eliminó!',
+        }).then(() => {
+          window.location.reload();
+          });
       } catch (error) {
         console.error(error);
       }
@@ -168,14 +167,13 @@ export default {
 
 
 const actualizarInformacion = async () => {
-  const userId = internUserId.value;
+  const classroomId = internClassroomId.value;
   try {
     await userStore.updateUser(
-      userId,
-      dataUsuario.value.name,
-      dataUsuario.value.lastname,
-      dataUsuario.value.email,
-      dataUsuario.value.rol
+      classroomId,
+      dataClassroom.value.aula,
+      dataClassroom.value.edificio,
+      dataClassroom.value.tipo,
     );
   } catch (error) {
     console.log(error);
@@ -403,20 +401,20 @@ $('#example').DataTable(dataTableOptions);
     };
 
     onMounted(async () => {
-      await getUser();
+     await getAulas();
       initDataTable();
     });
 
     return { 
       data,
       actualizarInformacion,
-      getUser,
-      deleteUser,
-      getUsuario,
+      getAula,
+      deleteAula,
+      getAulas,
       openModal,
       saveChanges,
     closeModal,
-    dataUsuario,
+    dataClassroom,
     type
    };
   },
