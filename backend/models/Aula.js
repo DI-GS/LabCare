@@ -1,20 +1,26 @@
 import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const aulaSchema = new mongoose.Schema({
-    Aula: {
-        type: String,
-        required: true
+    aula: {
+        type: Number,
+        required: true,
     },
-    Edificio: {
+    edificio: {
         type: String,
-        required: true
+        required: true,
     },
-    Tipo: {
+    tipo: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
+    uid: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true, 
+    },
 });
 
 const Aula = mongoose.model('Aula', aulaSchema);
 
-export default Aula;  // Exporta el modelo por defecto
+export default Aula;
