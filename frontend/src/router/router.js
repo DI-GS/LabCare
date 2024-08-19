@@ -42,8 +42,8 @@ const routes = [
     { path: '/successful-payment', component: SuccessfulPayment },
     { path: '/Agregar-clase', name: 'subjectAdd', meta:{auth:true}, component:subjectAdd},
     { path: '/Visualizar-clases', name: 'subjectView', meta:{auth:true}, component:subjectView},
-    { path: '/Visualizar-graficas', name: 'ViewGraphics', component: ViewGraphics},
-    { path: '/Visualizar-aulas', name: 'ViewClassrooms', component: ViewClassrooms},
+    { path: '/Visualizar-graficas', name: 'ViewGraphics', meta:{auth:true}, component: ViewGraphics},
+    { path: '/Visualizar-aulas', name: 'ViewClassrooms',meta:{auth:true}, component: ViewClassrooms},
     { path: '/Visualizar-aulas/Agregar-aula', name: 'AddClassrooms', meta:{auth:true}, component: AddClassrooms},
     { path: '/informes', name: 'reportes-pdf', meta:{auth:true}, component: ViewReportes}
 

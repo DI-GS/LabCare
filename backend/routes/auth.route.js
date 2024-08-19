@@ -32,7 +32,7 @@ router.delete("/deleteUser", requireToken, deleteUser);
 router.post("/newSubject",requireToken,newSubject);
 router.post("/newClassroom",requireToken,newClassroom);
 router.get("/getClassrooms", requireToken, getClassrooms);
-router.get("/getClassroom", requireToken, getClassroom);
+router.get("/getClassroom/:classroomId", requireToken, getClassroom);
 router.patch("/updateClassroom", requireToken, updateClassroom);
 router.delete("/deleteClassroom", requireToken, deleteClassroom);
 router.get("/getSubjects",requireToken,getSubjects);

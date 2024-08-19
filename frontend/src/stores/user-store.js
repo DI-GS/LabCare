@@ -307,8 +307,9 @@ const newClassroom= async (aula, edificio, tipo)=>{
 
 const updateClassroom= async (classroomId, aula, edificio, tipo)=>{
   try {
+    
       const res=await api({
-        url:"/auth/updateClassrooms",
+        url:"/auth/updateClassroom",
       method:"PATCH",
       headers:{
         "Content-Type": "application/json",
@@ -320,6 +321,7 @@ const updateClassroom= async (classroomId, aula, edificio, tipo)=>{
         edificio, 
         tipo
       }
+      
     });
     console.log(res)
     return res
@@ -356,7 +358,7 @@ const getClassroom= async (classroomId)=>{
         Authorization: "Bearer " + token.value,
       },
     });
-    console.log("Entra a userstore", subjectId)
+    console.log("Entra a userstore", classroomId)
    
     return res.data
     

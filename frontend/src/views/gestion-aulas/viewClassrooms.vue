@@ -113,11 +113,15 @@ export default {
     const type = ref(null); 
     var internClassroomId = ref("")
 
-    const openModal = (classroom) => {
+   
+
+   const openModal = (classroom) => {
     getAula(classroom._id)
     const modal = document.getElementById('modal_horarios');
     modal.style.display = 'block';
   };
+  
+
     // Evento clic para cerrar el modal al hacer clic en el botón "Cerrar" (X)
     const closeModal = () => {
     const modal = document.getElementById('modal_horarios');
@@ -126,10 +130,10 @@ export default {
 
     // Evento clic para guardar los cambios y actualizar las celdas
     const saveChanges = async () => {
-   // actualizarInformacion()
+    actualizarInformacion()
     closeModal();
     window.location.reload();
-};
+    };
     
       const getAula = async (ClassroomId) => {
       try {
@@ -169,12 +173,16 @@ export default {
 const actualizarInformacion = async () => {
   const classroomId = internClassroomId.value;
   try {
-    await userStore.updateUser(
+    await userStore.updateClassroom(
       classroomId,
       dataClassroom.value.aula,
       dataClassroom.value.edificio,
       dataClassroom.value.tipo,
     );
+    Swal.fire({
+        icon: 'success',
+        title: 'Se actualizo el aula',
+        });
   } catch (error) {
     console.log(error);
   }
